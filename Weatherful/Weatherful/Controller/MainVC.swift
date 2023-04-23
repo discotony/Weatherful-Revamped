@@ -23,6 +23,9 @@ class MainVC: UIViewController {
     @IBOutlet weak var weatherDetailsLabel: UILabel!
     
     private var isSearchTriggered: Bool = true
+    private var tempUnits: [tempUnits] = [.metric, .imperial]
+    
+    var weatherManager = WeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,7 @@ class MainVC: UIViewController {
         setUpPlaceholder()
         
         searchTextField.delegate = self
+        weatherManager.delegate = self
     }
     
     private func setUpUI() {
@@ -104,7 +108,7 @@ extension MainVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("textFieldShouldReturn: " + searchTextField.text!)
-        self.view.endEditing(true)
+        self.view.endEditing(true) //FOLLOWUP
         return true
         
     }
@@ -123,10 +127,80 @@ extension MainVC: UITextFieldDelegate {
         if let cityName = searchTextField.text {
             let formattedCityName = String((cityName as NSString).replacingOccurrences(of: " ", with: "+"))
             print("textFieldDidEndEditing " + formattedCityName)
+            weatherManager.fetchWeather(from: formattedCityName)
         }
         
         // Reset search field
         searchTextField.text = ""
         hideSearchBar()
     }
+}
+
+// MARK: - WeatherManagerDelegate
+
+extension MainVC: WeatherManagerDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        DispatchQueue.main.async {
+            self.cityLabel.text = weather.cityName
+            self.weatherImageView.image = UIImage(named: "sun_max") // customize it
+            self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
+            self.currentTempLabel.text = "\(weather.tempCurrentString)°F" //FOLLOWUP
+    //        weatherDetailsLabel.text =
+            
+            
+    //
+    //        let windSymbol = NSTextAttachment(image: UIImage(systemName: "wind")!.withTintColor(.weatherfulBlack))
+    //        let humiditySymbol = NSTextAttachment(image: UIImage(systemName: "humidity")!.withTintColor(.weatherfulBlack))
+    //
+    //
+    //        let windString = NSAttributedString(string: " \(weather.wind)  ")
+    //        let humidityString = NSAttributedString(string: " \(weather.humidity)")
+    //
+    //        let weatherDetails = NSMutableString()
+    //
+    //        windString.insert(NSAttributedString(attachment: windSymbol), at: 0)
+    //
+    //
+    //        dailyWeatherHeaderLabel.configure(font: CustomFonts.captionMedium!)
+    //        let headerTitle = NSMutableAttributedString(string: " 5-DAY FORECAST")
+    //        headerTitle.insert(NSAttributedString(attachment: imageAttachment), at: 0)
+    //        dailyWeatherHeaderLabel.attributedText = headerTitle
+    //
+    //
+    //
+    //
+    //        let weatherDetailsString = NSAttributedString()
+    //        weatherDetailsString.insert(NSAttributedString(attachment: imageAttachment), at: 0)
+    //
+    //        dailyWeatherHeaderLabel.configure(font: CustomFonts.captionMedium!)
+    //        let headerTitle = NSMutableAttributedString(string: " 5-DAY FORECAST")
+    //        headerTitle.insert(NSAttributedString(attachment: imageAttachment), at: 0)
+    //        dailyWeatherHeaderLabel.attributedText = headerTitle
+            
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error.localizedDescription)
+        DispatchQueue.main.async {
+            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Please enter a valid city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red])
+//            self.animateWarningShake()
+            self.searchTextField.becomeFirstResponder()
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { Timer in
+                self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
+            }
+        }
+    }
+    
+//    private func animateWarningShake() {
+//        let animation = CABasicAnimation(keyPath: "position")
+//        animation.duration = 0.07
+//        animation.repeatCount = 4
+//        animation.autoreverses = true
+//        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x - 5, y: self.searchButtonView.center.y))
+//        animation.toValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x + 5, y: self.searchButtonView.center.y))
+//
+//        AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) { }
+//        self.searchButtonView.layer.add(animation, forKey: "position")
+//    }
 }
