@@ -20,7 +20,11 @@ class MainVC: UIViewController {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherConditionLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
-    @IBOutlet weak var weatherDetailsLabel: UILabel!
+    @IBOutlet weak var maxMinTempLabel: UILabel!
+    
+    @IBOutlet weak var additionalWeatherStackView: UIStackView!
+    @IBOutlet weak var windLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
     
     private var isSearchTriggered: Bool = true
     private var tempUnits: [tempUnits] = [.metric, .imperial]
@@ -29,6 +33,8 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        setUpAppIcon()
         setUpUI()
         setUpPlaceholder()
         
@@ -36,33 +42,44 @@ class MainVC: UIViewController {
         weatherManager.delegate = self
     }
     
+//    private func setUpAppIcon() {
+//        if #available(iOS 13.0, *) {
+//            if self.traitCollection.userInterfaceStyle == .dark {
+//               UIApplication.shared.setAlternateIconName("AppIcon-DarkMode")
+//            } else {
+//                UIApplication.shared.setAlternateIconName(nil)
+//            }
+//        }
+//    }
+    
     private func setUpUI() {
         
         headerView.backgroundColor = .clear
         self.headerView.roundCorners()
         guard let titleLargeFont = WeatherfulFonts.titmeLarge else { return }
-        cityLabel.configure(font: titleLargeFont, color: .weatherfulBlack)
+        cityLabel.configure(font: titleLargeFont)
         searchTextField.backgroundColor = .clear
         searchTextField.textColor = .weatherfulDarkGrey
         searchTextField.tintColor = .weatherfulPlaceholderGrey
         searchTextField.borderStyle = .none
         searchTextField.font = WeatherfulFonts.captionMedium
-        dropdownSymbol.tintColor = .weatherfulBlack
         
         guard let titleXLFont = WeatherfulFonts.titleXL else { return }
         guard let captionLargeFont = WeatherfulFonts.captionLarge else { return }
         guard let captionMediumFont = WeatherfulFonts.captionMedium else { return }
-        weatherConditionLabel.configure(font: captionLargeFont, color: .weatherfulBlack)
-        currentTempLabel.configure(font: titleXLFont, color: .weatherfulBlack)
-        weatherDetailsLabel.configure(font: captionMediumFont, color: .weatherfulBlack)
+        weatherConditionLabel.configure(font: captionLargeFont)
+        currentTempLabel.configure(font: titleXLFont)
+        maxMinTempLabel.configure(font: captionMediumFont)
+        windLabel.configure(font: captionMediumFont)
+        humidityLabel.configure(font: captionMediumFont)
     }
     
     private func setUpPlaceholder() {
         cityLabel.text = "San Francisco"
-        weatherImageView.image = UIImage(systemName: "cloud_snow")
+        weatherImageView.image = UIImage(named: "clear")
         weatherConditionLabel.text = "Heavy Snow"
         currentTempLabel.text = "72°F"
-        weatherDetailsLabel.text = "Wind: 15 km/h, Humidty: 43%"
+        maxMinTempLabel.text = "Wind: 15 km/h, Humidty: 43%"
     }
     
     
@@ -141,42 +158,14 @@ extension MainVC: UITextFieldDelegate {
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
+            self.weatherImageView.image = UIImage(named: weather.conditionName)
+            print(weather.conditionName)
             self.cityLabel.text = weather.cityName
-            self.weatherImageView.image = UIImage(named: "sun_max") // customize it
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.currentTempLabel.text = "\(weather.tempCurrentString)°F" //FOLLOWUP
-    //        weatherDetailsLabel.text =
-            
-            
-    //
-    //        let windSymbol = NSTextAttachment(image: UIImage(systemName: "wind")!.withTintColor(.weatherfulBlack))
-    //        let humiditySymbol = NSTextAttachment(image: UIImage(systemName: "humidity")!.withTintColor(.weatherfulBlack))
-    //
-    //
-    //        let windString = NSAttributedString(string: " \(weather.wind)  ")
-    //        let humidityString = NSAttributedString(string: " \(weather.humidity)")
-    //
-    //        let weatherDetails = NSMutableString()
-    //
-    //        windString.insert(NSAttributedString(attachment: windSymbol), at: 0)
-    //
-    //
-    //        dailyWeatherHeaderLabel.configure(font: CustomFonts.captionMedium!)
-    //        let headerTitle = NSMutableAttributedString(string: " 5-DAY FORECAST")
-    //        headerTitle.insert(NSAttributedString(attachment: imageAttachment), at: 0)
-    //        dailyWeatherHeaderLabel.attributedText = headerTitle
-    //
-    //
-    //
-    //
-    //        let weatherDetailsString = NSAttributedString()
-    //        weatherDetailsString.insert(NSAttributedString(attachment: imageAttachment), at: 0)
-    //
-    //        dailyWeatherHeaderLabel.configure(font: CustomFonts.captionMedium!)
-    //        let headerTitle = NSMutableAttributedString(string: " 5-DAY FORECAST")
-    //        headerTitle.insert(NSAttributedString(attachment: imageAttachment), at: 0)
-    //        dailyWeatherHeaderLabel.attributedText = headerTitle
-            
+            self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
+            self.windLabel.text = weather.windString + " "
+            self.humidityLabel.text = weather.humidityString
         }
     }
     
@@ -184,7 +173,7 @@ extension MainVC: WeatherManagerDelegate {
         print(error.localizedDescription)
         DispatchQueue.main.async {
             self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Please enter a valid city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red])
-//            self.animateWarningShake()
+            //            self.animateWarningShake()
             self.searchTextField.becomeFirstResponder()
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { Timer in
                 self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
@@ -192,15 +181,16 @@ extension MainVC: WeatherManagerDelegate {
         }
     }
     
-//    private func animateWarningShake() {
-//        let animation = CABasicAnimation(keyPath: "position")
-//        animation.duration = 0.07
-//        animation.repeatCount = 4
-//        animation.autoreverses = true
-//        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x - 5, y: self.searchButtonView.center.y))
-//        animation.toValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x + 5, y: self.searchButtonView.center.y))
-//
-//        AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) { }
-//        self.searchButtonView.layer.add(animation, forKey: "position")
-//    }
+    //    private func animateWarningShake() {
+    //        let animation = CABasicAnimation(keyPath: "position")
+    //        animation.duration = 0.07
+    //        animation.repeatCount = 4
+    //        animation.autoreverses = true
+    //        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x - 5, y: self.searchButtonView.center.y))
+    //        animation.toValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x + 5, y: self.searchButtonView.center.y))
+    //
+    //        AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) { }
+    //        self.searchButtonView.layer.add(animation, forKey: "position")
+    //    }
+    
 }
