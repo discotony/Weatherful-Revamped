@@ -19,28 +19,51 @@ struct WeatherModel {
     var conditionName: String {
         switch conditionId {
         // thunderstorm
-        case 200...232:
-            return "cloud_bolt"
+        case 200...202:
+            return "thunder_rain"
+        case 203...210:
+            return "thunder_light"
+        case 211...221:
+            return "thunder_heavy"
+        case 222...232:
+            return "thunder_drizzle"
+            
         // drizzle
         case 300...321:
-            return "cloud_drizzle"
+            return "drizzle"
         // rain
         case 500...531:
-            return "cloud_rain"
+            return "rain"
+            
         // snow
-        case 600...622:
+        case 601:
             return "cloud_snow"
+        case 602:
+            return "snow"
+        case 603...622:
+            return "cloud_snow"
+            
         // Atmosphere
-        case 701...781:
-            return "cloud_fog"
+        case 701...762:
+            return "fog"
+        case 771:
+            return "squall"
+        case 781:
+            return "tornado"
+            
         // clear
         case 800:
-            return "sun_max"
+            return "clear"
+        case 801:
+            return "cloud_light"
+            
         // clouds
-        case 801...804:
-            return "cloud_bolt"
-        default:
+        case 802:
             return "cloud"
+        case 803...804:
+            return "cloud_heavy"
+        default:
+            return ""
         }
     }
     
@@ -48,6 +71,8 @@ struct WeatherModel {
     var tempFeelsLike: Double
     var tempMin: Double
     var tempMax: Double
+    var wind: Double
+    var humidity: Int
     
     var tempCurrentString: String {
         return String(format: "%.1f", tempCurrent)
@@ -64,6 +89,11 @@ struct WeatherModel {
         return String(format: "%.1f", tempMax)
     }
        
-    var wind: Double
-    var humidity: Int
+    var windString: String {
+        return String(format: "%.1f", wind) + " mph"
+    }
+    
+    var humidityString: String {
+        return "\(humidity) %"
+    }
 }
