@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "icon_location.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "icon_location 1.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "icon_search2.png",
+      "filename" : "icon_locaiton2 2.png",
       "idiom" : "universal"
     }
   ],

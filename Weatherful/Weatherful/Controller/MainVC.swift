@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class MainVC: UIViewController {
     
@@ -17,7 +18,7 @@ class MainVC: UIViewController {
     
     @IBOutlet weak var tappableView: UIView!
     
-    @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var weatherAnimationView: LottieAnimationView!
     @IBOutlet weak var weatherConditionLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var maxMinTempLabel: UILabel!
@@ -28,8 +29,10 @@ class MainVC: UIViewController {
     
     private var isSearchTriggered: Bool = true
     private var tempUnits: [tempUnits] = [.metric, .imperial]
-    
+
     var weatherManager = WeatherManager()
+    var isDarkMode: Bool = false
+    var condditionID: Int = 0 //FOLLOWUP
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +43,8 @@ class MainVC: UIViewController {
         
         searchTextField.delegate = self
         weatherManager.delegate = self
+        
+        isDarkMode = traitCollection.userInterfaceStyle == .dark ? true : false
     }
     
 //    private func setUpAppIcon() {
@@ -53,7 +58,6 @@ class MainVC: UIViewController {
 //    }
     
     private func setUpUI() {
-        
         headerView.backgroundColor = .clear
         self.headerView.roundCorners()
         guard let titleLargeFont = WeatherfulFonts.titmeLarge else { return }
@@ -76,11 +80,31 @@ class MainVC: UIViewController {
     
     private func setUpPlaceholder() {
         cityLabel.text = "San Francisco"
-        weatherImageView.image = UIImage(named: "clear")
         weatherConditionLabel.text = "Heavy Snow"
         currentTempLabel.text = "72°F"
         maxMinTempLabel.text = "Wind: 15 km/h, Humidty: 43%"
+//        weatherAnimationView.animation = LottieAnimation.named("clear-day")
+        weatherAnimationView.play()
+        weatherAnimationView.loopMode = .loop
     }
+    
+    // MARK: - Dark Mode Support
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        print (traitCollection.userInterfaceStyle == .dark)
+        if traitCollection.userInterfaceStyle == .dark {
+            self.weatherAnimationView.animation = LottieAnimation.named("clear-night")
+            self.weatherAnimationView.play()
+            self.weatherAnimationView.loopMode = .loop
+        } else {
+            self.weatherAnimationView.animation = LottieAnimation.named("clear-day")
+            self.weatherAnimationView.play()
+            self.weatherAnimationView.loopMode = .loop
+        }
+    }
+//    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+//
+//    }
     
     
     // MARK: - IBActions
@@ -158,10 +182,12 @@ extension MainVC: UITextFieldDelegate {
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
-            self.weatherImageView.image = UIImage(named: weather.conditionName)
             print(weather.conditionName)
             self.cityLabel.text = weather.cityName
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
+            self.weatherAnimationView.animation = LottieAnimation.named(weather.animatedConditionName)
+            self.weatherAnimationView.play()
+            self.weatherAnimationView.loopMode = .loop
             self.currentTempLabel.text = "\(weather.tempCurrentString)°F" //FOLLOWUP
             self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
             self.windLabel.text = weather.windString + " "

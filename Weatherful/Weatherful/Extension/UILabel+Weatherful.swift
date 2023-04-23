@@ -16,7 +16,7 @@ extension UILabel {
     }
 
     func applyLabelShadow(isTextDark: Bool) {
-        self.layer.shadowColor = isTextDark ? UIColor.white.cgColor : UIColor.black.cgColor
+        self.layer.shadowColor = isTextDark ? UIColor.weatherfulWhite.cgColor : UIColor.weatherfulBlack.cgColor
         self.layer.shadowOpacity = 0.4
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowRadius = 6.0

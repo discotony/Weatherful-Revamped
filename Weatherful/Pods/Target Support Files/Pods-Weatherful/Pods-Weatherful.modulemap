@@ -1,0 +1,6 @@
+framework module Pods_Weatherful {
+  umbrella header "Pods-Weatherful-umbrella.h"
+
+  export *
+  module * { export * }
+}
