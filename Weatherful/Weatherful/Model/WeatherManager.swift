@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import CoreLocation
 
 // https://api.openweathermap.org/data/2.5/&units=imperial&appid={API key}&weather?q={city name}
 // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=Berlin
 
-//private var APIKey = "69909afa26903a28166857e723462128"
+private var APIKey = "69909afa26903a28166857e723462128"
 
 enum tempUnits {
     case metric
@@ -23,18 +24,29 @@ protocol WeatherManagerDelegate {
 }
 
 struct WeatherManager {
-//    let urlStringTemplate = "https://api.openweathermap.org/data/2.5/weather?appid=\(APIKey)&units=imperial&q="
-    let weatherUrl = "https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q="
+    let urlStringTemplate = "https://api.openweathermap.org/data/2.5/weather?appid=\(APIKey)&units=imperial"
+//    let weatherUrl = "https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q="
     
     var delegate: WeatherManagerDelegate?
     
     // MARK: - Fetch Weather by City Name
     func fetchWeather(from cityName: String) {
-//        let urlString = urlStringTemplate + cityName
-        let urlString = weatherUrl + cityName
+        let urlString = "\(urlStringTemplate)&q=\(cityName)"
+//        let urlString = weatherUrl + cityName
         print(urlString)
         performURLRequest(with: urlString)
     }
+    
+    // MARK: - by Geo-coordinates
+    // Using Geo-coordinates: https://api.openweathermap.org/data/2.5/weather?appid={API key}&lat={lat}&lon={lon}
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let urlString =  "\(urlStringTemplate)&lat=\(latitude)&lon=\(longitude)"
+        performURLRequest(with: urlString)
+    }
+    
+//    func fetchWeather(by zipCode) {
+//
+//    }
     
     private func performURLRequest(with urlString: String) {
         // 1. Create a URL

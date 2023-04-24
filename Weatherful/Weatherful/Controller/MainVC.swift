@@ -7,6 +7,7 @@
 
 import UIKit
 import Lottie
+import CoreLocation
 
 class MainVC: UIViewController {
     
@@ -16,6 +17,7 @@ class MainVC: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var dropdownSymbol: UIImageView!
     
+    @IBOutlet weak var resetLocationButton: UIButton!
     @IBOutlet weak var tappableView: UIView!
     
     @IBOutlet weak var weatherAnimationView: LottieAnimationView!
@@ -31,20 +33,24 @@ class MainVC: UIViewController {
     private var tempUnits: [tempUnits] = [.metric, .imperial]
 
     var weatherManager = WeatherManager()
-    var isDarkMode: Bool = false
-    var condditionID: Int = 0 //FOLLOWUP
+    var locationManager = CLLocationManager()
+    
+    var homeCityName = ""
+    var didRequestHomeLocation = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        setUpAppIcon()
         setUpUI()
-        setUpPlaceholder()
+//        setUpPlaceholder()
+        resetPlaceholder()
         
         searchTextField.delegate = self
         weatherManager.delegate = self
-        
-        isDarkMode = traitCollection.userInterfaceStyle == .dark ? true : false
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
 //    private func setUpAppIcon() {
@@ -68,6 +74,12 @@ class MainVC: UIViewController {
         searchTextField.borderStyle = .none
         searchTextField.font = WeatherfulFonts.captionMedium
         
+        resetLocationButton.backgroundColor = .weatherfulDarkGrey.withAlphaComponent(0.5)
+        resetLocationButton.titleLabel?.font = WeatherfulFonts.captionMedium
+        resetLocationButton.roundCorners(cornerRadius: resetLocationButton.frame.height / 2)
+        resetLocationButton.applyDarkShadow()
+        resetLocationButton.isHidden = true
+        
         guard let titleXLFont = WeatherfulFonts.titleXL else { return }
         guard let captionLargeFont = WeatherfulFonts.captionLarge else { return }
         guard let captionMediumFont = WeatherfulFonts.captionMedium else { return }
@@ -78,14 +90,20 @@ class MainVC: UIViewController {
         humidityLabel.configure(font: captionMediumFont)
     }
     
+    private func resetPlaceholder() {
+        cityLabel.text = ""
+        weatherConditionLabel.text = ""
+        currentTempLabel.text = ""
+        maxMinTempLabel.text = ""
+        windLabel.text = ""
+        humidityLabel.text = ""
+    }
+    
     private func setUpPlaceholder() {
         cityLabel.text = "San Francisco"
         weatherConditionLabel.text = "Heavy Snow"
         currentTempLabel.text = "72°F"
         maxMinTempLabel.text = "Wind: 15 km/h, Humidty: 43%"
-//        weatherAnimationView.animation = LottieAnimation.named("clear-day")
-        weatherAnimationView.play()
-        weatherAnimationView.loopMode = .loop
     }
     
     // MARK: - Dark Mode Support
@@ -116,7 +134,6 @@ class MainVC: UIViewController {
             self.hideSearchBar()
         }
         isSearchTriggered = !isSearchTriggered
-    
     }
     
     private func showSearchBar() {
@@ -142,6 +159,11 @@ class MainVC: UIViewController {
             self.tappableView.isHidden = false
         }
     }
+    
+    @IBAction func resetLocationButtonPressed(_ sender: Any) {
+        locationManager.requestLocation()
+        resetLocationButton.isHidden = true
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -165,6 +187,7 @@ extension MainVC: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        didRequestHomeLocation = false
         if let cityName = searchTextField.text {
             let formattedCityName = String((cityName as NSString).replacingOccurrences(of: " ", with: "+"))
             print("textFieldDidEndEditing " + formattedCityName)
@@ -174,6 +197,7 @@ extension MainVC: UITextFieldDelegate {
         // Reset search field
         searchTextField.text = ""
         hideSearchBar()
+//        didLocationReset = false
     }
 }
 
@@ -192,6 +216,8 @@ extension MainVC: WeatherManagerDelegate {
             self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
             self.windLabel.text = weather.windString + " "
             self.humidityLabel.text = weather.humidityString
+            
+            self.resetLocationButton.isHidden = self.didRequestHomeLocation ? true : false
         }
     }
     
@@ -219,4 +245,20 @@ extension MainVC: WeatherManagerDelegate {
     //        self.searchButtonView.layer.add(animation, forKey: "position")
     //    }
     
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension MainVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        didRequestHomeLocation = true
+        if let latestLocation = locations.last {
+            locationManager.stopUpdatingLocation() //FOLLOWUP
+            weatherManager.fetchWeather(latitude: latestLocation.coordinate.latitude, longitude: latestLocation.coordinate.longitude)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
 }

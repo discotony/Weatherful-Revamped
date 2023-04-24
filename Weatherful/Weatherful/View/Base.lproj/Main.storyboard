@@ -170,6 +170,17 @@
                                     <constraint firstItem="M5X-sj-a3R" firstAttribute="centerX" secondItem="7tT-bk-Hxh" secondAttribute="centerX" id="yOI-ug-nwu"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ei4-TQ-Rgc">
+                                <rect key="frame" x="119" y="92" width="137" height="34.5"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Reset Location">
+                                    <color key="baseForegroundColor" name="weatherfullTextColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="resetLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DoP-xZ-CRm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -178,6 +189,8 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Dgx-Fd-Rw8" secondAttribute="trailing" constant="16" id="8WL-Fr-8pN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7tT-bk-Hxh" secondAttribute="trailing" constant="16" id="Clk-YG-WF6"/>
                             <constraint firstItem="Dgx-Fd-Rw8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="HcK-8B-q6K"/>
+                            <constraint firstItem="Ei4-TQ-Rgc" firstAttribute="top" secondItem="Dgx-Fd-Rw8" secondAttribute="bottom" constant="8" id="K9r-ZO-9zE"/>
+                            <constraint firstItem="Ei4-TQ-Rgc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NOy-vv-vHX"/>
                             <constraint firstItem="7tT-bk-Hxh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Vib-fa-igo"/>
                             <constraint firstItem="UnJ-Bd-idt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Was-91-HuT"/>
                             <constraint firstAttribute="bottom" secondItem="UnJ-Bd-idt" secondAttribute="bottom" id="e49-4E-Sal"/>
@@ -195,6 +208,7 @@
                         <outlet property="humidityLabel" destination="lqU-lI-5P1" id="AjK-zj-Nae"/>
                         <outlet property="iconImageView" destination="vxz-Pv-lCs" id="igd-tk-Qaf"/>
                         <outlet property="maxMinTempLabel" destination="pUc-IS-W0N" id="acb-Rw-gAO"/>
+                        <outlet property="resetLocationButton" destination="Ei4-TQ-Rgc" id="bGw-2I-02v"/>
                         <outlet property="searchTextField" destination="MSZ-ON-1B1" id="0qE-ev-rg0"/>
                         <outlet property="tappableView" destination="g9Z-jy-XO8" id="RYa-1P-XW9"/>
                         <outlet property="weatherAnimationView" destination="n1D-al-pOn" id="Bcv-a9-HNs"/>
@@ -216,6 +230,9 @@
         <namedColor name="weatherfullTextColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
