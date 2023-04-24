@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Morning.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "Morning 1.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Night.pdf",
+      "filename" : "Day.png",
       "idiom" : "universal"
     }
   ],
