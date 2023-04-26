@@ -203,6 +203,7 @@
                     </view>
                     <connections>
                         <outlet property="additionalWeatherStackView" destination="M5X-sj-a3R" id="V1f-uw-qfV"/>
+                        <outlet property="backgroundImageView" destination="UnJ-Bd-idt" id="G8w-FJ-l3Z"/>
                         <outlet property="cityLabel" destination="Bba-h8-l4j" id="wWX-je-Ny9"/>
                         <outlet property="currentTempLabel" destination="GEb-px-pZr" id="WpT-MP-peS"/>
                         <outlet property="dropdownSymbol" destination="qpi-Uv-l72" id="mhk-xu-bRD"/>
