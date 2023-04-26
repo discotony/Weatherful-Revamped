@@ -33,7 +33,7 @@ struct WeatherManager {
     func fetchWeather(from cityName: String) {
         let urlString = "\(urlStringTemplate)&q=\(cityName)"
 //        let urlString = weatherUrl + cityName
-        print(urlString)
+//        print(urlString)
         performURLRequest(with: urlString)
     }
     
@@ -84,6 +84,8 @@ struct WeatherManager {
             do {
                 let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
                 let cityName = decodedData.name
+                let latitude = decodedData.coord.lat
+                let longitude = decodedData.coord.lon
                 let conditionId = decodedData.weather[0].id
                 let condition = decodedData.weather[0].main
                 let conditionDescription = decodedData.weather[0].description.capitalizeFirstLetters
@@ -94,15 +96,16 @@ struct WeatherManager {
                 let wind = decodedData.wind.speed
                 let humidity = decodedData.main.humidity
                 
-                print(cityName)
-                print(conditionId)
-                print(condition)
-                print(conditionDescription)
-                print(tempCurrent)
-                print(wind)
-                print(humidity)
+//                print(cityName)
+//                print(conditionId)
+//                print(condition)
+//                print(conditionDescription)
+//                print(tempCurrent)
+//                print(wind)
+//                print(humidity)
                 
                 return WeatherModel(cityName: cityName,
+                                    coordinates: Coord(lat: latitude, lon: longitude),
                                     conditionId: conditionId,
                                     condition: condition,
                                     conditionDescription: conditionDescription,

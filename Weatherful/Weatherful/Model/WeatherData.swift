@@ -11,9 +11,15 @@ import Foundation
 
 struct WeatherData: Decodable {
     var name: String
+    var coord: Coord
     var weather: [Weather]
     var main: Main
     var wind: Wind
+}
+
+struct Coord: Decodable {
+    var lat: Double
+    var lon: Double
 }
 
 struct Weather: Decodable {

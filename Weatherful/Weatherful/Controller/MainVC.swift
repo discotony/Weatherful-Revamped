@@ -8,6 +8,8 @@
 import UIKit
 import Lottie
 import CoreLocation
+import MapKit
+import Contacts
 
 class MainVC: UIViewController {
     
@@ -34,8 +36,9 @@ class MainVC: UIViewController {
     
     var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
+    var location: CLLocation?
     
-    var homeCityName = ""
+    var homeCity = ""
     var didRequestHomeLocation = true
     
     override func viewDidLoad() {
@@ -169,7 +172,7 @@ class MainVC: UIViewController {
 extension MainVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn: " + searchTextField.text!)
+//        print("textFieldShouldReturn: " + searchTextField.text!)
         self.view.endEditing(true) //FOLLOWUP
         return true
         
@@ -193,7 +196,7 @@ extension MainVC: UITextFieldDelegate {
         didRequestHomeLocation = false
         if let cityName = searchTextField.text {
             let formattedCityName = String((cityName as NSString).replacingOccurrences(of: " ", with: "+"))
-            print("textFieldDidEndEditing " + formattedCityName)
+//            print("textFieldDidEndEditing " + formattedCityName)
             weatherManager.fetchWeather(from: formattedCityName)
         }
         
@@ -208,8 +211,22 @@ extension MainVC: UITextFieldDelegate {
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
-            print(weather.conditionName)
+            
             self.cityLabel.text = weather.cityName
+            
+            let location = CLLocation(latitude: weather.coordinates.lat, longitude: weather.coordinates.lon)
+            location.placemark { placemark, error in
+                guard let placemark = placemark else {
+                    print("Error:", error ?? "nil")
+                    return
+                }
+                if var country = placemark.country {
+                    if country == "United States" {
+                        country = "US"
+                    }
+                    self.cityLabel.text?.append(", \(country)")
+                }
+            }
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.weatherAnimationView.animation = LottieAnimation.named(weather.animatedConditionName)
             self.weatherAnimationView.play()
@@ -219,7 +236,7 @@ extension MainVC: WeatherManagerDelegate {
             self.windLabel.text = weather.windString + " "
             self.humidityLabel.text = weather.humidityString
             
-            self.resetLocationButton.isHidden = self.didRequestHomeLocation ? true : false
+            self.resetLocationButton.isHidden = weather.cityName == self.homeCity ? true : false
             self.view.removeBluerLoader()
         }
     }
@@ -246,12 +263,71 @@ extension MainVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         didRequestHomeLocation = true
         if let latestLocation = locations.last {
+            let latitude = latestLocation.coordinate.latitude
+            let longitude = latestLocation.coordinate.longitude
             locationManager.stopUpdatingLocation() //FOLLOWUP
-            weatherManager.fetchWeather(latitude: latestLocation.coordinate.latitude, longitude: latestLocation.coordinate.longitude)
+            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
+            
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            location.placemark { placemark, error in
+                guard let placemark = placemark else {
+                    print("Error:", error ?? "nil")
+                    return
+                }
+                if let cityName = placemark.city {
+                    self.homeCity = cityName
+                }
+            }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
+    }
+    
+    private func convertGeoCoord(lat: Double, lon: Double) -> (city: String, country: String) {
+        var city = "hi"
+        var country = "di"
+        let location = CLLocation(latitude: lat, longitude: lon)
+        location.placemark { placemark, error in
+            guard let placemark = placemark else {
+                print("Error:", error ?? "nil")
+                return
+            }
+            if let cityName = placemark.city, let countryName = placemark.county {
+                city = cityName
+                country = countryName
+            }
+        }
+        return (city, country)
+    }
+}
+
+extension CLPlacemark {
+    /// street name, eg. Infinite Loop
+    var streetName: String? { thoroughfare }
+    /// // eg. 1
+    var streetNumber: String? { subThoroughfare }
+    /// city, eg. Cupertino
+    var city: String? { locality }
+    /// neighborhood, common name, eg. Mission District
+    var neighborhood: String? { subLocality }
+    /// state, eg. CA
+    var state: String? { administrativeArea }
+    /// county, eg. Santa Clara
+    var county: String? { subAdministrativeArea }
+    /// zip code, eg. 95014
+    var zipCode: String? { postalCode }
+    /// postal address formatted
+    @available(iOS 11.0, *)
+    var postalAddressFormatted: String? {
+        guard let postalAddress = postalAddress else { return nil }
+        return CNPostalAddressFormatter().string(from: postalAddress)
+    }
+}
+
+extension CLLocation {
+    func placemark(completion: @escaping (_ placemark: CLPlacemark?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first, $1) }
     }
 }
