@@ -29,4 +29,8 @@ extension UIColor {
     static let weatherfulPlaceholderGrey: UIColor = {
         return UIColor(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0)
     }()
+    
+    static let weatherWarningRed: UIColor = {
+        return UIColor(red: 220.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+    }()
 }
