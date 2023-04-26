@@ -59,7 +59,6 @@
 		04D2631829F5D64300233FAF /* snow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2631729F5D64300233FAF /* snow.svg */; };
 		04D2631A29F5D65000233FAF /* snow.json in Resources */ = {isa = PBXBuildFile; fileRef = 04D2631929F5D65000233FAF /* snow.json */; };
 		04D2631C29F5D79300233FAF /* sleet.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2631B29F5D79300233FAF /* sleet.svg */; };
-		04D2631F29F5D7D900233FAF /* sleet.json in Resources */ = {isa = PBXBuildFile; fileRef = 04D2631E29F5D7D900233FAF /* sleet.json */; };
 		04D2632129F5D81400233FAF /* rain.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2632029F5D81400233FAF /* rain.svg */; };
 		04D2632329F5D81C00233FAF /* rain.json in Resources */ = {isa = PBXBuildFile; fileRef = 04D2632229F5D81C00233FAF /* rain.json */; };
 		04D2632529F5D84400233FAF /* drizzle.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2632429F5D84400233FAF /* drizzle.svg */; };
@@ -72,6 +71,7 @@
 		04D2633329F5DBCF00233FAF /* not-available-night.json in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633229F5DBCF00233FAF /* not-available-night.json */; };
 		04D2633529F5DBE300233FAF /* not-available-day.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633429F5DBE300233FAF /* not-available-day.svg */; };
 		04D2633729F5DBEC00233FAF /* not-available-night.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633629F5DBEC00233FAF /* not-available-night.svg */; };
+		04D2633B29F8CA4F00233FAF /* sleet.json in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633A29F8CA4F00233FAF /* sleet.json */; };
 		C5649DAD3502BD3DF01C988C /* Pods_Weatherful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED34BEEAC5C806A91A4497D /* Pods_Weatherful.framework */; };
 /* End PBXBuildFile section */
 
@@ -149,7 +149,6 @@
 		04D2631729F5D64300233FAF /* snow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = snow.svg; sourceTree = "<group>"; };
 		04D2631929F5D65000233FAF /* snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = snow.json; sourceTree = "<group>"; };
 		04D2631B29F5D79300233FAF /* sleet.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sleet.svg; sourceTree = "<group>"; };
-		04D2631E29F5D7D900233FAF /* sleet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sleet.json; path = "../../../../../Downloads/weather-icons-dev/production/fill/lottie/sleet.json"; sourceTree = "<group>"; };
 		04D2632029F5D81400233FAF /* rain.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rain.svg; sourceTree = "<group>"; };
 		04D2632229F5D81C00233FAF /* rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rain.json; sourceTree = "<group>"; };
 		04D2632429F5D84400233FAF /* drizzle.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = drizzle.svg; sourceTree = "<group>"; };
@@ -162,6 +161,7 @@
 		04D2633229F5DBCF00233FAF /* not-available-night.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-available-night.json"; sourceTree = "<group>"; };
 		04D2633429F5DBE300233FAF /* not-available-day.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "not-available-day.svg"; sourceTree = "<group>"; };
 		04D2633629F5DBEC00233FAF /* not-available-night.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "not-available-night.svg"; sourceTree = "<group>"; };
+		04D2633A29F8CA4F00233FAF /* sleet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sleet.json; path = "../../../../../Downloads/New Folder With Items/weather-icons-dev/design/fill/lottie/sleet.json"; sourceTree = "<group>"; };
 		4D4D35A9F135001836506D95 /* Pods-Weatherful.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weatherful.debug.xcconfig"; path = "Target Support Files/Pods-Weatherful/Pods-Weatherful.debug.xcconfig"; sourceTree = "<group>"; };
 		4ED34BEEAC5C806A91A4497D /* Pods_Weatherful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weatherful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7956FDAD574CB8A11DE037EE /* Pods-Weatherful.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weatherful.release.xcconfig"; path = "Target Support Files/Pods-Weatherful/Pods-Weatherful.release.xcconfig"; sourceTree = "<group>"; };
@@ -339,7 +339,7 @@
 				04D2631329F5D3E000233FAF /* mist.svg */,
 				04D2631929F5D65000233FAF /* snow.json */,
 				04D2631729F5D64300233FAF /* snow.svg */,
-				04D2631E29F5D7D900233FAF /* sleet.json */,
+				04D2633A29F8CA4F00233FAF /* sleet.json */,
 				04D2631B29F5D79300233FAF /* sleet.svg */,
 				04D2632229F5D81C00233FAF /* rain.json */,
 				04D2632029F5D81400233FAF /* rain.svg */,
@@ -520,6 +520,7 @@
 				04D262DF29F5CF4A00233FAF /* overcast.json in Resources */,
 				04D262E529F5CF6100233FAF /* cloudy.svg in Resources */,
 				04D262FE29F5D17A00233FAF /* wind.json in Resources */,
+				04D2633B29F8CA4F00233FAF /* sleet.json in Resources */,
 				04D2632929F5D8D200233FAF /* thunderstorms-rain.svg in Resources */,
 				04D2630E29F5D38F00233FAF /* haze.json in Resources */,
 				04D2631629F5D3ED00233FAF /* mist.json in Resources */,
@@ -542,7 +543,6 @@
 				04D262D529F5CC0B00233FAF /* clear-day.json in Resources */,
 				04D2631829F5D64300233FAF /* snow.svg in Resources */,
 				04D2632B29F5D8EA00233FAF /* thunderstorms-rain.json in Resources */,
-				04D2631F29F5D7D900233FAF /* sleet.json in Resources */,
 				04D2631A29F5D65000233FAF /* snow.json in Resources */,
 				04C112D329F4AC3400119130 /* SF-Pro-Text-Regular.otf in Resources */,
 				04D262F829F5D0A100233FAF /* tornado.svg in Resources */,
@@ -738,7 +738,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -792,7 +792,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -819,6 +819,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -849,6 +850,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
