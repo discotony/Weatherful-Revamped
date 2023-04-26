@@ -31,7 +31,7 @@ class MainVC: UIViewController {
     
     private var isSearchTriggered: Bool = true
     private var tempUnits: [tempUnits] = [.metric, .imperial]
-
+    
     var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
     
@@ -51,15 +51,15 @@ class MainVC: UIViewController {
         view.showBlurLoader()
     }
     
-//    private func setUpAppIcon() {
-//        if #available(iOS 13.0, *) {
-//            if self.traitCollection.userInterfaceStyle == .dark {
-//               UIApplication.shared.setAlternateIconName("AppIcon-DarkMode")
-//            } else {
-//                UIApplication.shared.setAlternateIconName(nil)
-//            }
-//        }
-//    }
+    //    private func setUpAppIcon() {
+    //        if #available(iOS 13.0, *) {
+    //            if self.traitCollection.userInterfaceStyle == .dark {
+    //               UIApplication.shared.setAlternateIconName("AppIcon-DarkMode")
+    //            } else {
+    //                UIApplication.shared.setAlternateIconName(nil)
+    //            }
+    //        }
+    //    }
     
     private func setUpUI() {
         headerView.backgroundColor = .clear
@@ -118,15 +118,15 @@ class MainVC: UIViewController {
             self.weatherAnimationView.loopMode = .loop
         }
     }
-//    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-//
-//    }
+    //    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    //
+    //    }
     
     
     // MARK: - IBActions
     
     @IBAction func searchButtonPressed(_ sender: UIButton) {
-        if isSearchTriggered { 
+        if isSearchTriggered {
             self.showSearchBar()
         } else {
             self.hideSearchBar()
@@ -180,7 +180,11 @@ extension MainVC: UITextFieldDelegate {
         if textField.text != "" {
             return true
         } else {
-            textField.placeholder = "Make sure to enter a city name!"
+            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Make sure to enter a city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherWarningRed, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { Timer in
+                self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
+            }
+            textField.shake()
             return false
         }
     }
@@ -194,7 +198,7 @@ extension MainVC: UITextFieldDelegate {
         }
         
         searchTextField.text = ""
-        hideSearchBar()
+        self.hideSearchBar()
         view.showBlurLoader()
     }
 }
@@ -223,28 +227,17 @@ extension MainVC: WeatherManagerDelegate {
     func didFailWithError(error: Error) {
         print(error.localizedDescription)
         DispatchQueue.main.async {
+            self.showSearchBar()
             self.view.removeBluerLoader()
             self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Please enter a valid city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red])
-            //            self.animateWarningShake()
             self.searchTextField.becomeFirstResponder()
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { Timer in
+            self.searchTextField.shake()
+            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Error: Invalid City Name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherWarningRed, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { Timer in
                 self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
             }
         }
     }
-    
-    //    private func animateWarningShake() {
-    //        let animation = CABasicAnimation(keyPath: "position")
-    //        animation.duration = 0.07
-    //        animation.repeatCount = 4
-    //        animation.autoreverses = true
-    //        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x - 5, y: self.searchButtonView.center.y))
-    //        animation.toValue = NSValue(cgPoint: CGPoint(x: self.searchButtonView.center.x + 5, y: self.searchButtonView.center.y))
-    //
-    //        AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) { }
-    //        self.searchButtonView.layer.add(animation, forKey: "position")
-    //    }
-    
 }
 
 // MARK: - CLLocationManagerDelegate
