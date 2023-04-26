@@ -223,6 +223,9 @@
             <point key="canvasLocation" x="9.9236641221374047" y="3.5211267605633805"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="n1D-al-pOn"/>
+    </designables>
     <resources>
         <image name="background-day" width="5000" height="5000"/>
         <image name="humidity" catalog="system" width="128" height="96"/>

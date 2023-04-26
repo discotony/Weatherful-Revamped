@@ -11,7 +11,7 @@ import Foundation
 
 struct WeatherModel {
     var cityName: String
-    
+    var coordinates: Coord
     var conditionId: Int
     var condition: String
     var conditionDescription: String
