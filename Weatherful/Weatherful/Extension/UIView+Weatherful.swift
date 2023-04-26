@@ -82,7 +82,6 @@ class ExpandableView: UIView {
         super.init(frame: frame)
         backgroundColor = .green
         translatesAutoresizingMaskIntoConstraints = false
-
     }
 
     required init?(coder aDecoder: NSCoder) {

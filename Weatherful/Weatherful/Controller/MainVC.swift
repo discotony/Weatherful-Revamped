@@ -40,10 +40,7 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        setUpAppIcon()
         setUpUI()
-//        setUpPlaceholder()
         resetPlaceholder()
         
         searchTextField.delegate = self
@@ -51,6 +48,7 @@ class MainVC: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        view.showBlurLoader()
     }
     
 //    private func setUpAppIcon() {
@@ -69,7 +67,7 @@ class MainVC: UIViewController {
         guard let titleLargeFont = WeatherfulFonts.titmeLarge else { return }
         cityLabel.configure(font: titleLargeFont)
         searchTextField.backgroundColor = .clear
-        searchTextField.textColor = .weatherfulDarkGrey
+        searchTextField.textColor = .weatherfulWhite
         searchTextField.tintColor = .weatherfulPlaceholderGrey
         searchTextField.borderStyle = .none
         searchTextField.font = WeatherfulFonts.captionMedium
@@ -138,7 +136,7 @@ class MainVC: UIViewController {
     
     private func showSearchBar() {
         UIView.animate(withDuration: 0.5) {
-            self.headerView.backgroundColor = .weatherfulLightGrey.withAlphaComponent(0.5)
+            self.headerView.backgroundColor = .weatherfulWhite.withAlphaComponent(0.2)
             self.cityLabel.isHidden = true
             self.dropdownSymbol.isHidden = true
             self.iconImageView.image = UIImage(named: "icon_search.png")
@@ -163,6 +161,7 @@ class MainVC: UIViewController {
     @IBAction func resetLocationButtonPressed(_ sender: Any) {
         locationManager.requestLocation()
         resetLocationButton.isHidden = true
+        view.showBlurLoader()
     }
 }
 
@@ -194,10 +193,9 @@ extension MainVC: UITextFieldDelegate {
             weatherManager.fetchWeather(from: formattedCityName)
         }
         
-        // Reset search field
         searchTextField.text = ""
         hideSearchBar()
-//        didLocationReset = false
+        view.showBlurLoader()
     }
 }
 
@@ -218,12 +216,14 @@ extension MainVC: WeatherManagerDelegate {
             self.humidityLabel.text = weather.humidityString
             
             self.resetLocationButton.isHidden = self.didRequestHomeLocation ? true : false
+            self.view.removeBluerLoader()
         }
     }
     
     func didFailWithError(error: Error) {
         print(error.localizedDescription)
         DispatchQueue.main.async {
+            self.view.removeBluerLoader()
             self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Please enter a valid city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red])
             //            self.animateWarningShake()
             self.searchTextField.becomeFirstResponder()
