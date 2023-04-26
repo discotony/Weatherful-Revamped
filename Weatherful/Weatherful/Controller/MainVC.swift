@@ -13,6 +13,8 @@ import Contacts
 
 class MainVC: UIViewController {
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
@@ -41,6 +43,8 @@ class MainVC: UIViewController {
     var homeCity = ""
     var didRequestHomeLocation = true
     
+    var timer = Timer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
@@ -65,6 +69,7 @@ class MainVC: UIViewController {
     //    }
     
     private func setUpUI() {
+        changeBackground()
         headerView.backgroundColor = .clear
         self.headerView.roundCorners()
         guard let titleLargeFont = WeatherfulFonts.titmeLarge else { return }
@@ -89,6 +94,22 @@ class MainVC: UIViewController {
         maxMinTempLabel.configure(font: captionMediumFont)
         windLabel.configure(font: captionMediumFont)
         humidityLabel.configure(font: captionMediumFont)
+    }
+    
+    private func changeBackground(){
+        switch Date().hour {
+        case 5...7:
+            backgroundImageView.image = UIImage(named: "background-sun")
+        case 18...20:
+            backgroundImageView.image = UIImage(named: "background-sun")
+        case 21...24:
+            backgroundImageView.image = UIImage(named: "background-night")
+        case 1...3:
+            backgroundImageView.image = UIImage(named: "background-night")
+        default:
+            backgroundImageView.image = UIImage(named: "background-day")
+        }
+//        scheduleTimer()
     }
     
     private func resetPlaceholder() {
@@ -172,7 +193,7 @@ class MainVC: UIViewController {
 extension MainVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        print("textFieldShouldReturn: " + searchTextField.text!)
+        //        print("textFieldShouldReturn: " + searchTextField.text!)
         self.view.endEditing(true) //FOLLOWUP
         return true
         
@@ -196,7 +217,7 @@ extension MainVC: UITextFieldDelegate {
         didRequestHomeLocation = false
         if let cityName = searchTextField.text {
             let formattedCityName = String((cityName as NSString).replacingOccurrences(of: " ", with: "+"))
-//            print("textFieldDidEndEditing " + formattedCityName)
+            //            print("textFieldDidEndEditing " + formattedCityName)
             weatherManager.fetchWeather(from: formattedCityName)
         }
         
@@ -330,4 +351,8 @@ extension CLLocation {
     func placemark(completion: @escaping (_ placemark: CLPlacemark?, _ error: Error?) -> ()) {
         CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first, $1) }
     }
+}
+
+extension Date {
+    var hour: Int { return Calendar.current.component(.hour, from: self) }
 }
