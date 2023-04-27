@@ -42,7 +42,16 @@ struct WeatherfulFonts {
     static let captionMedium = UIFont(name: "SFProText-Regular", size: 16.0)
     
     // MARK: - <#Section Heading#>
-    static let captionSmall = UIFont(name: "SFProText-Medium", size: 14.0)
+    static let captionSmallSemibold = UIFont(name: "SFProText-Semibold", size: 14.0)
+    
+    static let titleSmallBold = UIFont(name: "SFProText-Bold", size: 14.0)
+    static let titleSmall = UIFont(name: "SFProText-Regular", size: 14.0)
+    static let captionSmall = UIFont(name: "SFProText-Medium", size: 12.0)
+    
+    
+    static let forecastSmall = UIFont(name: "SFProText-Regular", size: 14.0)
+    
+    static let forecastMedium = UIFont(name: "SFProText-Regular", size: 16.0)
 }
 
 func listFontNames() {

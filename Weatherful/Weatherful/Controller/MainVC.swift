@@ -33,6 +33,10 @@ class MainVC: UIViewController {
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
+    @IBOutlet weak var forecastBackgroundView: UIView!
+    @IBOutlet weak var dateCollectionView: UICollectionView!
+    @IBOutlet weak var forecastCollectionView: UICollectionView!
+    
     private var isSearchTriggered: Bool = true
     private var tempUnits: [tempUnits] = [.metric, .imperial]
     
@@ -44,7 +48,14 @@ class MainVC: UIViewController {
     var didRequestHomeLocation = true
     
     var timer = Timer()
-    
+
+//    enum SectionType {
+//        case dateCell
+//        case forecastCell
+//    }
+//
+//    var sections: [SectionType] = [.dateCell, .forecastCell]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
@@ -55,7 +66,19 @@ class MainVC: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        dateCollectionView.dataSource = self
+        dateCollectionView.delegate = self
+        forecastCollectionView.dataSource = self
+        forecastCollectionView.delegate = self
+        setUpHeaderCollectionView()
+        
         view.showBlurLoader()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
     }
     
     //    private func setUpAppIcon() {
@@ -109,7 +132,7 @@ class MainVC: UIViewController {
         default:
             backgroundImageView.image = UIImage(named: "background-day")
         }
-//        scheduleTimer()
+        //        scheduleTimer()
     }
     
     private func resetPlaceholder() {
@@ -128,6 +151,24 @@ class MainVC: UIViewController {
         maxMinTempLabel.text = "Wind: 15 km/h, Humidty: 43%"
     }
     
+    private func setUpHeaderCollectionView() {
+        dateCollectionView.register(UINib(nibName: K.dateCellNibName, bundle: nil), forCellWithReuseIdentifier: K.dateCellIdentifier) //FOLLOWUP
+        dateCollectionView.showsHorizontalScrollIndicator = false
+        dateCollectionView.collectionViewLayout = setFlowLayout()
+//
+        forecastCollectionView.register(UINib(nibName: K.forecastCellNibName, bundle: nil), forCellWithReuseIdentifier: K.forecastCellIdentifier)
+        forecastCollectionView.showsHorizontalScrollIndicator = false
+        forecastCollectionView.collectionViewLayout = setFlowLayout()
+    }
+    
+    private func setFlowLayout() -> UICollectionViewFlowLayout {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 16
+        return flowLayout
+    }
+    
+    
     // MARK: - Dark Mode Support
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -142,10 +183,6 @@ class MainVC: UIViewController {
             self.weatherAnimationView.loopMode = .loop
         }
     }
-    //    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-    //
-    //    }
-    
     
     // MARK: - IBActions
     
@@ -323,6 +360,60 @@ extension MainVC: CLLocationManagerDelegate {
         return (city, country)
     }
 }
+
+// MARK: - UICollectionViewDataSource
+
+extension MainVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == dateCollectionView {
+            return 5
+        } else {
+            return 8
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == dateCollectionView {
+            let cell = dateCollectionView.dequeueReusableCell(withReuseIdentifier: K.dateCellIdentifier, for: indexPath) as! DateCell
+            if indexPath.row == 0 {
+                cell.dateLabel.font = WeatherfulFonts.titleSmallBold
+            } else {
+                cell.dateLabel.font = WeatherfulFonts.titleSmall
+            }
+            cell.dateLabel.text = "Today, April 25"
+            return cell
+        } else {
+            let cell = forecastCollectionView.dequeueReusableCell(withReuseIdentifier: K.forecastCellIdentifier, for: indexPath) as! ForecastCell
+            cell.dateLabel.text = "12 PM"
+            cell.sizeToFit()
+            cell.conditionImageView.image = UIImage(systemName: "sun.max")?.withTintColor(.weatherfulWhite, renderingMode: .alwaysOriginal)
+            cell.tempLabel.text = "36°F"
+            return cell
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension MainVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == dateCollectionView {
+            return CGSize(width: 105, height: 40)
+        } else {
+            return CGSize(width: 100, height: 160)
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension MainVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    }
+}
+
+// MARK: - Others
 
 extension CLPlacemark {
     /// street name, eg. Infinite Loop
