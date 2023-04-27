@@ -6,7 +6,10 @@
 	<string>We need your current location to get the most accurate weather data.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Text-Black.otf</string>
+		<string>SF-Pro-Text-Heavy.otf</string>
 		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
 		<string>SF-Pro-Text-Medium.otf</string>
 		<string>SF-Pro-Text-Regular.otf</string>
 	</array>

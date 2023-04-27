@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD529F8E7EE0057098E /* DateCell.swift */; };
+		0440BAD829F8E7EE0057098E /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAD629F8E7EE0057098E /* DateCell.xib */; };
+		0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD929F8E8050057098E /* ForecastCell.swift */; };
+		0440BADC29F8E8050057098E /* ForecastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0440BADA29F8E8050057098E /* ForecastCell.xib */; };
+		0440BAE029F8E9710057098E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BADF29F8E9710057098E /* Constants.swift */; };
+		0440BAE329F9F3260057098E /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAE229F9F3260057098E /* SF-Pro-Text-Semibold.otf */; };
+		0440BAE529FA0BDC0057098E /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAE429FA0BDC0057098E /* SF-Pro-Text-Heavy.otf */; };
+		0440BAE729FA0C3B0057098E /* SF-Pro-Text-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAE629FA0C3B0057098E /* SF-Pro-Text-Black.otf */; };
 		04C1128829F47C9900119130 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1128729F47C9900119130 /* AppDelegate.swift */; };
 		04C1128A29F47C9900119130 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1128929F47C9900119130 /* SceneDelegate.swift */; };
 		04C1128C29F47C9900119130 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1128B29F47C9900119130 /* MainVC.swift */; };
@@ -93,6 +101,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0440BAD529F8E7EE0057098E /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		0440BAD629F8E7EE0057098E /* DateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
+		0440BAD929F8E8050057098E /* ForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCell.swift; sourceTree = "<group>"; };
+		0440BADA29F8E8050057098E /* ForecastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastCell.xib; sourceTree = "<group>"; };
+		0440BADF29F8E9710057098E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0440BAE229F9F3260057098E /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		0440BAE429FA0BDC0057098E /* SF-Pro-Text-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Heavy.otf"; path = "../../../../Documents/_TO BE SORTED/_Programming/Fonts/SF Pro/SF-Pro-Text-Heavy.otf"; sourceTree = "<group>"; };
+		0440BAE629FA0C3B0057098E /* SF-Pro-Text-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Black.otf"; path = "../../../../Documents/_TO BE SORTED/_Programming/Projects/Proudful/resources_proudful/San Francisco Pro/SF-Pro-Text-Black.otf"; sourceTree = "<group>"; };
 		04C1128429F47C9900119130 /* Weatherful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weatherful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C1128729F47C9900119130 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04C1128929F47C9900119130 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -227,6 +243,7 @@
 				04C1130329F4AD7200119130 /* Extension */,
 				04C1130429F4AD7800119130 /* Assets */,
 				04C112B729F4AB5A00119130 /* Fonts */,
+				0440BADF29F8E9710057098E /* Constants.swift */,
 			);
 			path = Weatherful;
 			sourceTree = "<group>";
@@ -251,7 +268,10 @@
 		04C112B729F4AB5A00119130 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				0440BAE629FA0C3B0057098E /* SF-Pro-Text-Black.otf */,
+				0440BAE429FA0BDC0057098E /* SF-Pro-Text-Heavy.otf */,
 				04C112C729F4AC3400119130 /* SF-Pro-Text-Bold.otf */,
+				0440BAE229F9F3260057098E /* SF-Pro-Text-Semibold.otf */,
 				04C112C329F4AC3300119130 /* SF-Pro-Text-Medium.otf */,
 				04C112C129F4AC3300119130 /* SF-Pro-Text-Regular.otf */,
 			);
@@ -296,6 +316,10 @@
 			children = (
 				04C1129229F47C9A00119130 /* LaunchScreen.storyboard */,
 				04C1128D29F47C9900119130 /* Main.storyboard */,
+				0440BAD529F8E7EE0057098E /* DateCell.swift */,
+				0440BAD629F8E7EE0057098E /* DateCell.xib */,
+				0440BAD929F8E8050057098E /* ForecastCell.swift */,
+				0440BADA29F8E8050057098E /* ForecastCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -517,12 +541,14 @@
 				04D2630029F5D2A800233FAF /* dust.svg in Resources */,
 				04D2633529F5DBE300233FAF /* not-available-day.svg in Resources */,
 				04D2632F29F5D8F600233FAF /* thunderstorms.json in Resources */,
+				0440BAE329F9F3260057098E /* SF-Pro-Text-Semibold.otf in Resources */,
 				04D262DF29F5CF4A00233FAF /* overcast.json in Resources */,
 				04D262E529F5CF6100233FAF /* cloudy.svg in Resources */,
 				04D262FE29F5D17A00233FAF /* wind.json in Resources */,
 				04D2633B29F8CA4F00233FAF /* sleet.json in Resources */,
 				04D2632929F5D8D200233FAF /* thunderstorms-rain.svg in Resources */,
 				04D2630E29F5D38F00233FAF /* haze.json in Resources */,
+				0440BAE729FA0C3B0057098E /* SF-Pro-Text-Black.otf in Resources */,
 				04D2631629F5D3ED00233FAF /* mist.json in Resources */,
 				04D262E729F5CF6600233FAF /* clear-day.svg in Resources */,
 				04D2632729F5D84E00233FAF /* drizzle.json in Resources */,
@@ -549,8 +575,11 @@
 				04C112D529F4AC3400119130 /* SF-Pro-Text-Medium.otf in Resources */,
 				04D2633129F5DB2C00233FAF /* not-available-day.json in Resources */,
 				04D262F029F5D00700233FAF /* partly-cloudy-night.svg in Resources */,
+				0440BADC29F8E8050057098E /* ForecastCell.xib in Resources */,
 				04C1128F29F47C9900119130 /* Main.storyboard in Resources */,
 				04D2632D29F5D8EF00233FAF /* thunderstorms.svg in Resources */,
+				0440BAD829F8E7EE0057098E /* DateCell.xib in Resources */,
+				0440BAE529FA0BDC0057098E /* SF-Pro-Text-Heavy.otf in Resources */,
 				04D2630C29F5D38300233FAF /* haze.svg in Resources */,
 				04D2632129F5D81400233FAF /* rain.svg in Resources */,
 				04D2632529F5D84400233FAF /* drizzle.svg in Resources */,
@@ -625,6 +654,9 @@
 				04C1131229F4AF5F00119130 /* String+Weatherful.swift in Sources */,
 				04C1131629F4D09F00119130 /* WeatherManager.swift in Sources */,
 				04C1130C29F4ADD300119130 /* UILabel+Weatherful.swift in Sources */,
+				0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */,
+				0440BAE029F8E9710057098E /* Constants.swift in Sources */,
+				0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */,
 				04C1130A29F4ADC800119130 /* UIView+Weatherful.swift in Sources */,
 				04C1128829F47C9900119130 /* AppDelegate.swift in Sources */,
 				04C1130829F4ADBE00119130 /* UIColor+Weatherful.swift in Sources */,
