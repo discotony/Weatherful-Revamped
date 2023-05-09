@@ -14,6 +14,10 @@ extension UIColor {
         return UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
     }()
     
+    static let weatherfulGrey: UIColor = {
+        return UIColor(red: 100.0/255.0, green: 100.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+    }()
+    
     static let weatherfulDarkGrey: UIColor = {
         return UIColor(red: 51.0/255.0, green: 51.0/255.0, blue: 51.0/255.0, alpha: 1.0)
     }()

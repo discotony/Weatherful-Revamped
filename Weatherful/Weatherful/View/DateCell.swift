@@ -14,7 +14,7 @@ class DateCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         if let captionSmallFont = WeatherfulFonts.titleSmall {
-            dateLabel.configure(font: captionSmallFont)
+            dateLabel.configure(font: captionSmallFont, color: .weatherfulLightGrey)
         }
     }
 }

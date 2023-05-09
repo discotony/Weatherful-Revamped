@@ -237,7 +237,7 @@
                             <constraint firstItem="Ei4-TQ-Rgc" firstAttribute="top" secondItem="Dgx-Fd-Rw8" secondAttribute="bottom" constant="8" id="K9r-ZO-9zE"/>
                             <constraint firstItem="Ei4-TQ-Rgc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NOy-vv-vHX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="V2K-dq-jLK" secondAttribute="trailing" id="NRT-WD-HAa"/>
-                            <constraint firstItem="V2K-dq-jLK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7tT-bk-Hxh" secondAttribute="bottom" constant="48" id="SH8-eo-arf"/>
+                            <constraint firstItem="V2K-dq-jLK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7tT-bk-Hxh" secondAttribute="bottom" constant="16" id="SH8-eo-arf"/>
                             <constraint firstItem="V2K-dq-jLK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TA4-4G-Tp3"/>
                             <constraint firstItem="7tT-bk-Hxh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Vib-fa-igo"/>
                             <constraint firstItem="UnJ-Bd-idt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Was-91-HuT"/>
