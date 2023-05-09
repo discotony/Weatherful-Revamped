@@ -9,9 +9,10 @@ import UIKit
 
 extension UILabel {
     
-    func configure(text: String? = nil, font: UIFont, isCenterAligned: Bool = false) {
+    func configure(text: String? = nil, font: UIFont, color: UIColor = .weatherfulWhite, isCenterAligned: Bool = false) {
         if let text = text { self.text = text }
         self.font = font
+        self.textColor = color
         if isCenterAligned { self.textAlignment = .center }
     }
 

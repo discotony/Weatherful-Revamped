@@ -76,9 +76,18 @@ class MainVC: UIViewController {
         view.showBlurLoader()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        dateCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .right)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .right)
+//        let defaultPath = IndexPath(row: 0, section: 0)
+//        dateCollectionView.selectItem(at: defaultPath, animated: false, scrollPosition: .right)
+//        dateCollectionView.reloadData()
     }
     
     //    private func setUpAppIcon() {
@@ -121,18 +130,31 @@ class MainVC: UIViewController {
     
     private func changeBackground(){
         switch Date().hour {
-        case 5...7:
-            backgroundImageView.image = UIImage(named: "background-sun")
-        case 18...20:
-            backgroundImageView.image = UIImage(named: "background-sun")
-        case 21...24:
-            backgroundImageView.image = UIImage(named: "background-night")
-        case 1...3:
-            backgroundImageView.image = UIImage(named: "background-night")
+        case 00...04:
+             backgroundImageView.image = UIImage(named: "00-04")
+        case 5:
+            backgroundImageView.image = UIImage(named: "05")
+        case 6...7:
+            backgroundImageView.image = UIImage(named: "06-07")
+        case 8...9:
+            backgroundImageView.image = UIImage(named: "08-09")
+        case 10...11:
+            backgroundImageView.image = UIImage(named: "10-11")
+        case 12...15:
+            backgroundImageView.image = UIImage(named: "12-15")
+        case 16...18:
+            backgroundImageView.image = UIImage(named: "16-18")
+        case 19:
+            backgroundImageView.image = UIImage(named: "19")
+        case 20:
+            backgroundImageView.image = UIImage(named: "20")
+        case 21:
+             backgroundImageView.image = UIImage(named: "21")
+        case 22...24:
+            backgroundImageView.image = UIImage(named: "22-23")
         default:
-            backgroundImageView.image = UIImage(named: "background-day")
+            break
         }
-        //        scheduleTimer()
     }
     
     private func resetPlaceholder() {
@@ -155,7 +177,7 @@ class MainVC: UIViewController {
         dateCollectionView.register(UINib(nibName: K.dateCellNibName, bundle: nil), forCellWithReuseIdentifier: K.dateCellIdentifier) //FOLLOWUP
         dateCollectionView.showsHorizontalScrollIndicator = false
         dateCollectionView.collectionViewLayout = setFlowLayout()
-//
+
         forecastCollectionView.register(UINib(nibName: K.forecastCellNibName, bundle: nil), forCellWithReuseIdentifier: K.forecastCellIdentifier)
         forecastCollectionView.showsHorizontalScrollIndicator = false
         forecastCollectionView.collectionViewLayout = setFlowLayout()
@@ -278,11 +300,15 @@ extension MainVC: WeatherManagerDelegate {
                     print("Error:", error ?? "nil")
                     return
                 }
-                if var country = placemark.country {
-                    if country == "United States" {
-                        country = "US"
+                if var area = placemark.country {
+                    if area == "United States" {
+                        if let state = placemark.state {
+                            area = state
+                        } else {
+                            area = "US"
+                        }
                     }
-                    self.cityLabel.text?.append(", \(country)")
+                    self.cityLabel.text?.append(", \(area)")
                 }
             }
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
@@ -295,7 +321,9 @@ extension MainVC: WeatherManagerDelegate {
             self.humidityLabel.text = weather.humidityString
             
             self.resetLocationButton.isHidden = weather.cityName == self.homeCity ? true : false
-            self.view.removeBluerLoader()
+            Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { Timer in
+                self.view.removeBluerLoader()
+            }
         }
     }
     
@@ -375,11 +403,16 @@ extension MainVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == dateCollectionView {
             let cell = dateCollectionView.dequeueReusableCell(withReuseIdentifier: K.dateCellIdentifier, for: indexPath) as! DateCell
-            if indexPath.row == 0 {
-                cell.dateLabel.font = WeatherfulFonts.titleSmallBold
-            } else {
-                cell.dateLabel.font = WeatherfulFonts.titleSmall
-            }
+//            if indexPath.row == 0 {
+            dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .right)
+            cell.isSelected = true
+
+//            if indexPath.row == 0 {
+//                cell.isSelected = true
+//                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right)
+//            }
+        
+//
             cell.dateLabel.text = "Today, April 25"
             return cell
         } else {
@@ -410,6 +443,27 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
 extension MainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == dateCollectionView {
+            guard let titleSmallBoldFont = WeatherfulFonts.titleSmallBold else { return }
+            let selectedCell = collectionView.cellForItem(at: indexPath) as! DateCell
+            selectedCell.dateLabel.configure(font: titleSmallBoldFont, color: .weatherfulWhite)
+        }
+        // display new collection list
+        // forecastCollectionView.reloadData()
+        //        } else {
+        //            // animation?
+        //        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if collectionView == dateCollectionView {
+            guard let titleSmallFont = WeatherfulFonts.titleSmall else { return }
+            let deselectedCell = collectionView.cellForItem(at: indexPath) as! DateCell
+            deselectedCell.dateLabel.configure(font: titleSmallFont, color: .weatherfulLightGrey)
+        }
     }
 }
 
