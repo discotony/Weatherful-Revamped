@@ -47,16 +47,22 @@ class MainVC: UIViewController {
     var conditionName = ""
     var homeCity = ""
     var didRequestHomeLocation = true
+    var forecastArray = [ForecastModel]()
+    var forecastGroup = [[ForecastModel]]()
+    var forecastDateArray = [String]()
     
     var timer = Timer()
-
-//    enum SectionType {
-//        case dateCell
-//        case forecastCell
-//    }
-//
-//    var sections: [SectionType] = [.dateCell, .forecastCell]
-
+    
+    enum SectionType {
+        case dayOne
+        case dayTwo
+        case dayThree
+        case dayFour
+        case dayFive
+    }
+    
+    var sections: [SectionType] = [.dayOne, .dayTwo, .dayThree, .dayFour, .dayFive]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
@@ -80,9 +86,9 @@ class MainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-
-        let selectedIndexPath = IndexPath(item: 0, section: 0)
-        dateCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .right)
+        
+        //        let selectedIndexPath = IndexPath(item: 0, section: 0)
+        //        dateCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .right)
     }
     
     private func updateConditionImage() {
@@ -118,10 +124,10 @@ class MainVC: UIViewController {
         super.viewDidAppear(animated)
         
         updateConditionImage()
-//        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .right)
-//        let defaultPath = IndexPath(row: 0, section: 0)
-//        dateCollectionView.selectItem(at: defaultPath, animated: false, scrollPosition: .right)
-//        dateCollectionView.reloadData()
+        //        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .right)
+        //        let defaultPath = IndexPath(row: 0, section: 0)
+        //        dateCollectionView.selectItem(at: defaultPath, animated: false, scrollPosition: .right)
+        //        dateCollectionView.reloadData()
     }
     
     //    private func setUpAppIcon() {
@@ -165,7 +171,7 @@ class MainVC: UIViewController {
     private func changeBackground(){
         switch Date().hour {
         case 00...04:
-             backgroundImageView.image = UIImage(named: "00-04")
+            backgroundImageView.image = UIImage(named: "00-04")
         case 5:
             backgroundImageView.image = UIImage(named: "05")
         case 6...7:
@@ -183,7 +189,7 @@ class MainVC: UIViewController {
         case 20:
             backgroundImageView.image = UIImage(named: "20")
         case 21:
-             backgroundImageView.image = UIImage(named: "21")
+            backgroundImageView.image = UIImage(named: "21")
         case 22...24: // FOLLOWUP
             backgroundImageView.image = UIImage(named: "22-23")
         default:
@@ -211,7 +217,7 @@ class MainVC: UIViewController {
         dateCollectionView.register(UINib(nibName: K.dateCellNibName, bundle: nil), forCellWithReuseIdentifier: K.dateCellIdentifier) //FOLLOWUP
         dateCollectionView.showsHorizontalScrollIndicator = false
         dateCollectionView.collectionViewLayout = setFlowLayout()
-
+        
         forecastCollectionView.register(UINib(nibName: K.forecastCellNibName, bundle: nil), forCellWithReuseIdentifier: K.forecastCellIdentifier)
         forecastCollectionView.showsHorizontalScrollIndicator = false
         forecastCollectionView.collectionViewLayout = setFlowLayout()
@@ -228,7 +234,7 @@ class MainVC: UIViewController {
     // MARK: - Dark Mode Support
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        print (traitCollection.userInterfaceStyle == .dark)
+        //        print (traitCollection.userInterfaceStyle == .dark)
         if traitCollection.userInterfaceStyle == .dark {
             self.weatherAnimationView.animation = LottieAnimation.named("clear-night")
             self.weatherAnimationView.play()
@@ -324,7 +330,7 @@ extension MainVC: UITextFieldDelegate {
 
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { //FOLLOWUP
             
             self.cityLabel.text = weather.cityName
             
@@ -348,7 +354,7 @@ extension MainVC: WeatherManagerDelegate {
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.conditionName = weather.animatedConditionName
             self.updateConditionImage()
-            self.currentTempLabel.text = "\(weather.tempCurrentString)°F" //FOLLOWUP
+            self.currentTempLabel.text = (weather.tempCurrentString) //FOLLOWUP
             self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
             self.windLabel.text = weather.windString + " "
             self.humidityLabel.text = weather.humidityString
@@ -358,6 +364,78 @@ extension MainVC: WeatherManagerDelegate {
                 self.view.removeBluerLoader()
             }
         }
+    }
+    
+    func didUpdateForecast(_ weatherManager: WeatherManager, forecast: [ForecastModel]) {
+        DispatchQueue.main.async {
+            self.forecastArray = forecast
+            
+            var dateArray = [String]()
+            var index = 0
+            while (index < forecast.count) {
+                //                print("date" + forecastArray[index].dateString)
+                dateArray.append(forecast[index].dateString)
+                index += 1
+            }
+            print("datearray: \(dateArray)")
+            self.forecastDateArray = dateArray.uniqued()
+            print("unique dates: \(self.forecastDateArray)")
+            
+            self.forecastGroup = self.groupForecast(forecastArray: forecast)
+            
+            self.dateCollectionView.reloadData()
+            self.forecastCollectionView.reloadData()
+        }
+    }
+    
+    private func groupForecast(forecastArray: [ForecastModel]) -> [[ForecastModel]] {
+        var forecastGroup = [[ForecastModel]]()
+        var groupOne = [ForecastModel]()
+        var groupTwo = [ForecastModel]()
+        var groupThree = [ForecastModel]()
+        var groupFour = [ForecastModel]()
+        var groupFive = [ForecastModel]()
+        var groupSix = [ForecastModel]()
+        
+        print("forecastArray.count: \(forecastArray.count)")
+        print("forecastDateArray.count: \(forecastDateArray.count)")
+        print("")
+        for forecast in forecastArray {
+            if forecast.dateString == forecastDateArray[0] {
+                groupOne.append(forecast)
+            } else if forecast.dateString == forecastDateArray[1] {
+                groupTwo.append(forecast)
+            } else if forecast.dateString == forecastDateArray[2] {
+                groupThree.append(forecast)
+            } else if forecast.dateString == forecastDateArray[3] {
+                groupFour.append(forecast)
+            } else if forecast.dateString == forecastDateArray[4] {
+                groupFive.append(forecast)
+            } else {
+                groupSix.append(forecast)
+            }
+        }
+        print("Group 1: \(groupOne.count)")
+        print("Group 2: \(groupTwo.count)")
+        print("Group 3: \(groupThree.count)")
+        print("Group 4: \(groupFour.count)")
+        print("Group 5: \(groupFive.count)")
+        print("Group 6: \(groupSix.count)")
+
+        forecastGroup.append(groupOne)
+        print(forecastGroup[0].count)
+        forecastGroup.append(groupTwo)
+        print(forecastGroup[1].count)
+        forecastGroup.append(groupThree)
+        print(forecastGroup[2].count)
+        forecastGroup.append(groupFour)
+        print(forecastGroup[3].count)
+        forecastGroup.append(groupFive)
+        print(forecastGroup[4].count)
+        forecastGroup.append(groupSix)
+        print(forecastGroup[5].count)
+        
+        return forecastGroup
     }
     
     func didFailWithError(error: Error) {
@@ -397,6 +475,8 @@ extension MainVC: CLLocationManagerDelegate {
                     self.homeCity = cityName
                 }
             }
+            
+            weatherManager.fetchForecast(latitude: latitude, longitude: longitude)
         }
     }
     
@@ -427,44 +507,68 @@ extension MainVC: CLLocationManagerDelegate {
 extension MainVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == dateCollectionView {
-            return 5
+            return forecastDateArray.count
         } else {
-            return 8
+            if forecastGroup.count != 0 {
+                return forecastGroup[1].count
+            } else {
+                return 0
+            }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == dateCollectionView {
             let cell = dateCollectionView.dequeueReusableCell(withReuseIdentifier: K.dateCellIdentifier, for: indexPath) as! DateCell
-//            if indexPath.row == 0 {
-            dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .right)
-            cell.isSelected = true
-
-//            if indexPath.row == 0 {
-//                cell.isSelected = true
-//                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right)
-//            }
-        
-//
-            cell.dateLabel.text = "Today, April 25"
+            //            if indexPath.row == 0 {
+            //            dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .right)
+            //            cell.isSelected = true
+            
+            //            if indexPath.row == 0 {
+            //                cell.isSelected = true
+            //                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right)
+            //            }
+            
+            //
+            
+//            cell.dateLabel.text = forecastDateArray[indexPath.row]
+            cell.dateLabel.text = "Today, 12/31"
+            
+            
             return cell
         } else {
             let cell = forecastCollectionView.dequeueReusableCell(withReuseIdentifier: K.forecastCellIdentifier, for: indexPath) as! ForecastCell
-            cell.dateLabel.text = "12 PM"
-            cell.sizeToFit()
-            cell.conditionImageView.image = UIImage(systemName: "sun.max")?.withTintColor(.weatherfulWhite, renderingMode: .alwaysOriginal)
-            cell.tempLabel.text = "36°F"
+            
+            if forecastGroup.count != 0 {
+                cell.timeLabel.text = forecastGroup[1][indexPath.row].timeString
+                cell.conditionImageView.image = UIImage(named: forecastGroup[1][indexPath.row].staticConditionName)
+                cell.tempLabel.text = forecastGroup[1][indexPath.row].tempString
+            }
             return cell
         }
+        
+        
+//        cell.dateLabel.text = "12 PM"
+//        cell.sizeToFit()
+//        cell.conditionImageView.image = UIImage(systemName: "sun.max")?.withTintColor(.weatherfulWhite, renderingMode: .alwaysOriginal)
+//        cell.tempLabel.text = "36°F"
     }
 }
+
+extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
+    }
+}
+
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension MainVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == dateCollectionView {
-            return CGSize(width: 105, height: 40)
+            return CGSize(width: 100, height: 40)
         } else {
             return CGSize(width: 100, height: 160)
         }

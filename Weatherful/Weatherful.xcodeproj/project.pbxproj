@@ -15,6 +15,8 @@
 		0440BAE329F9F3260057098E /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAE229F9F3260057098E /* SF-Pro-Text-Semibold.otf */; };
 		0440BAE529FA0BDC0057098E /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAE429FA0BDC0057098E /* SF-Pro-Text-Heavy.otf */; };
 		0440BAE729FA0C3B0057098E /* SF-Pro-Text-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAE629FA0C3B0057098E /* SF-Pro-Text-Black.otf */; };
+		0440BAE92A0C8C8A0057098E /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAE82A0C8C8A0057098E /* ForecastModel.swift */; };
+		0440BAEB2A0C8D1F0057098E /* ForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAEA2A0C8D1F0057098E /* ForecastData.swift */; };
 		04C1128829F47C9900119130 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1128729F47C9900119130 /* AppDelegate.swift */; };
 		04C1128A29F47C9900119130 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1128929F47C9900119130 /* SceneDelegate.swift */; };
 		04C1128C29F47C9900119130 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1128B29F47C9900119130 /* MainVC.swift */; };
@@ -109,6 +111,8 @@
 		0440BAE229F9F3260057098E /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		0440BAE429FA0BDC0057098E /* SF-Pro-Text-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Heavy.otf"; path = "../../../../Documents/_TO BE SORTED/_Programming/Fonts/SF Pro/SF-Pro-Text-Heavy.otf"; sourceTree = "<group>"; };
 		0440BAE629FA0C3B0057098E /* SF-Pro-Text-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Black.otf"; path = "../../../../Documents/_TO BE SORTED/_Programming/Projects/Proudful/resources_proudful/San Francisco Pro/SF-Pro-Text-Black.otf"; sourceTree = "<group>"; };
+		0440BAE82A0C8C8A0057098E /* ForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
+		0440BAEA2A0C8D1F0057098E /* ForecastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastData.swift; sourceTree = "<group>"; };
 		04C1128429F47C9900119130 /* Weatherful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weatherful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C1128729F47C9900119130 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04C1128929F47C9900119130 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -329,7 +333,9 @@
 			children = (
 				04C1131529F4D09F00119130 /* WeatherManager.swift */,
 				04C1131929F4D0B000119130 /* WeatherData.swift */,
+				0440BAEA2A0C8D1F0057098E /* ForecastData.swift */,
 				04C1131729F4D0A900119130 /* WeatherModel.swift */,
+				0440BAE82A0C8C8A0057098E /* ForecastModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -654,8 +660,10 @@
 				04C1131229F4AF5F00119130 /* String+Weatherful.swift in Sources */,
 				04C1131629F4D09F00119130 /* WeatherManager.swift in Sources */,
 				04C1130C29F4ADD300119130 /* UILabel+Weatherful.swift in Sources */,
+				0440BAEB2A0C8D1F0057098E /* ForecastData.swift in Sources */,
 				0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */,
 				0440BAE029F8E9710057098E /* Constants.swift in Sources */,
+				0440BAE92A0C8C8A0057098E /* ForecastModel.swift in Sources */,
 				0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */,
 				04C1130A29F4ADC800119130 /* UIView+Weatherful.swift in Sources */,
 				04C1128829F47C9900119130 /* AppDelegate.swift in Sources */,

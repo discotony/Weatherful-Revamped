@@ -134,18 +134,18 @@ struct WeatherModel {
     var humidity: Int
     
     var tempCurrentString: String {
-        return String(Int(tempCurrent))
+        return String(Int(tempCurrent)) + "°F"
     }
     
     var tempFeelsLikeString: String {
-        return String(format: "%.1f", tempFeelsLike)
+        return String(format: "%.1f", tempFeelsLike) + "°F"
     }
     
     var tempMinString: String {
-        return String(format: "%.1f", tempMax)
+        return String(format: "%.1f", tempMax) + "°F"
     }
     var tempMaxString: String {
-        return String(format: "%.1f", tempMax)
+        return String(format: "%.1f", tempMax) + "°F"
     }
        
     var windString: String {

@@ -16,5 +16,6 @@ class DateCell: UICollectionViewCell {
         if let captionSmallFont = WeatherfulFonts.titleSmall {
             dateLabel.configure(font: captionSmallFont, color: .weatherfulLightGrey)
         }
+        dateLabel.textAlignment = .left
     }
 }
