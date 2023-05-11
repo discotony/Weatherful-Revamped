@@ -44,6 +44,7 @@ class MainVC: UIViewController {
     var locationManager = CLLocationManager()
     var location: CLLocation?
     
+    var conditionName = ""
     var homeCity = ""
     var didRequestHomeLocation = true
     
@@ -78,12 +79,45 @@ class MainVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+
         let selectedIndexPath = IndexPath(item: 0, section: 0)
         dateCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .right)
     }
     
+    private func updateConditionImage() {
+        let currHour = Date().hour
+        var newCondition = conditionName
+        
+        if conditionName == "" {
+            return
+        } else if (currHour >= 0 && currHour <= 05) || (currHour >= 22 && currHour <= 24) {
+            if conditionName == "clear-day" {
+                newCondition = "clear-night"
+            } else if conditionName == "party-cloudy-day" {
+                newCondition = "party-cloudy-night"
+            } else if conditionName == "not-available-day" {
+                newCondition = "not-available-night"
+            }
+        } else {
+            if conditionName == "clear-night" {
+                newCondition = "clear-day"
+            } else if conditionName == "party-cloudy-night" {
+                newCondition = "party-cloudy-day"
+            } else if conditionName == "not-available-night" {
+                newCondition = "not-available-day"
+            }
+        }
+        
+        weatherAnimationView.animation = LottieAnimation.named(newCondition)
+        weatherAnimationView.play()
+        weatherAnimationView.loopMode = .loop
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        updateConditionImage()
 //        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .right)
 //        let defaultPath = IndexPath(row: 0, section: 0)
 //        dateCollectionView.selectItem(at: defaultPath, animated: false, scrollPosition: .right)
@@ -150,7 +184,7 @@ class MainVC: UIViewController {
             backgroundImageView.image = UIImage(named: "20")
         case 21:
              backgroundImageView.image = UIImage(named: "21")
-        case 22...24:
+        case 22...24: // FOLLOWUP
             backgroundImageView.image = UIImage(named: "22-23")
         default:
             break
@@ -312,9 +346,8 @@ extension MainVC: WeatherManagerDelegate {
                 }
             }
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
-            self.weatherAnimationView.animation = LottieAnimation.named(weather.animatedConditionName)
-            self.weatherAnimationView.play()
-            self.weatherAnimationView.loopMode = .loop
+            self.conditionName = weather.animatedConditionName
+            self.updateConditionImage()
             self.currentTempLabel.text = "\(weather.tempCurrentString)°F" //FOLLOWUP
             self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
             self.windLabel.text = weather.windString + " "
