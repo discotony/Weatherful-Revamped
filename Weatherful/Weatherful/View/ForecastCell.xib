@@ -22,24 +22,24 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PKw-gf-AAe">
                         <rect key="frame" x="0.0" y="0.0" width="209" height="337"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ooF-8T-xna">
-                                <rect key="frame" x="80.666666666666671" y="78.666666666666686" width="48.000000000000014" height="180"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ooF-8T-xna">
+                                <rect key="frame" x="72.666666666666671" y="78.666666666666686" width="64.000000000000014" height="180"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cX8-cP-uKG">
-                                        <rect key="frame" x="0.0" y="0.0" width="48" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="weatherfullTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Urg-7a-MI6">
-                                        <rect key="frame" x="0.0" y="65.999999999999986" width="48" height="48"/>
+                                        <rect key="frame" x="0.0" y="57.999999999999986" width="64" height="64"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Urg-7a-MI6" secondAttribute="height" multiplier="1:1" id="jh9-Ro-VO6"/>
-                                            <constraint firstAttribute="width" constant="48" id="qj5-YB-HNb"/>
+                                            <constraint firstAttribute="width" constant="64" id="qj5-YB-HNb"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc6-1K-odL">
-                                        <rect key="frame" x="0.0" y="130" width="48" height="50"/>
+                                        <rect key="frame" x="0.0" y="130" width="64" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="weatherfullTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -65,9 +65,9 @@
             <size key="customSize" width="209" height="337"/>
             <connections>
                 <outlet property="conditionImageView" destination="Urg-7a-MI6" id="xRe-uX-nwZ"/>
-                <outlet property="dateLabel" destination="cX8-cP-uKG" id="5gP-E4-vPy"/>
                 <outlet property="overlayView" destination="PKw-gf-AAe" id="Eln-tJ-HYo"/>
                 <outlet property="tempLabel" destination="zc6-1K-odL" id="KCr-BE-i1c"/>
+                <outlet property="timeLabel" destination="cX8-cP-uKG" id="W7n-92-EYs"/>
             </connections>
             <point key="canvasLocation" x="260.30534351145036" y="99.647887323943664"/>
         </collectionViewCell>

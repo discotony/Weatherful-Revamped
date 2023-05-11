@@ -10,7 +10,7 @@ import UIKit
 class ForecastCell: UICollectionViewCell {
 
     @IBOutlet weak var overlayView: UIView!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
     
@@ -21,7 +21,7 @@ class ForecastCell: UICollectionViewCell {
         overlayView.roundCorners()
         
         if let captionSmallFont = WeatherfulFonts.forecastSmall {
-            dateLabel.configure(font: captionSmallFont)
+            timeLabel.configure(font: captionSmallFont)
         }
         if let captionMediumFont = WeatherfulFonts.forecastMedium {
             tempLabel.configure(font: captionMediumFont)
