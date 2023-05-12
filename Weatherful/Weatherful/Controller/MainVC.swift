@@ -51,6 +51,8 @@ class MainVC: UIViewController {
     var forecastGroup = [[ForecastModel]]()
     var forecastDateArray = [String]()
     
+    var selectedForcastGroup = 0
+    
     var timer = Timer()
     
     enum SectionType {
@@ -124,10 +126,13 @@ class MainVC: UIViewController {
         super.viewDidAppear(animated)
         
         updateConditionImage()
-        //        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .right)
-        //        let defaultPath = IndexPath(row: 0, section: 0)
-        //        dateCollectionView.selectItem(at: defaultPath, animated: false, scrollPosition: .right)
-        //        dateCollectionView.reloadData()
+        
+//        NSIndexPath *indexPathForFirstRow = [NSIndexPath indexPathForRow:0 inSection:0];
+//        [self.dateCollectionView selectItemAtIndexPath:indexPathForFirstRow animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+//        [self collectionView:self.dateCollectionView didSelectItemAtIndexPath:indexPathForFirstRow];
+//        
+        
+//        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .right)
     }
     
     //    private func setUpAppIcon() {
@@ -382,8 +387,11 @@ extension MainVC: WeatherManagerDelegate {
             print("unique dates: \(self.forecastDateArray)")
             
             self.forecastGroup = self.groupForecast(forecastArray: forecast)
+
             
             self.dateCollectionView.reloadData()
+//            self.dateCollectionView.selectItem(at: IndexPath(item: 1, section: 0), animated: false, scrollPosition: .right)
+
             self.forecastCollectionView.reloadData()
         }
     }
@@ -510,7 +518,7 @@ extension MainVC: UICollectionViewDataSource {
             return forecastDateArray.count
         } else {
             if forecastGroup.count != 0 {
-                return forecastGroup[1].count
+                return forecastGroup[selectedForcastGroup].count
             } else {
                 return 0
             }
@@ -529,30 +537,75 @@ extension MainVC: UICollectionViewDataSource {
             //                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right)
             //            }
             
-            //
             
-//            cell.dateLabel.text = forecastDateArray[indexPath.row]
-            cell.dateLabel.text = "Today, 12/31"
+            cell.dateLabel.text = forecastDateArray[indexPath.row]
+            
+            
+//            if indexPath.row == 0 {
+//                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right) //Add this line
+//                cell.isSelected = true
+//                if let titmeSmallBoldFont = WeatherfulFonts.titleSmallBold {
+//                    cell.dateLabel.configure(font: titmeSmallBoldFont, color: .weatherfulWhite)
+//                }
+//            }
+            
+            
+            // MARK: - Replace day of the week with "Today"
+//            let currentDate = formatDate(timestamp: Date().description)
+//            print(forecastDateArray.count)
+//            print("currentdate: " + currentDate)
+//            print(forecastArray[0])
+//            if currentDate == forecastDateArray[0] {
+//                var todayDate = currentDate
+//                let start = todayDate.startIndex
+//                let end = todayDate.index(todayDate.startIndex, offsetBy: 3)
+//                let result = todayDate.replacingCharacters(in: start..<end, with: "Today")
+                
+//                cell.dateLabel.text = result
+//                print(result)
+//                cell.dateLabel.text?.replaceSubrange(0...2, with: "Today")
+//            }
+            
+//            let letters = "zzzy"
+//            // Replace first three characters with a string.
+//            let start = letters.startIndex;
+//            let end = letters.index(letters.startIndex, offsetBy: 3);
+//            let result = letters.replacingCharacters(in: start..<end, with: "wh")
+//            // The result.
+//            print(result)
             
             
             return cell
+            
         } else {
             let cell = forecastCollectionView.dequeueReusableCell(withReuseIdentifier: K.forecastCellIdentifier, for: indexPath) as! ForecastCell
             
             if forecastGroup.count != 0 {
-                cell.timeLabel.text = forecastGroup[1][indexPath.row].timeString
-                cell.conditionImageView.image = UIImage(named: forecastGroup[1][indexPath.row].staticConditionName)
-                cell.tempLabel.text = forecastGroup[1][indexPath.row].tempString
+                cell.timeLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].timeString
+                cell.conditionImageView.image = UIImage(named: forecastGroup[selectedForcastGroup][indexPath.row].staticConditionName)
+                cell.tempLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].tempString
             }
             return cell
         }
-        
-        
-//        cell.dateLabel.text = "12 PM"
-//        cell.sizeToFit()
-//        cell.conditionImageView.image = UIImage(systemName: "sun.max")?.withTintColor(.weatherfulWhite, renderingMode: .alwaysOriginal)
-//        cell.tempLabel.text = "36°F"
     }
+    
+    func formatDate(timestamp: String) -> String {
+        
+        var formattedString = String(Array(timestamp)[5...9]).replacingOccurrences(of: "-", with: "/")
+        if formattedString[0] == "0" {
+            formattedString = formattedString.replace("", at: 0)
+            if formattedString[2] == "0" {
+                formattedString = formattedString.replace("", at: 2)
+            }
+        } else if formattedString[3] == "0" {
+            formattedString = formattedString.replace("", at: 3)
+        }
+        return formattedString
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//
+//    }
 }
 
 extension Sequence where Element: Hashable {
@@ -575,6 +628,8 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+
+
 // MARK: - UICollectionViewDelegate
 
 extension MainVC: UICollectionViewDelegate {
@@ -587,12 +642,11 @@ extension MainVC: UICollectionViewDelegate {
             guard let titleSmallBoldFont = WeatherfulFonts.titleSmallBold else { return }
             let selectedCell = collectionView.cellForItem(at: indexPath) as! DateCell
             selectedCell.dateLabel.configure(font: titleSmallBoldFont, color: .weatherfulWhite)
+            selectedForcastGroup = indexPath.row
+            print("selectedIndexPath: \(selectedForcastGroup)")
+            forecastCollectionView.reloadData()
+            forecastCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .right)
         }
-        // display new collection list
-        // forecastCollectionView.reloadData()
-        //        } else {
-        //            // animation?
-        //        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
