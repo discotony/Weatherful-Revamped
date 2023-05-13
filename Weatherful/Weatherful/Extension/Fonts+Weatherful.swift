@@ -49,7 +49,7 @@ struct WeatherfulFonts {
     
     
     // MARK: - Forecast Date Label
-    static let titleSmallBold = UIFont(name: "SFProText-Bold", size: 14.0)
+    static let titleSmallBold = UIFont(name: "SFProText-Semibold", size: 14.0)
     static let titleSmall = UIFont(name: "SFProText-Regular", size: 14.0)
     
     // MARK: - Forecast Time Label
