@@ -34,7 +34,8 @@ class MainVC: UIViewController {
     @IBOutlet weak var humidityLabel: UILabel!
     
     @IBOutlet weak var forecastBackgroundView: UIView!
-    @IBOutlet weak var dateCollectionView: UICollectionView!
+    @IBOutlet weak var forecastHeaderLabel: UILabel!
+    @IBOutlet weak var forecastDetailButton: UIButton!
     @IBOutlet weak var forecastCollectionView: UICollectionView!
     
     private var isSearchTriggered: Bool = true
@@ -76,8 +77,6 @@ class MainVC: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
-        dateCollectionView.dataSource = self
-        dateCollectionView.delegate = self
         forecastCollectionView.dataSource = self
         forecastCollectionView.delegate = self
         setUpHeaderCollectionView()
@@ -89,8 +88,6 @@ class MainVC: UIViewController {
         super.viewWillAppear(animated)
         
         
-        //        let selectedIndexPath = IndexPath(item: 0, section: 0)
-        //        dateCollectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .right)
     }
     
     private func updateConditionImage() {
@@ -126,13 +123,6 @@ class MainVC: UIViewController {
         super.viewDidAppear(animated)
         
         updateConditionImage()
-        
-//        NSIndexPath *indexPathForFirstRow = [NSIndexPath indexPathForRow:0 inSection:0];
-//        [self.dateCollectionView selectItemAtIndexPath:indexPathForFirstRow animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-//        [self collectionView:self.dateCollectionView didSelectItemAtIndexPath:indexPathForFirstRow];
-//        
-        
-//        self.dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .right)
     }
     
     //    private func setUpAppIcon() {
@@ -171,6 +161,29 @@ class MainVC: UIViewController {
         maxMinTempLabel.configure(font: captionMediumFont)
         windLabel.configure(font: captionMediumFont)
         humidityLabel.configure(font: captionMediumFont)
+ 
+        guard let titleSmallFont = WeatherfulFonts.titleSmall else { return }
+        
+        let headerLabelAttachment = NSTextAttachment()
+        headerLabelAttachment.image = UIImage(systemName: "chart.xyaxis.line")?.withTintColor(.weatherfulWhite)
+        headerLabelAttachment.setImageHeight(font: titleSmallFont, height: 12)
+        let headerLabelTitle = NSMutableAttributedString(string: " 24 HR FORECAST")
+        headerLabelTitle.insert(NSAttributedString(attachment: headerLabelAttachment), at: 0)
+        
+        forecastHeaderLabel.configure(font: titleSmallFont)
+        forecastHeaderLabel.attributedText = headerLabelTitle
+        
+        let headerDetailAttachment = NSTextAttachment()
+//        imageAttachment.image = UIImage(named: "icon_right_arrow")
+        headerDetailAttachment.image = UIImage(systemName: "chevron.forward")?.withTintColor(.weatherfulWhite)
+        headerDetailAttachment.setImageHeight(font: titleSmallFont, height: 12)
+        
+        let headerDetailTitle = NSMutableAttributedString(string: "Next 5 DAYS ")
+        headerDetailTitle.append(NSAttributedString(attachment: headerDetailAttachment))
+        
+        forecastDetailButton.titleLabel?.font = titleSmallFont
+        forecastDetailButton.titleLabel?.attributedText = headerDetailTitle
+//        forecastDetailButton.titleLabel?.textAlignment = .right
     }
     
     private func changeBackground(){
@@ -219,9 +232,6 @@ class MainVC: UIViewController {
     }
     
     private func setUpHeaderCollectionView() {
-        dateCollectionView.register(UINib(nibName: K.dateCellNibName, bundle: nil), forCellWithReuseIdentifier: K.dateCellIdentifier) //FOLLOWUP
-        dateCollectionView.showsHorizontalScrollIndicator = false
-        dateCollectionView.collectionViewLayout = setFlowLayout()
         
         forecastCollectionView.register(UINib(nibName: K.forecastCellNibName, bundle: nil), forCellWithReuseIdentifier: K.forecastCellIdentifier)
         forecastCollectionView.showsHorizontalScrollIndicator = false
@@ -291,6 +301,10 @@ class MainVC: UIViewController {
         resetLocationButton.isHidden = true
         view.showBlurLoader()
     }
+    
+    @IBAction func forecastDetailButtonPressed(_ sender: UIButton) {
+    }
+    
 }
 
 // MARK: - UITextFieldDelegate
@@ -374,24 +388,21 @@ extension MainVC: WeatherManagerDelegate {
     func didUpdateForecast(_ weatherManager: WeatherManager, forecast: [ForecastModel]) {
         DispatchQueue.main.async {
             self.forecastArray = forecast
+            print(self.forecastArray.count)
             
-            var dateArray = [String]()
-            var index = 0
-            while (index < forecast.count) {
-                //                print("date" + forecastArray[index].dateString)
-                dateArray.append(forecast[index].dateString)
-                index += 1
-            }
-            print("datearray: \(dateArray)")
-            self.forecastDateArray = dateArray.uniqued()
-            print("unique dates: \(self.forecastDateArray)")
             
-            self.forecastGroup = self.groupForecast(forecastArray: forecast)
-
             
-            self.dateCollectionView.reloadData()
-//            self.dateCollectionView.selectItem(at: IndexPath(item: 1, section: 0), animated: false, scrollPosition: .right)
-
+//            var dateArray = [String]()
+//            var index = 0
+//            while (index < forecast.count) {
+//                //                print("date" + forecastArray[index].dateString)
+//                dateArray.append(forecast[index].dateString)
+//                index += 1
+//            }
+//            print("datearray: \(dateArray)")
+//            self.forecastDateArray = dateArray.uniqued()
+//            print("unique dates: \(self.forecastDateArray)")
+//            self.forecastGroup = self.groupForecast(forecastArray: forecast)
             self.forecastCollectionView.reloadData()
         }
     }
@@ -514,79 +525,37 @@ extension MainVC: CLLocationManagerDelegate {
 
 extension MainVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == dateCollectionView {
-            return forecastDateArray.count
-        } else {
-            if forecastGroup.count != 0 {
-                return forecastGroup[selectedForcastGroup].count
-            } else {
-                return 0
-            }
-        }
+        
+//        if forecastGroup.count != 0 {
+//            return forecastGroup[selectedForcastGroup].count
+//        } else {
+//            return 0
+//        }
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == dateCollectionView {
-            let cell = dateCollectionView.dequeueReusableCell(withReuseIdentifier: K.dateCellIdentifier, for: indexPath) as! DateCell
-            //            if indexPath.row == 0 {
-            //            dateCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .right)
-            //            cell.isSelected = true
-            
-            //            if indexPath.row == 0 {
-            //                cell.isSelected = true
-            //                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right)
-            //            }
-            
-            
-            cell.dateLabel.text = forecastDateArray[indexPath.row]
-            
-            
-//            if indexPath.row == 0 {
-//                dateCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .right) //Add this line
-//                cell.isSelected = true
-//                if let titmeSmallBoldFont = WeatherfulFonts.titleSmallBold {
-//                    cell.dateLabel.configure(font: titmeSmallBoldFont, color: .weatherfulWhite)
-//                }
-//            }
-            
-            
-            // MARK: - Replace day of the week with "Today"
-//            let currentDate = formatDate(timestamp: Date().description)
-//            print(forecastDateArray.count)
-//            print("currentdate: " + currentDate)
-//            print(forecastArray[0])
-//            if currentDate == forecastDateArray[0] {
-//                var todayDate = currentDate
-//                let start = todayDate.startIndex
-//                let end = todayDate.index(todayDate.startIndex, offsetBy: 3)
-//                let result = todayDate.replacingCharacters(in: start..<end, with: "Today")
-                
-//                cell.dateLabel.text = result
-//                print(result)
-//                cell.dateLabel.text?.replaceSubrange(0...2, with: "Today")
-//            }
-            
-//            let letters = "zzzy"
-//            // Replace first three characters with a string.
-//            let start = letters.startIndex;
-//            let end = letters.index(letters.startIndex, offsetBy: 3);
-//            let result = letters.replacingCharacters(in: start..<end, with: "wh")
-//            // The result.
-//            print(result)
-            
-            
-            return cell
-            
-        } else {
-            let cell = forecastCollectionView.dequeueReusableCell(withReuseIdentifier: K.forecastCellIdentifier, for: indexPath) as! ForecastCell
-            
-            if forecastGroup.count != 0 {
-                cell.timeLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].timeString
-                cell.conditionImageView.image = UIImage(named: forecastGroup[selectedForcastGroup][indexPath.row].staticConditionName)
-                cell.tempLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].tempString
-            }
-            return cell
+        
+        let cell = forecastCollectionView.dequeueReusableCell(withReuseIdentifier: K.forecastCellIdentifier, for: indexPath) as! ForecastCell
+        
+//        if forecastGroup.count != 0 {
+//            //                cell.timeLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].timeString
+//            cell.timeLabel.numberOfLines = 2
+//            cell.timeLabel.text = forecastDateArray[indexPath.row] + "\n" + forecastGroup[selectedForcastGroup][indexPath.row].timeString
+//            cell.conditionImageView.image = UIImage(named: forecastGroup[selectedForcastGroup][indexPath.row].staticConditionName)
+//            cell.tempLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].tempString
+//        }
+//
+        
+//        while indexPath.row < 7 {
+        if !forecastArray.isEmpty {
+            cell.timeLabel.numberOfLines = 2
+            cell.timeLabel.text = forecastArray[indexPath.row].dateString + "\n" + forecastArray[indexPath.row].timeString
+            cell.conditionImageView.image = UIImage(named: forecastArray[indexPath.row].staticConditionName)
+            cell.tempLabel.text = forecastArray[indexPath.row].tempString
         }
+        return cell
+        
     }
     
     func formatDate(timestamp: String) -> String {
@@ -620,11 +589,7 @@ extension Sequence where Element: Hashable {
 
 extension MainVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == dateCollectionView {
-            return CGSize(width: 100, height: 40)
-        } else {
-            return CGSize(width: 100, height: 160)
-        }
+        return CGSize(width: 100, height: 160)
     }
 }
 
@@ -635,26 +600,6 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
 extension MainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == dateCollectionView {
-            guard let titleSmallBoldFont = WeatherfulFonts.titleSmallBold else { return }
-            let selectedCell = collectionView.cellForItem(at: indexPath) as! DateCell
-            selectedCell.dateLabel.configure(font: titleSmallBoldFont, color: .weatherfulWhite)
-            selectedForcastGroup = indexPath.row
-            print("selectedIndexPath: \(selectedForcastGroup)")
-            forecastCollectionView.reloadData()
-            forecastCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .right)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if collectionView == dateCollectionView {
-            guard let titleSmallFont = WeatherfulFonts.titleSmall else { return }
-            let deselectedCell = collectionView.cellForItem(at: indexPath) as! DateCell
-            deselectedCell.dateLabel.configure(font: titleSmallFont, color: .weatherfulLightGrey)
-        }
     }
 }
 
@@ -691,4 +636,13 @@ extension CLLocation {
 
 extension Date {
     var hour: Int { return Calendar.current.component(.hour, from: self) }
+}
+
+extension NSTextAttachment {
+    func setImageHeight(font: UIFont, height: CGFloat) {
+        guard let image = image else { return }
+        let ratio = image.size.width / image.size.height
+
+        bounds = CGRect(x: bounds.origin.x, y: (font.capHeight - height.rounded()) / 2, width: ratio * height, height: height)
+    }
 }
