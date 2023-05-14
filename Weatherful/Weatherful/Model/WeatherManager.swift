@@ -167,14 +167,24 @@ struct WeatherManager {
                      
                     let weather = list.weather[0]
                     let conditionId = weather.id
+                    let conditionDescription = list.weather[0].description.capitalizeFirstLetters
+                    
                     let temp = list.main.temp
+                    
+                    let wind = list.wind.speed
+                    let humidity = list.main.humidity
+                    
                     
                     let forecast = ForecastModel(cityName: cityName,
                                                  coordinates: Coord(lat: latitude, lon: longitude),
                                                  timeString: timeString,
                                                  dateString: formattedDateString,
                                                  conditionId: conditionId,
-                                                 temp: temp)
+                                                 conditionDescription: conditionDescription,
+                                                 temp: temp,
+                                                 wind: wind,
+                                                 humidity: humidity)
+                    
                     forecastArray.append(forecast)
                 }
                 return forecastArray

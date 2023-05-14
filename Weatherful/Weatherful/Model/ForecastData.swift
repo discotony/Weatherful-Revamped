@@ -21,4 +21,5 @@ struct List: Decodable {
     var dt: Int
     var main: Main
     var weather: [Weather]
+    var wind: Wind
 }

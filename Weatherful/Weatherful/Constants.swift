@@ -16,4 +16,11 @@ struct K {
     
     static let forecastCellIdentifier = String(describing: ForecastCell.self)
     static let forecastCellNibName = String(describing: ForecastCell.self)
+    
+    static let forecastHeaderCellIdentifier = String(describing: ForecastHeaderCell.self)
+    static let forecastHeaderNibName = String(describing: ForecastHeaderCell.self)
+    static let forecastDetailCellIdentifier = String(describing: ForecastDetailCell.self)
+    static let forecastDetailNibName = String(describing: ForecastDetailCell.self)
+    
+    static let showForecastDetailIdentifier = "showForecastDetail"
 }
