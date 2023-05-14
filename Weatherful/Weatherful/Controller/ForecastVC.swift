@@ -8,7 +8,7 @@
 import UIKit
 
 class ForecastVC: UIViewController {
-
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var forecastTableView: UITableView!
     
@@ -16,9 +16,19 @@ class ForecastVC: UIViewController {
     var forecastGroup = [[ForecastModel]]()
     var locationName = ""
     
+    enum SectionType {
+        case dayOne
+        case dayTwo
+        case dayThree
+        case dayFour
+        case dayFive
+    }
+    
+    var sections: [SectionType] = [.dayOne, .dayTwo, .dayThree, .dayFour, .dayFive]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setUpNavBar()
         setUpUI()
         setUpTableView()
@@ -46,40 +56,97 @@ class ForecastVC: UIViewController {
         forecastTableView.register(UINib(nibName: K.forecastHeaderNibName, bundle: nil), forCellReuseIdentifier: K.forecastHeaderCellIdentifier)
         
         forecastTableView.backgroundColor = .clear
-//        forecastTableView.separatorColor = .clear
-        forecastTableView.separatorColor = .weatherfulLightGrey.withAlphaComponent(0.1)
+        //        forecastTableView.separatorColor = .clear
+        forecastTableView.showsVerticalScrollIndicator = false
+        //        forecastTableView.separatorColor = .weatherfulLightGrey.withAlphaComponent(0.2)
+        forecastTableView.separatorColor = . clear
+        
     }
 }
 
 // MARK: - UITableViewDataSource
 extension ForecastVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return sections.count //FOLLOWUP
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecastArray.count
+        let sectionType = sections[section]
+        switch sectionType {
+        case .dayOne:
+            return forecastGroup[0].count
+        case .dayTwo:
+            return forecastGroup[1].count
+        case .dayThree:
+            return forecastGroup[2].count
+        case .dayFour:
+            return forecastGroup[3].count
+        case .dayFive:
+            return forecastGroup[5].count
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UIView()
+        //        let headerView = UIView()
         let headerCell = forecastTableView.dequeueReusableCell(withIdentifier: K.forecastHeaderCellIdentifier) as! ForecastHeaderCell
-//        headerView.addSubview(headerCell)
+        //        headerView.addSubview(headerCell)
+        
+        
+        let sectionType = sections[section]
+        switch sectionType {
+        case .dayOne:
+            headerCell.configure(text: forecastGroup[0][0].dateCompleteString)
+        case .dayTwo:
+            headerCell.configure(text: forecastGroup[1][0].dateCompleteString)
+        case .dayThree:
+            headerCell.configure(text: forecastGroup[2][0].dateCompleteString)
+        case .dayFour:
+            headerCell.configure(text: forecastGroup[3][0].dateCompleteString)
+        case .dayFive:
+            headerCell.configure(text: forecastGroup[4][0].dateCompleteString)
+        }
+        
         return headerCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = forecastTableView.dequeueReusableCell(withIdentifier: K.forecastDetailCellIdentifier, for: indexPath) as! ForecastDetailCell
         
-        let forecast = forecastArray[indexPath.row]
-        cell.timeLabel.text = forecast.timeString
-        cell.conditionImageView.image = UIImage(named: forecast.staticConditionName)
-        cell.conditionDescriptionLabel.text = forecast.conditionDescription
-        cell.tempLabel.text = forecast.tempString
-//        cell.windLabel.text = forecast.windString
-//        cell.humidityLabel.text = forecast.humidityString
+        let sectionType = sections[indexPath.section]
+        switch sectionType {
+        case .dayOne:
+            let forecast = forecastGroup[0][indexPath.row]
+            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+        case .dayTwo:
+            let forecast = forecastGroup[1][indexPath.row]
+            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+        case .dayThree:
+            let forecast = forecastGroup[2][indexPath.row]
+            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+        case .dayFour:
+            let forecast = forecastGroup[3][indexPath.row]
+            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+        case .dayFive:
+            let forecast = forecastGroup[4][indexPath.row]
+            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+        }
+        
+        
+        //        cell.windLabel.text = forecast.windString
+        //        cell.humidityLabel.text = forecast.humidityString
+        
+        
+        
+        // FOLLOWUP
+//        let bottomBorder = CALayer()
+//        if indexPath.row > 0 && indexPath.row < forecastArray.count  {
+//            bottomBorder.frame = CGRect(x: 16, y: 0, width: cell.contentView.frame.size.width - 32, height: 1.0)
+//            bottomBorder.backgroundColor = UIColor.weatherfulLightGrey.withAlphaComponent(0.1).cgColor
+//            cell.contentView.layer.addSublayer(bottomBorder)
+//        }
         
         cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -90,6 +157,7 @@ extension ForecastVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+    
 }
 
 
@@ -108,7 +176,7 @@ extension ForecastVC: UITableViewDelegate {
         cell.layer.mask = visibilityMaskForCell(cell: cell, location: (margin / Float(cell.frame.size.height) ))
         cell.layer.masksToBounds = true
     }
-
+    
     func visibilityMaskForCell(cell: UITableViewCell, location: Float) -> CAGradientLayer {
         let mask = CAGradientLayer()
         mask.frame = cell.bounds
@@ -118,7 +186,14 @@ extension ForecastVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        tableView.cellForRow(at: indexPath)?.backgroundColor = . systemTeal
+        performSegue(withIdentifier: K.showForecastDetailIdentifier, sender: self)
     }
-}
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == K.showForecastDetailIdentifier {
+            let destinationVC = segue.destination as! ForecastDetailVC
+            destinationVC.view.backgroundColor = .systemTeal
+        }
+    }
 
+}

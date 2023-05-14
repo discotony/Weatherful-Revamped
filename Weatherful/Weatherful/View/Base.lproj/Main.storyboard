@@ -288,7 +288,7 @@
                         <outlet property="weatherAnimationView" destination="n1D-al-pOn" id="Bcv-a9-HNs"/>
                         <outlet property="weatherConditionLabel" destination="w3Z-EY-n88" id="Bjk-dl-KMK"/>
                         <outlet property="windLabel" destination="RSj-DQ-c0a" id="Sg1-eb-Oj6"/>
-                        <segue destination="ddg-wC-arS" kind="show" identifier="showForecastDetail" id="eDL-sU-l4i"/>
+                        <segue destination="ddg-wC-arS" kind="show" identifier="showForecast" id="eDL-sU-l4i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -328,11 +328,28 @@
                     <connections>
                         <outlet property="backgroundImageView" destination="4RP-a3-fvU" id="7E7-LX-OA9"/>
                         <outlet property="forecastTableView" destination="R0y-sX-75D" id="6FO-Cl-OMN"/>
+                        <segue destination="Nah-3a-EtA" kind="show" identifier="showForecastDetail" id="Xv2-5Q-03C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PyB-BX-aRy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1850" y="3"/>
+        </scene>
+        <!--Forecast DetailVC-->
+        <scene sceneID="0cO-3q-pWp">
+            <objects>
+                <viewController id="Nah-3a-EtA" customClass="ForecastDetailVC" customModule="Weatherful" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uzG-WC-Nuh">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="43D-tk-4fB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OxA-Tc-cnx"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="04p-a3-bDM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2732" y="3"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Eg-Bb-R9l">

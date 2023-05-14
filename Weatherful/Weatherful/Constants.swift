@@ -22,5 +22,6 @@ struct K {
     static let forecastDetailCellIdentifier = String(describing: ForecastDetailCell.self)
     static let forecastDetailNibName = String(describing: ForecastDetailCell.self)
     
+    static let showForecastIdentifier = "showForecast"
     static let showForecastDetailIdentifier = "showForecastDetail"
 }
