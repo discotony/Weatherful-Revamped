@@ -15,6 +15,33 @@ struct ForecastModel {
     var timeString: String
     var dateString: String
 
+    var dateFullString: String
+    var dateCompleteString: String {
+//        let endIndex = dateString.index(dateString.startIndex, offsetBy: 3)
+        let day = dateString.prefix(3)
+//        let startIndex = dateString.index(dateString., offsetBy: <#T##Int#>)
+        let date = dateString.suffix(4)
+        print(day)
+        switch day {
+        case "Sun":
+            return "Sunday" + ", " + dateFullString
+        case "Mon":
+            return "Monday" + ", " + dateFullString
+        case "Tue":
+            return "Tuesday" + ", " + dateFullString
+        case "Wed":
+            return "Wednesday" + ", " + dateFullString
+        case "Thu":
+            return "Thursday" + ", " + dateFullString
+        case "Fri":
+            return "Friday" + ", " + dateFullString
+        case "Sat":
+            return "Saturday" + ", " + dateFullString
+        default:
+            print("Error fetching days")
+            return "Day"
+        }
+    }
 
                         
     var conditionId: Int

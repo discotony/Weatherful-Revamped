@@ -164,6 +164,8 @@ struct WeatherManager {
 //                    print("")
                     let timeString = formatTime(time: String(Array(convertedTimeStamp)[11...15]))
 //                    print("timeString: " + timeString)
+                    
+                    let dateFullString = formatFullDate(timestamp: convertedTimeStamp)
                      
                     let weather = list.weather[0]
                     let conditionId = weather.id
@@ -179,6 +181,7 @@ struct WeatherManager {
                                                  coordinates: Coord(lat: latitude, lon: longitude),
                                                  timeString: timeString,
                                                  dateString: formattedDateString,
+                                                 dateFullString: dateFullString,
                                                  conditionId: conditionId,
                                                  conditionDescription: conditionDescription,
                                                  temp: temp,
@@ -208,6 +211,40 @@ struct WeatherManager {
                 formattedString = formattedString.replace("", at: 3)
             }
             return formattedString
+        }
+        
+        func formatFullDate(timestamp: String) -> String {
+            let month = String(Array(timestamp)[5...6])
+            let date = String(Array(timestamp)[8...9])
+            switch month {
+            case "01":
+                return "January" + " " + date
+            case "02":
+                return "February" + " " + date
+            case "03":
+                return "March" + " " + date
+            case "04":
+                return "April" + " " + date
+            case "05":
+                return "May" + " " + date
+            case "06":
+                return "June" + " " + date
+            case "07":
+                return "July" + " " + date
+            case "08":
+                return "August" + " " + date
+            case "09":
+                return "September" + " " + date
+            case "10":
+                return "October" + " " + date
+            case "11":
+                return "November" + " " + date
+            case "12":
+                return "December" + " " + date
+            default:
+                print("Error fetching date")
+                return formatDate(timestamp: timestamp)
+            }
         }
 
         func getDayOfWeekString(date: String) -> String {

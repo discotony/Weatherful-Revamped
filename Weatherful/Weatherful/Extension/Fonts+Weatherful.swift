@@ -57,6 +57,8 @@ struct WeatherfulFonts {
     
     // MARK: - Forecast Temp Label
     static let forecastMedium = UIFont(name: "SFProText-Regular", size: 16.0)
+    
+    static let forecastLarge = UIFont(name: "SFProText-Regular", size: 18.0)
 }
 
 func listFontNames() {

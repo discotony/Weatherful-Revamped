@@ -316,22 +316,18 @@ class MainVC: UIViewController {
     }
     
     @IBAction func forecastDetailButtonPressed(_ sender: UIButton) {
-        self.performSegue(withIdentifier: K.showForecastDetailIdentifier, sender: self)
+        self.performSegue(withIdentifier: K.showForecastIdentifier, sender: self)
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.showForecastDetailIdentifier {
-//            let destinationVC = segue.destination as! ForecastdetailVC
+        if segue.identifier == K.showForecastIdentifier {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
             destinationVC.forecastGroup = forecastGroup
             destinationVC.locationName = locationName
         }
     }
-    
-    
-    
 }
 
 // MARK: - UITextFieldDelegate

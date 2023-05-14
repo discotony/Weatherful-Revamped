@@ -10,6 +10,7 @@ import UIKit
 class ForecastDetailCell: UITableViewCell {
 
     @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var conditionDescriptionLabel: UILabel!
@@ -23,8 +24,22 @@ class ForecastDetailCell: UITableViewCell {
     private func setUpUI() {
         self.backgroundColor = .clear
         overlayView.backgroundColor = .clear
-//        overlayView.backgroundColor = .weatherfulLightGrey.withAlphaComponent(0.1)
-//        overlayView.roundCorners()
+        borderView.backgroundColor = .weatherfulLightGrey.withAlphaComponent(0.1)
+        borderView.roundCorners()
+        
+        guard let forecastSmallFont = WeatherfulFonts.forecastSmall else { return }
+        guard let forecastMediumFont = WeatherfulFonts.forecastMedium else { return }
+        guard let forecastLargeFont = WeatherfulFonts.forecastLarge else { return }
+        timeLabel.configure(font: forecastSmallFont)
+        conditionDescriptionLabel.configure(font: forecastMediumFont)
+        tempLabel.configure(font: forecastMediumFont)
+    }
+    
+    func configure(time: String, imageName: String, condition: String, temp: String) {
+        timeLabel.text = time
+        conditionImageView.image = UIImage(named: imageName)
+        conditionDescriptionLabel.text = condition
+        tempLabel.text = temp
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -32,4 +47,10 @@ class ForecastDetailCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+//    override func prepareForReuse() {
+//        for view in subviews {
+//            view.backgroundColor = .clear
+//        }
+//    }
 }
