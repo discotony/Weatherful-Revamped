@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041200D62A1057E3007EF637 /* ForecastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200D52A1057E3007EF637 /* ForecastVC.swift */; };
+		041200D82A105A65007EF637 /* UIImageView+Weatherful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200D72A105A65007EF637 /* UIImageView+Weatherful.swift */; };
+		041200DB2A106F1A007EF637 /* ForecastDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200D92A106F1A007EF637 /* ForecastDetailCell.swift */; };
+		041200DC2A106F1A007EF637 /* ForecastDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041200DA2A106F1A007EF637 /* ForecastDetailCell.xib */; };
+		041200DF2A109C95007EF637 /* ForecastHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200DD2A109C95007EF637 /* ForecastHeaderCell.swift */; };
+		041200E02A109C95007EF637 /* ForecastHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */; };
 		0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD529F8E7EE0057098E /* DateCell.swift */; };
 		0440BAD829F8E7EE0057098E /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAD629F8E7EE0057098E /* DateCell.xib */; };
 		0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD929F8E8050057098E /* ForecastCell.swift */; };
@@ -23,9 +29,6 @@
 		04C1128F29F47C9900119130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C1128D29F47C9900119130 /* Main.storyboard */; };
 		04C1129129F47C9A00119130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C1129029F47C9A00119130 /* Assets.xcassets */; };
 		04C1129429F47C9A00119130 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C1129229F47C9A00119130 /* LaunchScreen.storyboard */; };
-		04C1129F29F47C9A00119130 /* WeatherfulTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1129E29F47C9A00119130 /* WeatherfulTests.swift */; };
-		04C112A929F47C9A00119130 /* WeatherfulUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C112A829F47C9A00119130 /* WeatherfulUITests.swift */; };
-		04C112AB29F47C9A00119130 /* WeatherfulUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C112AA29F47C9A00119130 /* WeatherfulUITestsLaunchTests.swift */; };
 		04C112D329F4AC3400119130 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04C112C129F4AC3300119130 /* SF-Pro-Text-Regular.otf */; };
 		04C112D529F4AC3400119130 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04C112C329F4AC3300119130 /* SF-Pro-Text-Medium.otf */; };
 		04C112D929F4AC3400119130 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04C112C729F4AC3400119130 /* SF-Pro-Text-Bold.otf */; };
@@ -85,24 +88,13 @@
 		C5649DAD3502BD3DF01C988C /* Pods_Weatherful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED34BEEAC5C806A91A4497D /* Pods_Weatherful.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		04C1129B29F47C9A00119130 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04C1127C29F47C9900119130 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 04C1128329F47C9900119130;
-			remoteInfo = Weatherful;
-		};
-		04C112A529F47C9A00119130 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04C1127C29F47C9900119130 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 04C1128329F47C9900119130;
-			remoteInfo = Weatherful;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		041200D52A1057E3007EF637 /* ForecastVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastVC.swift; sourceTree = "<group>"; };
+		041200D72A105A65007EF637 /* UIImageView+Weatherful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Weatherful.swift"; sourceTree = "<group>"; };
+		041200D92A106F1A007EF637 /* ForecastDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDetailCell.swift; sourceTree = "<group>"; };
+		041200DA2A106F1A007EF637 /* ForecastDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastDetailCell.xib; sourceTree = "<group>"; };
+		041200DD2A109C95007EF637 /* ForecastHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastHeaderCell.swift; sourceTree = "<group>"; };
+		041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastHeaderCell.xib; sourceTree = "<group>"; };
 		0440BAD529F8E7EE0057098E /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		0440BAD629F8E7EE0057098E /* DateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
 		0440BAD929F8E8050057098E /* ForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCell.swift; sourceTree = "<group>"; };
@@ -121,9 +113,7 @@
 		04C1129029F47C9A00119130 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04C1129329F47C9A00119130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04C1129529F47C9A00119130 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04C1129A29F47C9A00119130 /* WeatherfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C1129E29F47C9A00119130 /* WeatherfulTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherfulTests.swift; sourceTree = "<group>"; };
-		04C112A429F47C9A00119130 /* WeatherfulUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherfulUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C112A829F47C9A00119130 /* WeatherfulUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherfulUITests.swift; sourceTree = "<group>"; };
 		04C112AA29F47C9A00119130 /* WeatherfulUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherfulUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		04C112C129F4AC3300119130 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -196,20 +186,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04C1129729F47C9A00119130 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04C112A129F47C9A00119130 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -229,8 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				04C1128429F47C9900119130 /* Weatherful.app */,
-				04C1129A29F47C9A00119130 /* WeatherfulTests.xctest */,
-				04C112A429F47C9A00119130 /* WeatherfulUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -286,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				04C1128B29F47C9900119130 /* MainVC.swift */,
+				041200D52A1057E3007EF637 /* ForecastVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -299,6 +274,7 @@
 				04C1130929F4ADC800119130 /* UIView+Weatherful.swift */,
 				04C1130B29F4ADD300119130 /* UILabel+Weatherful.swift */,
 				04C1130D29F4ADE000119130 /* UIImage+Weatherful.swift */,
+				041200D72A105A65007EF637 /* UIImageView+Weatherful.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -324,6 +300,10 @@
 				0440BAD629F8E7EE0057098E /* DateCell.xib */,
 				0440BAD929F8E8050057098E /* ForecastCell.swift */,
 				0440BADA29F8E8050057098E /* ForecastCell.xib */,
+				041200DD2A109C95007EF637 /* ForecastHeaderCell.swift */,
+				041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */,
+				041200D92A106F1A007EF637 /* ForecastDetailCell.swift */,
+				041200DA2A106F1A007EF637 /* ForecastDetailCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -451,42 +431,6 @@
 			productReference = 04C1128429F47C9900119130 /* Weatherful.app */;
 			productType = "com.apple.product-type.application";
 		};
-		04C1129929F47C9A00119130 /* WeatherfulTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 04C112B129F47C9A00119130 /* Build configuration list for PBXNativeTarget "WeatherfulTests" */;
-			buildPhases = (
-				04C1129629F47C9A00119130 /* Sources */,
-				04C1129729F47C9A00119130 /* Frameworks */,
-				04C1129829F47C9A00119130 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				04C1129C29F47C9A00119130 /* PBXTargetDependency */,
-			);
-			name = WeatherfulTests;
-			productName = WeatherfulTests;
-			productReference = 04C1129A29F47C9A00119130 /* WeatherfulTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		04C112A329F47C9A00119130 /* WeatherfulUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 04C112B429F47C9A00119130 /* Build configuration list for PBXNativeTarget "WeatherfulUITests" */;
-			buildPhases = (
-				04C112A029F47C9A00119130 /* Sources */,
-				04C112A129F47C9A00119130 /* Frameworks */,
-				04C112A229F47C9A00119130 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				04C112A629F47C9A00119130 /* PBXTargetDependency */,
-			);
-			name = WeatherfulUITests;
-			productName = WeatherfulUITests;
-			productReference = 04C112A429F47C9A00119130 /* WeatherfulUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -499,14 +443,6 @@
 				TargetAttributes = {
 					04C1128329F47C9900119130 = {
 						CreatedOnToolsVersion = 14.3;
-					};
-					04C1129929F47C9A00119130 = {
-						CreatedOnToolsVersion = 14.3;
-						TestTargetID = 04C1128329F47C9900119130;
-					};
-					04C112A329F47C9A00119130 = {
-						CreatedOnToolsVersion = 14.3;
-						TestTargetID = 04C1128329F47C9900119130;
 					};
 				};
 			};
@@ -524,8 +460,6 @@
 			projectRoot = "";
 			targets = (
 				04C1128329F47C9900119130 /* Weatherful */,
-				04C1129929F47C9A00119130 /* WeatherfulTests */,
-				04C112A329F47C9A00119130 /* WeatherfulUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -536,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D2631029F5D3A800233FAF /* smoke.svg in Resources */,
+				041200DC2A106F1A007EF637 /* ForecastDetailCell.xib in Resources */,
 				04D2630629F5D31400233FAF /* fog.json in Resources */,
 				04D2630429F5D30A00233FAF /* fog.svg in Resources */,
 				04C1129429F47C9A00119130 /* LaunchScreen.storyboard in Resources */,
@@ -564,6 +499,7 @@
 				04D2633729F5DBEC00233FAF /* not-available-night.svg in Resources */,
 				04D2633329F5DBCF00233FAF /* not-available-night.json in Resources */,
 				04D2632329F5D81C00233FAF /* rain.json in Resources */,
+				041200E02A109C95007EF637 /* ForecastHeaderCell.xib in Resources */,
 				04D2631229F5D3B500233FAF /* smoke.json in Resources */,
 				04D2631C29F5D79300233FAF /* sleet.svg in Resources */,
 				04D262F229F5D02A00233FAF /* partly-cloudy-night.json in Resources */,
@@ -590,20 +526,6 @@
 				04D2632129F5D81400233FAF /* rain.svg in Resources */,
 				04D2632529F5D84400233FAF /* drizzle.svg in Resources */,
 				04D262FA29F5D0B100233FAF /* tornado.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04C1129829F47C9A00119130 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04C112A229F47C9A00119130 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +583,7 @@
 				04C1131629F4D09F00119130 /* WeatherManager.swift in Sources */,
 				04C1130C29F4ADD300119130 /* UILabel+Weatherful.swift in Sources */,
 				0440BAEB2A0C8D1F0057098E /* ForecastData.swift in Sources */,
+				041200DB2A106F1A007EF637 /* ForecastDetailCell.swift in Sources */,
 				0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */,
 				0440BAE029F8E9710057098E /* Constants.swift in Sources */,
 				0440BAE92A0C8C8A0057098E /* ForecastModel.swift in Sources */,
@@ -669,44 +592,17 @@
 				04C1128829F47C9900119130 /* AppDelegate.swift in Sources */,
 				04C1130829F4ADBE00119130 /* UIColor+Weatherful.swift in Sources */,
 				04C1131029F4ADF100119130 /* Fonts+Weatherful.swift in Sources */,
+				041200D62A1057E3007EF637 /* ForecastVC.swift in Sources */,
 				04C1128A29F47C9900119130 /* SceneDelegate.swift in Sources */,
 				04C1130E29F4ADE000119130 /* UIImage+Weatherful.swift in Sources */,
 				04C1131A29F4D0B000119130 /* WeatherData.swift in Sources */,
+				041200DF2A109C95007EF637 /* ForecastHeaderCell.swift in Sources */,
+				041200D82A105A65007EF637 /* UIImageView+Weatherful.swift in Sources */,
 				04C1131829F4D0A900119130 /* WeatherModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04C1129629F47C9A00119130 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				04C1129F29F47C9A00119130 /* WeatherfulTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04C112A029F47C9A00119130 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				04C112A929F47C9A00119130 /* WeatherfulUITests.swift in Sources */,
-				04C112AB29F47C9A00119130 /* WeatherfulUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		04C1129C29F47C9A00119130 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 04C1128329F47C9900119130 /* Weatherful */;
-			targetProxy = 04C1129B29F47C9A00119130 /* PBXContainerItemProxy */;
-		};
-		04C112A629F47C9A00119130 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 04C1128329F47C9900119130 /* Weatherful */;
-			targetProxy = 04C112A529F47C9A00119130 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		04C1128D29F47C9900119130 /* Main.storyboard */ = {
@@ -854,11 +750,11 @@
 				DEVELOPMENT_TEAM = X6JB7G9XQ7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weatherful/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your current location to get the most accurate weather data.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -885,11 +781,11 @@
 				DEVELOPMENT_TEAM = X6JB7G9XQ7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weatherful/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your current location to get the most accurate weather data.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -901,82 +797,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		04C112B229F47C9A00119130 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X6JB7G9XQ7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.antonybluemel.WeatherfulTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Weatherful.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Weatherful";
-			};
-			name = Debug;
-		};
-		04C112B329F47C9A00119130 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X6JB7G9XQ7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.antonybluemel.WeatherfulTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Weatherful.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Weatherful";
-			};
-			name = Release;
-		};
-		04C112B529F47C9A00119130 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X6JB7G9XQ7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.antonybluemel.WeatherfulUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Weatherful;
-			};
-			name = Debug;
-		};
-		04C112B629F47C9A00119130 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X6JB7G9XQ7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.antonybluemel.WeatherfulUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Weatherful;
 			};
 			name = Release;
 		};
@@ -997,24 +817,6 @@
 			buildConfigurations = (
 				04C112AF29F47C9A00119130 /* Debug */,
 				04C112B029F47C9A00119130 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		04C112B129F47C9A00119130 /* Build configuration list for PBXNativeTarget "WeatherfulTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				04C112B229F47C9A00119130 /* Debug */,
-				04C112B329F47C9A00119130 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		04C112B429F47C9A00119130 /* Build configuration list for PBXNativeTarget "WeatherfulUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				04C112B529F47C9A00119130 /* Debug */,
-				04C112B629F47C9A00119130 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

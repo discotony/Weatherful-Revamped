@@ -15,10 +15,10 @@ struct ForecastModel {
     var timeString: String
     var dateString: String
 
-//    var dateGroup: [[String: String]]
-//    var
+
                         
     var conditionId: Int
+    var conditionDescription: String
     
     var staticConditionName: String {
         switch conditionId {
@@ -83,5 +83,16 @@ struct ForecastModel {
     
     var tempString: String {
         return String(Int(temp)) + "°F"
+    }
+    
+    var wind: Double
+    var humidity: Int
+    
+    var windString: String {
+        return String(format: "%.1f", wind) + " mph"
+    }
+    
+    var humidityString: String {
+        return "\(humidity) %"
     }
 }

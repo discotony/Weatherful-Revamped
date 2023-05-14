@@ -46,7 +46,8 @@ class MainVC: UIViewController {
     var location: CLLocation?
     
     var conditionName = ""
-    var homeCity = ""
+    var homeCity = "" //FOLLOWUP
+    var locationName = "" //FOLLOWUP
     var didRequestHomeLocation = true
     var forecastArray = [ForecastModel]()
     var forecastGroup = [[ForecastModel]]()
@@ -86,9 +87,16 @@ class MainVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        backgroundImageView.updateBackground()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+
     
     private func updateConditionImage() {
         let currHour = Date().hour
@@ -136,7 +144,6 @@ class MainVC: UIViewController {
     //    }
     
     private func setUpUI() {
-        changeBackground()
         headerView.backgroundColor = .clear
         self.headerView.roundCorners()
         guard let titleLargeFont = WeatherfulFonts.titmeLarge else { return }
@@ -178,42 +185,48 @@ class MainVC: UIViewController {
         headerDetailAttachment.image = UIImage(systemName: "chevron.forward")?.withTintColor(.weatherfulWhite)
         headerDetailAttachment.setImageHeight(font: titleSmallFont, height: 12)
         
-        let headerDetailTitle = NSMutableAttributedString(string: "Next 5 DAYS ")
+//        let headerDetailTitle = NSMutableAttributedString(string: "Next 5 DAYS ")
+        
+        let headerDetailTitle = NSMutableAttributedString(string: "Next 5 DAYS ", attributes: [NSAttributedString.Key.font : titleSmallFont])
         headerDetailTitle.append(NSAttributedString(attachment: headerDetailAttachment))
         
+//        let headerTitle = NSAttributedString
+//        headerLabelTitle.addAttribute(NSAttributedString.Key.font, value: titleSmallFont, range: NSRange()
+        
         forecastDetailButton.titleLabel?.font = titleSmallFont
-        forecastDetailButton.titleLabel?.attributedText = headerDetailTitle
-//        forecastDetailButton.titleLabel?.textAlignment = .right
+//        forecastDetailButton.
+        forecastDetailButton.setAttributedTitle(headerDetailTitle, for: .normal)
+        
     }
     
-    private func changeBackground(){
-        switch Date().hour {
-        case 00...04:
-            backgroundImageView.image = UIImage(named: "00-04")
-        case 5:
-            backgroundImageView.image = UIImage(named: "05")
-        case 6...7:
-            backgroundImageView.image = UIImage(named: "06-07")
-        case 8...9:
-            backgroundImageView.image = UIImage(named: "08-09")
-        case 10...11:
-            backgroundImageView.image = UIImage(named: "10-11")
-        case 12...15:
-            backgroundImageView.image = UIImage(named: "12-15")
-        case 16...18:
-            backgroundImageView.image = UIImage(named: "16-18")
-        case 19:
-            backgroundImageView.image = UIImage(named: "19")
-        case 20:
-            backgroundImageView.image = UIImage(named: "20")
-        case 21:
-            backgroundImageView.image = UIImage(named: "21")
-        case 22...24: // FOLLOWUP
-            backgroundImageView.image = UIImage(named: "22-23")
-        default:
-            break
-        }
-    }
+//    private func changeBackground(){
+//        switch Date().hour {
+//        case 00...04:
+//            backgroundImageView.image = UIImage(named: "00-04")
+//        case 5:
+//            backgroundImageView.image = UIImage(named: "05")
+//        case 6...7:
+//            backgroundImageView.image = UIImage(named: "06-07")
+//        case 8...9:
+//            backgroundImageView.image = UIImage(named: "08-09")
+//        case 10...11:
+//            backgroundImageView.image = UIImage(named: "10-11")
+//        case 12...15:
+//            backgroundImageView.image = UIImage(named: "12-15")
+//        case 16...18:
+//            backgroundImageView.image = UIImage(named: "16-18")
+//        case 19:
+//            backgroundImageView.image = UIImage(named: "19")
+//        case 20:
+//            backgroundImageView.image = UIImage(named: "20")
+//        case 21:
+//            backgroundImageView.image = UIImage(named: "21")
+//        case 22...24: // FOLLOWUP
+//            backgroundImageView.image = UIImage(named: "22-23")
+//        default:
+//            break
+//        }
+//    }
     
     private func resetPlaceholder() {
         cityLabel.text = ""
@@ -303,7 +316,21 @@ class MainVC: UIViewController {
     }
     
     @IBAction func forecastDetailButtonPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: K.showForecastDetailIdentifier, sender: self)
+        
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == K.showForecastDetailIdentifier {
+//            let destinationVC = segue.destination as! ForecastdetailVC
+            let destinationVC = segue.destination as! ForecastVC
+            destinationVC.forecastArray = forecastArray
+            destinationVC.forecastGroup = forecastGroup
+            destinationVC.locationName = locationName
+        }
+    }
+    
+    
     
 }
 
@@ -368,6 +395,7 @@ extension MainVC: WeatherManagerDelegate {
                         }
                     }
                     self.cityLabel.text?.append(", \(area)")
+                    self.locationName = weather.cityName + ", \(area)"
                 }
             }
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
@@ -392,17 +420,19 @@ extension MainVC: WeatherManagerDelegate {
             
             
             
-//            var dateArray = [String]()
-//            var index = 0
-//            while (index < forecast.count) {
-//                //                print("date" + forecastArray[index].dateString)
-//                dateArray.append(forecast[index].dateString)
-//                index += 1
-//            }
+            //FOLLOWUP
+            var dateArray = [String]()
+            var index = 0
+            while (index < forecast.count) {
+                //                print("date" + forecastArray[index].dateString)
+                dateArray.append(forecast[index].dateString)
+                index += 1
+            }
 //            print("datearray: \(dateArray)")
-//            self.forecastDateArray = dateArray.uniqued()
+            self.forecastDateArray = dateArray.uniqued()
 //            print("unique dates: \(self.forecastDateArray)")
-//            self.forecastGroup = self.groupForecast(forecastArray: forecast)
+            self.forecastGroup = self.groupForecast(forecastArray: forecast)
+            print(self.forecastGroup.count)
             self.forecastCollectionView.reloadData()
         }
     }
