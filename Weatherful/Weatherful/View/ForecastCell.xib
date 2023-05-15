@@ -22,35 +22,49 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PKw-gf-AAe">
                         <rect key="frame" x="0.0" y="0.0" width="209" height="337"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ooF-8T-xna">
-                                <rect key="frame" x="72.666666666666671" y="78.666666666666686" width="64.000000000000014" height="180"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kjt-06-usO">
+                                <rect key="frame" x="54.666666666666657" y="97" width="100" height="143"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cX8-cP-uKG">
-                                        <rect key="frame" x="0.0" y="0.0" width="64" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="weatherfullTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="pEC-Pt-3Ni">
+                                        <rect key="frame" x="33.000000000000007" y="0.0" width="33.999999999999993" height="42.666666666666664"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="or6-Z1-J3M">
+                                                <rect key="frame" x="0.0" y="0.0" width="34" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" name="weatherfullTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cX8-cP-uKG">
+                                                <rect key="frame" x="0.0" y="22.333333333333329" width="34" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" name="weatherfullTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Urg-7a-MI6">
-                                        <rect key="frame" x="0.0" y="57.999999999999986" width="64" height="64"/>
+                                        <rect key="frame" x="18.000000000000007" y="50.666666666666657" width="63.999999999999993" height="64"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="64" id="hWM-GF-VWy"/>
                                             <constraint firstAttribute="width" secondItem="Urg-7a-MI6" secondAttribute="height" multiplier="1:1" id="jh9-Ro-VO6"/>
-                                            <constraint firstAttribute="width" constant="64" id="qj5-YB-HNb"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc6-1K-odL">
-                                        <rect key="frame" x="0.0" y="130" width="64" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="temp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc6-1K-odL">
+                                        <rect key="frame" x="30.333333333333332" y="122.66666666666664" width="39.333333333333343" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="weatherfullTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="4x2-6K-DZF"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ooF-8T-xna" firstAttribute="centerX" secondItem="PKw-gf-AAe" secondAttribute="centerX" id="EXB-6W-eQf"/>
-                            <constraint firstItem="ooF-8T-xna" firstAttribute="centerY" secondItem="PKw-gf-AAe" secondAttribute="centerY" id="ttP-tE-0Mi"/>
+                            <constraint firstItem="Kjt-06-usO" firstAttribute="centerY" secondItem="PKw-gf-AAe" secondAttribute="centerY" id="apG-y2-ofX"/>
+                            <constraint firstItem="Kjt-06-usO" firstAttribute="centerX" secondItem="PKw-gf-AAe" secondAttribute="centerX" id="gxC-QP-f8y"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -65,6 +79,7 @@
             <size key="customSize" width="209" height="337"/>
             <connections>
                 <outlet property="conditionImageView" destination="Urg-7a-MI6" id="xRe-uX-nwZ"/>
+                <outlet property="dateLabel" destination="or6-Z1-J3M" id="NKR-dE-YTc"/>
                 <outlet property="overlayView" destination="PKw-gf-AAe" id="Eln-tJ-HYo"/>
                 <outlet property="tempLabel" destination="zc6-1K-odL" id="KCr-BE-i1c"/>
                 <outlet property="timeLabel" destination="cX8-cP-uKG" id="W7n-92-EYs"/>
@@ -74,7 +89,7 @@
     </objects>
     <resources>
         <namedColor name="weatherfullTextColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -12,42 +12,25 @@ import Foundation
 struct ForecastModel {
     var cityName: String
     var coordinates: Coord
-    var timeString: String
-    var dateString: String
-
-    var dateFullString: String
-    var dateCompleteString: String {
-//        let endIndex = dateString.index(dateString.startIndex, offsetBy: 3)
-        let day = dateString.prefix(3)
-//        let startIndex = dateString.index(dateString., offsetBy: <#T##Int#>)
-        let date = dateString.suffix(4)
-        print(day)
-        switch day {
-        case "Sun":
-            return "Sunday" + ", " + dateFullString
-        case "Mon":
-            return "Monday" + ", " + dateFullString
-        case "Tue":
-            return "Tuesday" + ", " + dateFullString
-        case "Wed":
-            return "Wednesday" + ", " + dateFullString
-        case "Thu":
-            return "Thursday" + ", " + dateFullString
-        case "Fri":
-            return "Friday" + ", " + dateFullString
-        case "Sat":
-            return "Saturday" + ", " + dateFullString
-        default:
-            print("Error fetching days")
-            return "Day"
-        }
+    
+    var weatherDate: WeatherDate
+    var dateShort: String {
+        return weatherDate.dateShort
     }
-
-                        
+    var dateFull: String {
+        return weatherDate.dateFull
+    }
+    var dateExpanded: String {
+        return weatherDate.dateExpanded
+    }
+    var time: String {
+        return weatherDate.time
+    }
+    
     var conditionId: Int
     var conditionDescription: String
     
-    var staticConditionName: String {
+    var conditionImageName: String {
         switch conditionId {
             // thunderstorm
         case 200...202:
@@ -107,19 +90,7 @@ struct ForecastModel {
     }
     
     var temp: Double
-    
     var tempString: String {
         return String(Int(temp)) + "°F"
-    }
-    
-    var wind: Double
-    var humidity: Int
-    
-    var windString: String {
-        return String(format: "%.1f", wind) + " mph"
-    }
-    
-    var humidityString: String {
-        return "\(humidity) %"
     }
 }

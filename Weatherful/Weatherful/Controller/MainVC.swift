@@ -146,7 +146,7 @@ class MainVC: UIViewController {
     private func setUpUI() {
         headerView.backgroundColor = .clear
         self.headerView.roundCorners()
-        guard let titleLargeFont = WeatherfulFonts.titmeLarge else { return }
+        guard let titleLargeFont = WeatherfulFonts.titleLarge else { return }
         cityLabel.configure(font: titleLargeFont)
         searchTextField.backgroundColor = .clear
         searchTextField.textColor = .weatherfulWhite
@@ -421,7 +421,7 @@ extension MainVC: WeatherManagerDelegate {
             var index = 0
             while (index < forecast.count) {
                 //                print("date" + forecastArray[index].dateString)
-                dateArray.append(forecast[index].dateString)
+                dateArray.append(forecast[index].dateShort)
                 index += 1
             }
 //            print("datearray: \(dateArray)")
@@ -446,15 +446,15 @@ extension MainVC: WeatherManagerDelegate {
         print("forecastDateArray.count: \(forecastDateArray.count)")
         print("")
         for forecast in forecastArray {
-            if forecast.dateString == forecastDateArray[0] {
+            if forecast.dateShort == forecastDateArray[0] {
                 groupOne.append(forecast)
-            } else if forecast.dateString == forecastDateArray[1] {
+            } else if forecast.dateShort == forecastDateArray[1] {
                 groupTwo.append(forecast)
-            } else if forecast.dateString == forecastDateArray[2] {
+            } else if forecast.dateShort == forecastDateArray[2] {
                 groupThree.append(forecast)
-            } else if forecast.dateString == forecastDateArray[3] {
+            } else if forecast.dateShort == forecastDateArray[3] {
                 groupFour.append(forecast)
-            } else if forecast.dateString == forecastDateArray[4] {
+            } else if forecast.dateShort == forecastDateArray[4] {
                 groupFive.append(forecast)
             } else {
                 groupSix.append(forecast)
@@ -575,10 +575,8 @@ extension MainVC: UICollectionViewDataSource {
         
 //        while indexPath.row < 7 {
         if !forecastArray.isEmpty {
-            cell.timeLabel.numberOfLines = 2
-            cell.timeLabel.text = forecastArray[indexPath.row].dateString + "\n" + forecastArray[indexPath.row].timeString
-            cell.conditionImageView.image = UIImage(named: forecastArray[indexPath.row].staticConditionName)
-            cell.tempLabel.text = forecastArray[indexPath.row].tempString
+            let forecast = forecastArray[indexPath.row]
+            cell.configure(date: forecast.dateShort, time: forecast.time, imageName: forecast.conditionImageName, temp: forecast.tempString)
         }
         return cell
         

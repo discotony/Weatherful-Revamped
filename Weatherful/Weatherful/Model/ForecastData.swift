@@ -18,8 +18,7 @@ struct City: Decodable {
 }
 
 struct List: Decodable {
-    var dt: Int
+    var dt: Double
     var main: Main
     var weather: [Weather]
-    var wind: Wind
 }

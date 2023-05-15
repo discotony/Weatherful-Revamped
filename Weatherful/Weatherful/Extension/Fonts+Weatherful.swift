@@ -32,8 +32,12 @@ struct WeatherfulFonts {
     // MARK: - <#Section Heading#>
     static let titleXL = UIFont(name: "SFProText-Bold", size: 84.0)
     
-    // MARK: - <#Section Heading#>
-    static let titmeLarge = UIFont(name: "SFProText-Bold", size: 20.0)
+    // MARK: - Section Heading
+    static let titleLarge = UIFont(name: "SFProText-Bold", size: 20.0)
+    
+    
+    // MARK: - Section Heading
+    static let titleMedium = UIFont(name: "SFProText-Bold", size: 18.0)
     
     // MARK: - <#Section Heading#>
     static let captionLarge = UIFont(name: "SFProText-Regular", size: 20.0)
