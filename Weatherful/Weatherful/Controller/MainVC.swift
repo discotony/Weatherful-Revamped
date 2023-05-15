@@ -38,34 +38,21 @@ class MainVC: UIViewController {
     @IBOutlet weak var forecastDetailButton: UIButton!
     @IBOutlet weak var forecastCollectionView: UICollectionView!
     
-    private var isSearchTriggered: Bool = true
-    private var tempUnits: [tempUnits] = [.metric, .imperial]
+    private var isSearchTriggered: Bool = true // FOLLOWUP
+    private var tempUnits: [tempUnits] = [.metric, .imperial] // FOLLOWUP
     
     var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
     var location: CLLocation?
     
     var conditionName = ""
-    var homeCity = "" //FOLLOWUP
-    var locationName = "" //FOLLOWUP
+    var homeLocation = ""
     var didRequestHomeLocation = true
     var forecastArray = [ForecastModel]()
     var forecastGroup = [[ForecastModel]]()
     var forecastDateArray = [String]()
     
-    var selectedForcastGroup = 0
-    
     var timer = Timer()
-    
-    enum SectionType {
-        case dayOne
-        case dayTwo
-        case dayThree
-        case dayFour
-        case dayFive
-    }
-    
-    var sections: [SectionType] = [.dayOne, .dayTwo, .dayThree, .dayFour, .dayFive]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,8 +65,6 @@ class MainVC: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
-        forecastCollectionView.dataSource = self
-        forecastCollectionView.delegate = self
         setUpHeaderCollectionView()
         
         view.showBlurLoader()
@@ -88,15 +73,13 @@ class MainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        backgroundImageView.updateBackground()
+        backgroundImageView.updateBackground() // FOLLOWUP
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
-
     
     private func updateConditionImage() {
         let currHour = Date().hour
@@ -121,7 +104,6 @@ class MainVC: UIViewController {
                 newCondition = "not-available-day"
             }
         }
-        
         weatherAnimationView.animation = LottieAnimation.named(newCondition)
         weatherAnimationView.play()
         weatherAnimationView.loopMode = .loop
@@ -129,23 +111,13 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        updateConditionImage()
+        updateConditionImage() // FOLLOWUP
     }
-    
-    //    private func setUpAppIcon() {
-    //        if #available(iOS 13.0, *) {
-    //            if self.traitCollection.userInterfaceStyle == .dark {
-    //               UIApplication.shared.setAlternateIconName("AppIcon-DarkMode")
-    //            } else {
-    //                UIApplication.shared.setAlternateIconName(nil)
-    //            }
-    //        }
-    //    }
     
     private func setUpUI() {
         headerView.backgroundColor = .clear
         self.headerView.roundCorners()
+        
         guard let titleLargeFont = WeatherfulFonts.titleLarge else { return }
         cityLabel.configure(font: titleLargeFont)
         searchTextField.backgroundColor = .clear
@@ -168,65 +140,24 @@ class MainVC: UIViewController {
         maxMinTempLabel.configure(font: captionMediumFont)
         windLabel.configure(font: captionMediumFont)
         humidityLabel.configure(font: captionMediumFont)
- 
-        guard let titleSmallFont = WeatherfulFonts.titleSmall else { return }
         
+        guard let titleSmallFont = WeatherfulFonts.titleSmall else { return }
         let headerLabelAttachment = NSTextAttachment()
         headerLabelAttachment.image = UIImage(systemName: "chart.xyaxis.line")?.withTintColor(.weatherfulWhite)
         headerLabelAttachment.setImageHeight(font: titleSmallFont, height: 12)
         let headerLabelTitle = NSMutableAttributedString(string: " 24 HR FORECAST")
         headerLabelTitle.insert(NSAttributedString(attachment: headerLabelAttachment), at: 0)
-        
         forecastHeaderLabel.configure(font: titleSmallFont)
         forecastHeaderLabel.attributedText = headerLabelTitle
         
-        let headerDetailAttachment = NSTextAttachment()
-//        imageAttachment.image = UIImage(named: "icon_right_arrow")
-        headerDetailAttachment.image = UIImage(systemName: "chevron.forward")?.withTintColor(.weatherfulWhite)
-        headerDetailAttachment.setImageHeight(font: titleSmallFont, height: 12)
-        
-//        let headerDetailTitle = NSMutableAttributedString(string: "Next 5 DAYS ")
-        
-        let headerDetailTitle = NSMutableAttributedString(string: "Next 5 DAYS ", attributes: [NSAttributedString.Key.font : titleSmallFont])
-        headerDetailTitle.append(NSAttributedString(attachment: headerDetailAttachment))
-        
-//        let headerTitle = NSAttributedString
-//        headerLabelTitle.addAttribute(NSAttributedString.Key.font, value: titleSmallFont, range: NSRange()
-        
+        let forecastButtonAttachment = NSTextAttachment()
+        forecastButtonAttachment.image = UIImage(systemName: "chevron.forward")?.withTintColor(.weatherfulWhite)
+        forecastButtonAttachment.setImageHeight(font: titleSmallFont, height: 12)
+        let forecastButtonTitle = NSMutableAttributedString(string: "Next 5 DAYS ", attributes: [NSAttributedString.Key.font : titleSmallFont])
+        forecastButtonTitle.append(NSAttributedString(attachment: forecastButtonAttachment))
         forecastDetailButton.titleLabel?.font = titleSmallFont
-//        forecastDetailButton.
-        forecastDetailButton.setAttributedTitle(headerDetailTitle, for: .normal)
-        
+        forecastDetailButton.setAttributedTitle(forecastButtonTitle, for: .normal)
     }
-    
-//    private func changeBackground(){
-//        switch Date().hour {
-//        case 00...04:
-//            backgroundImageView.image = UIImage(named: "00-04")
-//        case 5:
-//            backgroundImageView.image = UIImage(named: "05")
-//        case 6...7:
-//            backgroundImageView.image = UIImage(named: "06-07")
-//        case 8...9:
-//            backgroundImageView.image = UIImage(named: "08-09")
-//        case 10...11:
-//            backgroundImageView.image = UIImage(named: "10-11")
-//        case 12...15:
-//            backgroundImageView.image = UIImage(named: "12-15")
-//        case 16...18:
-//            backgroundImageView.image = UIImage(named: "16-18")
-//        case 19:
-//            backgroundImageView.image = UIImage(named: "19")
-//        case 20:
-//            backgroundImageView.image = UIImage(named: "20")
-//        case 21:
-//            backgroundImageView.image = UIImage(named: "21")
-//        case 22...24: // FOLLOWUP
-//            backgroundImageView.image = UIImage(named: "22-23")
-//        default:
-//            break
-//        }
-//    }
     
     private func resetPlaceholder() {
         cityLabel.text = ""
@@ -237,15 +168,9 @@ class MainVC: UIViewController {
         humidityLabel.text = ""
     }
     
-    private func setUpPlaceholder() {
-        cityLabel.text = "San Francisco"
-        weatherConditionLabel.text = "Heavy Snow"
-        currentTempLabel.text = "72°F"
-        maxMinTempLabel.text = "Wind: 15 km/h, Humidty: 43%"
-    }
-    
     private func setUpHeaderCollectionView() {
-        
+        forecastCollectionView.dataSource = self
+        forecastCollectionView.delegate = self
         forecastCollectionView.register(UINib(nibName: K.forecastCellNibName, bundle: nil), forCellWithReuseIdentifier: K.forecastCellIdentifier)
         forecastCollectionView.showsHorizontalScrollIndicator = false
         forecastCollectionView.collectionViewLayout = setFlowLayout()
@@ -258,9 +183,7 @@ class MainVC: UIViewController {
         return flowLayout
     }
     
-    
     // MARK: - Dark Mode Support
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         //        print (traitCollection.userInterfaceStyle == .dark)
         if traitCollection.userInterfaceStyle == .dark {
@@ -275,7 +198,6 @@ class MainVC: UIViewController {
     }
     
     // MARK: - IBActions
-    
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         if isSearchTriggered {
             self.showSearchBar()
@@ -317,7 +239,6 @@ class MainVC: UIViewController {
     
     @IBAction func forecastDetailButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: K.showForecastIdentifier, sender: self)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -326,14 +247,13 @@ class MainVC: UIViewController {
             destinationVC.forecastArray = forecastArray
             destinationVC.forecastGroup = forecastGroup
             destinationVC.numForecastDates = forecastDateArray.count
-            destinationVC.locationName = locationName
+            destinationVC.homeLocation = homeLocation
         }
     }
 }
 
 // MARK: - UITextFieldDelegate
 extension MainVC: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //        print("textFieldShouldReturn: " + searchTextField.text!)
         self.view.endEditing(true) //FOLLOWUP
@@ -370,31 +290,30 @@ extension MainVC: UITextFieldDelegate {
 }
 
 // MARK: - WeatherManagerDelegate
-
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async { //FOLLOWUP
-            
-            self.cityLabel.text = weather.cityName
-            
+            var currentLocation = ""
             let location = CLLocation(latitude: weather.coordinates.lat, longitude: weather.coordinates.lon)
             location.placemark { placemark, error in
                 guard let placemark = placemark else {
                     print("Error:", error ?? "nil")
                     return
                 }
-                if var area = placemark.country {
-                    if area == "United States" {
+                if var country = placemark.country {
+                    if country == "United States" {
                         if let state = placemark.state {
-                            area = state
+                            country = state
                         } else {
-                            area = "US"
+                            country = "US"
                         }
                     }
-                    self.cityLabel.text?.append(", \(area)")
-                    self.locationName = weather.cityName + ", \(area)"
+                    currentLocation = weather.cityName + ", \(country)"
+                    self.cityLabel.text = currentLocation
+                    self.homeLocation = currentLocation
                 }
             }
+            
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.conditionName = weather.animatedConditionName
             self.updateConditionImage()
@@ -403,7 +322,7 @@ extension MainVC: WeatherManagerDelegate {
             self.windLabel.text = weather.windString + " "
             self.humidityLabel.text = weather.humidityString
             
-            self.resetLocationButton.isHidden = weather.cityName == self.homeCity ? true : false
+            self.resetLocationButton.isHidden = currentLocation == self.homeLocation ? true : false
             Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { Timer in
                 self.view.removeBluerLoader()
             }
@@ -413,74 +332,31 @@ extension MainVC: WeatherManagerDelegate {
     func didUpdateForecast(_ weatherManager: WeatherManager, forecast: [ForecastModel]) {
         DispatchQueue.main.async {
             self.forecastArray = forecast
-            print(self.forecastArray.count)
-            
-            
-            
-            //FOLLOWUP
-            var dateArray = [String]()
-            var index = 0
-            while (index < forecast.count) {
-                //                print("date" + forecastArray[index].dateString)
-                dateArray.append(forecast[index].dateShort)
-                index += 1
-            }
-//            print("datearray: \(dateArray)")
-            self.forecastDateArray = dateArray.uniqued()
-//            print("unique dates: \(self.forecastDateArray)")
+            self.forecastDateArray = self.getDateGroup(forecastArray: forecast)
             self.forecastGroup = self.groupForecast(forecastArray: forecast)
-            print(self.forecastGroup.count)
             self.forecastCollectionView.reloadData()
         }
     }
     
+    private func getDateGroup(forecastArray: [ForecastModel]) -> [String] {
+        var dateArray = [String]()
+        for forecast in forecastArray {
+            dateArray.append(forecast.dateShort)
+        }
+        return dateArray.uniqued()
+    }
+    
     private func groupForecast(forecastArray: [ForecastModel]) -> [[ForecastModel]] {
         var forecastGroup = [[ForecastModel]]()
-        var groupOne = [ForecastModel]()
-        var groupTwo = [ForecastModel]()
-        var groupThree = [ForecastModel]()
-        var groupFour = [ForecastModel]()
-        var groupFive = [ForecastModel]()
-        var groupSix = [ForecastModel]()
         
-        print("forecastArray.count: \(forecastArray.count)")
-        print("forecastDateArray.count: \(forecastDateArray.count)")
-        print("")
-        for forecast in forecastArray {
-            if forecast.dateShort == forecastDateArray[0] {
-                groupOne.append(forecast)
-            } else if forecast.dateShort == forecastDateArray[1] {
-                groupTwo.append(forecast)
-            } else if forecast.dateShort == forecastDateArray[2] {
-                groupThree.append(forecast)
-            } else if forecast.dateShort == forecastDateArray[3] {
-                groupFour.append(forecast)
-            } else if forecast.dateShort == forecastDateArray[4] {
-                groupFive.append(forecast)
-            } else {
-                groupSix.append(forecast)
+        for i in forecastDateArray.indices {
+            forecastGroup.append([ForecastModel]())
+            for forecast in forecastArray {
+                if forecastDateArray[i] == forecast.dateShort {
+                    forecastGroup[i].append(forecast)
+                }
             }
         }
-        print("Group 1: \(groupOne.count)")
-        print("Group 2: \(groupTwo.count)")
-        print("Group 3: \(groupThree.count)")
-        print("Group 4: \(groupFour.count)")
-        print("Group 5: \(groupFive.count)")
-        print("Group 6: \(groupSix.count)")
-
-        forecastGroup.append(groupOne)
-        print(forecastGroup[0].count)
-        forecastGroup.append(groupTwo)
-        print(forecastGroup[1].count)
-        forecastGroup.append(groupThree)
-        print(forecastGroup[2].count)
-        forecastGroup.append(groupFour)
-        print(forecastGroup[3].count)
-        forecastGroup.append(groupFive)
-        print(forecastGroup[4].count)
-        forecastGroup.append(groupSix)
-        print(forecastGroup[5].count)
-        
         return forecastGroup
     }
     
@@ -501,7 +377,6 @@ extension MainVC: WeatherManagerDelegate {
 }
 
 // MARK: - CLLocationManagerDelegate
-
 extension MainVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         didRequestHomeLocation = true
@@ -510,18 +385,6 @@ extension MainVC: CLLocationManagerDelegate {
             let longitude = latestLocation.coordinate.longitude
             locationManager.stopUpdatingLocation() //FOLLOWUP
             weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
-            
-            let location = CLLocation(latitude: latitude, longitude: longitude)
-            location.placemark { placemark, error in
-                guard let placemark = placemark else {
-                    print("Error:", error ?? "nil")
-                    return
-                }
-                if let cityName = placemark.city {
-                    self.homeCity = cityName
-                }
-            }
-            
             weatherManager.fetchForecast(latitude: latitude, longitude: longitude)
         }
     }
@@ -529,89 +392,26 @@ extension MainVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
     }
-    
-    private func convertGeoCoord(lat: Double, lon: Double) -> (city: String, country: String) {
-        var city = "hi"
-        var country = "di"
-        let location = CLLocation(latitude: lat, longitude: lon)
-        location.placemark { placemark, error in
-            guard let placemark = placemark else {
-                print("Error:", error ?? "nil")
-                return
-            }
-            if let cityName = placemark.city, let countryName = placemark.county {
-                city = cityName
-                country = countryName
-            }
-        }
-        return (city, country)
-    }
 }
 
 // MARK: - UICollectionViewDataSource
-
 extension MainVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-//        if forecastGroup.count != 0 {
-//            return forecastGroup[selectedForcastGroup].count
-//        } else {
-//            return 0
-//        }
         return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = forecastCollectionView.dequeueReusableCell(withReuseIdentifier: K.forecastCellIdentifier, for: indexPath) as! ForecastCell
         
-//        if forecastGroup.count != 0 {
-//            //                cell.timeLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].timeString
-//            cell.timeLabel.numberOfLines = 2
-//            cell.timeLabel.text = forecastDateArray[indexPath.row] + "\n" + forecastGroup[selectedForcastGroup][indexPath.row].timeString
-//            cell.conditionImageView.image = UIImage(named: forecastGroup[selectedForcastGroup][indexPath.row].staticConditionName)
-//            cell.tempLabel.text = forecastGroup[selectedForcastGroup][indexPath.row].tempString
-//        }
-//
-        
-//        while indexPath.row < 7 {
         if !forecastArray.isEmpty {
             let forecast = forecastArray[indexPath.row]
             cell.configure(date: forecast.dateShort, time: forecast.time, imageName: forecast.conditionImageName, temp: forecast.tempString)
         }
         return cell
-        
-    }
-    
-    func formatDate(timestamp: String) -> String {
-        
-        var formattedString = String(Array(timestamp)[5...9]).replacingOccurrences(of: "-", with: "/")
-        if formattedString[0] == "0" {
-            formattedString = formattedString.replace("", at: 0)
-            if formattedString[2] == "0" {
-                formattedString = formattedString.replace("", at: 2)
-            }
-        } else if formattedString[3] == "0" {
-            formattedString = formattedString.replace("", at: 3)
-        }
-        return formattedString
-    }
-    
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//
-//    }
-}
-
-extension Sequence where Element: Hashable {
-    func uniqued() -> [Element] {
-        var set = Set<Element>()
-        return filter { set.insert($0).inserted }
     }
 }
-
 
 // MARK: - UICollectionViewDelegateFlowLayout
-
 extension MainVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 160)
@@ -619,17 +419,14 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
 }
 
 
-
 // MARK: - UICollectionViewDelegate
-
 extension MainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
     }
 }
 
-// MARK: - Others
-
+// MARK: - Other Extensions
 extension CLPlacemark {
     /// street name, eg. Infinite Loop
     var streetName: String? { thoroughfare }
@@ -667,7 +464,14 @@ extension NSTextAttachment {
     func setImageHeight(font: UIFont, height: CGFloat) {
         guard let image = image else { return }
         let ratio = image.size.width / image.size.height
-
+        
         bounds = CGRect(x: bounds.origin.x, y: (font.capHeight - height.rounded()) / 2, width: ratio * height, height: height)
+    }
+}
+
+extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
     }
 }

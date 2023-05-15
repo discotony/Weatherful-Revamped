@@ -13,7 +13,7 @@ struct ForecastModel {
     var cityName: String
     var coordinates: Coord
     
-    var weatherDate: WeatherDate
+    var weatherDate: WeatherfulDate
     var dateShort: String {
         return weatherDate.dateShort
     }

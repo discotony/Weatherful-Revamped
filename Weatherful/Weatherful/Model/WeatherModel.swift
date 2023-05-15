@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=Berlin
 
