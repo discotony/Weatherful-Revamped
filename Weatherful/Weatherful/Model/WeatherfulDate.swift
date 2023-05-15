@@ -7,12 +7,7 @@
 
 import Foundation
 
-enum Format {
-    case shortened
-    case full
-}
-
-struct WeatherDate {
+struct WeatherfulDate {
     let timestamp: Double
     
     private var formattedTimestamp: String {

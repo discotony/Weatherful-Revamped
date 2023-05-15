@@ -28,12 +28,14 @@ struct WeatherManager {
     var delegate: WeatherManagerDelegate?
     
     // MARK: - Fetch Weather by City Name
+    // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
     func fetchWeather(from cityName: String) {
         let urlString = "\(weatherUrl)&q=\(cityName)"
         performURLRequest(with: urlString)
     }
     
     // MARK: - Fetch Weather by Geo-coordinates
+    // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&lat=52.535152&lon=13.390206
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
         performURLRequest(with: urlString)
@@ -44,6 +46,7 @@ struct WeatherManager {
     //    }
     
     // MARK: - Fetch Forecast
+    // https://api.openweathermap.org/data/2.5/forecast?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
     func fetchForecast(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(forecastUrl)&lat=\(latitude)&lon=\(longitude)"
         performURLRequest(with: urlString, isForecast: true)
@@ -127,7 +130,7 @@ struct WeatherManager {
                     let cityName = decodedData.city.name
                     let coordinates = decodedData.city.coord // FOLLOW-UP: remove if unused
                     let list = decodedData.list[index]
-                    let weatherDate = WeatherDate(timestamp: list.dt)
+                    let weatherDate = WeatherfulDate(timestamp: list.dt)
                     let weather = list.weather[0]
                     let conditionId = weather.id
                     let conditionDescription = weather.description.capitalizeFirstLetters

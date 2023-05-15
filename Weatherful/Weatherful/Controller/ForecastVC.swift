@@ -15,7 +15,7 @@ class ForecastVC: UIViewController {
     var forecastArray = [ForecastModel]()
     var forecastGroup = [[ForecastModel]]()
     var numForecastDates = 0
-    var locationName = ""
+    var homeLocation = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class ForecastVC: UIViewController {
         
         guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
-        self.title = locationName
+        self.title = homeLocation
         
         let backButton = UIButton()
         let backButtonAttachment = NSTextAttachment()
@@ -106,7 +106,7 @@ extension ForecastVC: UITableViewDataSource {
 extension ForecastVC: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         for cell in forecastTableView.visibleCells {
-            let hiddenFrameHeight = scrollView.contentOffset.y + navigationController!.navigationBar.frame.size.height - cell.frame.origin.y - 1
+            let hiddenFrameHeight = scrollView.contentOffset.y + (navigationController?.navigationBar.frame.size.height ?? 0) - cell.frame.origin.y - 1
             if (hiddenFrameHeight >= 0 || hiddenFrameHeight <= cell.frame.size.height) {
                 maskCell(cell: cell, margin: Float(hiddenFrameHeight))
             }
