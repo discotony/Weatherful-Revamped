@@ -13,7 +13,6 @@ struct K {
     static let dateCellIdentifier = String(describing: DateCell.self)
     static let dateCellNibName = String(describing: DateCell.self)
     
-    
     static let forecastCellIdentifier = String(describing: ForecastCell.self)
     static let forecastCellNibName = String(describing: ForecastCell.self)
     
@@ -23,5 +22,4 @@ struct K {
     static let forecastDetailNibName = String(describing: ForecastDetailCell.self)
     
     static let showForecastIdentifier = "showForecast"
-    static let showForecastDetailIdentifier = "showForecastDetail"
 }
