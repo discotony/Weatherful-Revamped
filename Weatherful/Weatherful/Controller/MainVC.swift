@@ -325,6 +325,7 @@ class MainVC: UIViewController {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
             destinationVC.forecastGroup = forecastGroup
+            destinationVC.numForecastDates = forecastDateArray.count
             destinationVC.locationName = locationName
         }
     }

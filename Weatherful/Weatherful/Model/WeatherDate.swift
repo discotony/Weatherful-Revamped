@@ -29,21 +29,19 @@ struct WeatherDate {
         return getDayOfWeekString(date: formattedTimestamp)
     }
     
-    // Sun, 5/14
+    // 5/14
     var dateShort: String {
         return "\(day), \(date)"
     }
     
-    // Sunday, May 14
+    //  Sun, 5/14
     var dateFull: String {
         return formatFullDate(timestamp: formattedTimestamp)
     }
     
+    // Sunday, May 14
     var dateExpanded: String {
         let day = dateShort.prefix(3)
-        let date = dateShort.suffix(4)
-        print(day)
-        print(date)
         switch day {
         case "Sun":
             return "Sunday" + ", " + dateFull
