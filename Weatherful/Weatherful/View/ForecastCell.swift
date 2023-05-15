@@ -10,6 +10,7 @@ import UIKit
 class ForecastCell: UICollectionViewCell {
 
     @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
@@ -20,11 +21,17 @@ class ForecastCell: UICollectionViewCell {
         overlayView.backgroundColor = .weatherfulLightGrey.withAlphaComponent(0.1)
         overlayView.roundCorners()
         
-        if let captionSmallFont = WeatherfulFonts.forecastSmall {
+        guard let captionSmallFont = WeatherfulFonts.forecastSmall else { return }
+        guard let captionMediumFont = WeatherfulFonts.forecastMedium else { return }
+            dateLabel.configure(font: captionSmallFont)
             timeLabel.configure(font: captionSmallFont)
-        }
-        if let captionMediumFont = WeatherfulFonts.forecastMedium {
             tempLabel.configure(font: captionMediumFont)
-        }
+    }
+    
+    func configure(date: String, time: String, imageName: String, temp: String) {
+        dateLabel.text = date
+        timeLabel.text = time
+        conditionImageView.image = UIImage(named: imageName)
+        tempLabel.text = temp
     }
 }

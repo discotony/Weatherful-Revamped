@@ -40,12 +40,38 @@ class ForecastVC: UIViewController {
     }
     
     private func setUpNavBar() {
-        //FOLLOWUP Customize font sizes
-        navigationController?.navigationBar.tintColor = .weatherfulWhite
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+//        navigationController?.navigationBar.tintColor = .weatherfulWhite
+        
+//        preferredStatusBarStyle = .lightContent
+        
+        guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
+        
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
         self.title = locationName
         
+        
+        let backButton = UIButton()
+            
+        let backButtonAttachment = NSTextAttachment()
+        backButtonAttachment.image = UIImage(named: "icon_left_arrow")
+        backButtonAttachment.setImageHeight(font: titleMediumFont, height: 14)
+        let backButtonTitle = NSMutableAttributedString(string: " Back", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        backButtonTitle.insert(NSAttributedString(attachment: backButtonAttachment), at: 0)
+        
+        
+        backButton.setAttributedTitle(backButtonTitle, for: .normal)
+        backButton.addTarget(self, action: #selector(btnLeftNavigationClicked), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
+    @objc func btnLeftNavigationClicked(sender: UIButton) {
+            guard let navigationController = self.navigationController else {
+                return
+            }
+            navigationController.popViewController(animated: true)
+    }
     private func setUpUI() {
     }
     
@@ -61,6 +87,7 @@ class ForecastVC: UIViewController {
         //        forecastTableView.separatorColor = .weatherfulLightGrey.withAlphaComponent(0.2)
         forecastTableView.separatorColor = . clear
         
+//        forecastTableView.sectionHeaderHeight = 0
     }
 }
 
@@ -95,15 +122,15 @@ extension ForecastVC: UITableViewDataSource {
         let sectionType = sections[section]
         switch sectionType {
         case .dayOne:
-            headerCell.configure(text: forecastGroup[0][0].dateCompleteString)
+            headerCell.configure(date: forecastGroup[0][0].dateExpanded)
         case .dayTwo:
-            headerCell.configure(text: forecastGroup[1][0].dateCompleteString)
+            headerCell.configure(date: forecastGroup[1][0].dateExpanded)
         case .dayThree:
-            headerCell.configure(text: forecastGroup[2][0].dateCompleteString)
+            headerCell.configure(date: forecastGroup[2][0].dateExpanded)
         case .dayFour:
-            headerCell.configure(text: forecastGroup[3][0].dateCompleteString)
+            headerCell.configure(date: forecastGroup[3][0].dateExpanded)
         case .dayFive:
-            headerCell.configure(text: forecastGroup[4][0].dateCompleteString)
+            headerCell.configure(date: forecastGroup[4][0].dateExpanded)
         }
         
         return headerCell
@@ -116,19 +143,24 @@ extension ForecastVC: UITableViewDataSource {
         switch sectionType {
         case .dayOne:
             let forecast = forecastGroup[0][indexPath.row]
-            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempString)
+            if indexPath.row == forecastGroup[0].count - 1 {
+                cell.borderView.isHidden = true
+            } else {
+                cell.borderView.isHidden = false
+            }
         case .dayTwo:
             let forecast = forecastGroup[1][indexPath.row]
-            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempString)
         case .dayThree:
             let forecast = forecastGroup[2][indexPath.row]
-            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempString)
         case .dayFour:
             let forecast = forecastGroup[3][indexPath.row]
-            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempString)
         case .dayFive:
             let forecast = forecastGroup[4][indexPath.row]
-            cell.configure(time: forecast.timeString, imageName: forecast.staticConditionName, condition: forecast.conditionDescription, temp: forecast.tempString)
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempString)
         }
         
         
@@ -151,6 +183,7 @@ extension ForecastVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 40
         return 40
     }
     
@@ -182,7 +215,7 @@ extension ForecastVC: UITableViewDelegate {
         mask.frame = cell.bounds
         mask.colors = [UIColor(white: 1, alpha: 0).cgColor, UIColor(white: 1, alpha: 1).cgColor]
         mask.locations = [NSNumber(value: location), NSNumber(value: location)]
-        return mask;
+        return mask
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -196,4 +229,11 @@ extension ForecastVC: UITableViewDelegate {
         }
     }
 
+}
+
+
+extension ForecastVC: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

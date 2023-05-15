@@ -127,7 +127,6 @@ struct WeatherModel {
     }
     
     var tempCurrent: Double
-    var tempFeelsLike: Double
     var tempMin: Double
     var tempMax: Double
     var wind: Double
@@ -135,10 +134,6 @@ struct WeatherModel {
     
     var tempCurrentString: String {
         return String(Int(tempCurrent)) + "°F"
-    }
-    
-    var tempFeelsLikeString: String {
-        return String(format: "%.1f", tempFeelsLike) + "°F"
     }
     
     var tempMinString: String {

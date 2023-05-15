@@ -8,7 +8,7 @@
 import UIKit
 
 class ForecastDetailCell: UITableViewCell {
-
+    
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
@@ -18,10 +18,7 @@ class ForecastDetailCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setUpUI()
-    }
-    
-    private func setUpUI() {
+        
         self.backgroundColor = .clear
         overlayView.backgroundColor = .clear
         borderView.backgroundColor = .weatherfulLightGrey.withAlphaComponent(0.1)
@@ -41,16 +38,4 @@ class ForecastDetailCell: UITableViewCell {
         conditionDescriptionLabel.text = condition
         tempLabel.text = temp
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-//    override func prepareForReuse() {
-//        for view in subviews {
-//            view.backgroundColor = .clear
-//        }
-//    }
 }
