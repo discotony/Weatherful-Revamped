@@ -13,12 +13,17 @@ class ForecastVC: UIViewController {
     @IBOutlet weak var forecastTableView: UITableView!
     
     var forecastArray = [ForecastModel]()
+    var forecastDateArray = [String]()
     var forecastGroup = [[ForecastModel]]()
     var numForecastDates = 0
     var homeLocation = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        forecastDateArray = getDateGroup(forecastArray: forecastArray)
+        numForecastDates = forecastDateArray.count
+        forecastGroup = groupForecast(forecastArray: forecastArray)
         
         setUpNavBar()
         setUpTableView()
@@ -62,6 +67,28 @@ class ForecastVC: UIViewController {
         forecastTableView.backgroundColor = .clear
         forecastTableView.showsVerticalScrollIndicator = false
         forecastTableView.separatorColor = . clear
+    }
+    
+    private func getDateGroup(forecastArray: [ForecastModel]) -> [String] {
+        var dateArray = [String]()
+        for forecast in forecastArray {
+            dateArray.append(forecast.dateShort)
+        }
+        return dateArray.uniqued()
+    }
+    
+    private func groupForecast(forecastArray: [ForecastModel]) -> [[ForecastModel]] {
+        var forecastGroup = [[ForecastModel]]()
+        
+        for i in forecastDateArray.indices {
+            forecastGroup.append([ForecastModel]())
+            for forecast in forecastArray {
+                if forecastDateArray[i] == forecast.dateShort {
+                    forecastGroup[i].append(forecast)
+                }
+            }
+        }
+        return forecastGroup
     }
 }
 

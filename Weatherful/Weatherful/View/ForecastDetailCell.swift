@@ -26,7 +26,6 @@ class ForecastDetailCell: UITableViewCell {
         
         guard let forecastSmallFont = WeatherfulFonts.forecastSmall else { return }
         guard let forecastMediumFont = WeatherfulFonts.forecastMedium else { return }
-        guard let forecastLargeFont = WeatherfulFonts.forecastLarge else { return }
         timeLabel.configure(font: forecastSmallFont)
         conditionDescriptionLabel.configure(font: forecastMediumFont)
         tempLabel.configure(font: forecastMediumFont)

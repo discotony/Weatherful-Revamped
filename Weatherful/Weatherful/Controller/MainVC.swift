@@ -47,10 +47,11 @@ class MainVC: UIViewController {
     
     var conditionName = ""
     var homeLocation = ""
+    var requestedLocation = ""
     var didRequestHomeLocation = true
     var forecastArray = [ForecastModel]()
-    var forecastGroup = [[ForecastModel]]()
-    var forecastDateArray = [String]()
+//    var forecastGroup = [[ForecastModel]]()
+//    var forecastDateArray = [String]()
     
     var timer = Timer()
     
@@ -183,20 +184,6 @@ class MainVC: UIViewController {
         return flowLayout
     }
     
-    // MARK: - Dark Mode Support
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        //        print (traitCollection.userInterfaceStyle == .dark)
-        if traitCollection.userInterfaceStyle == .dark {
-            self.weatherAnimationView.animation = LottieAnimation.named("clear-night")
-            self.weatherAnimationView.play()
-            self.weatherAnimationView.loopMode = .loop
-        } else {
-            self.weatherAnimationView.animation = LottieAnimation.named("clear-day")
-            self.weatherAnimationView.play()
-            self.weatherAnimationView.loopMode = .loop
-        }
-    }
-    
     // MARK: - IBActions
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         if isSearchTriggered {
@@ -245,8 +232,6 @@ class MainVC: UIViewController {
         if segue.identifier == K.showForecastIdentifier {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
-            destinationVC.forecastGroup = forecastGroup
-            destinationVC.numForecastDates = forecastDateArray.count
             destinationVC.homeLocation = homeLocation
         }
     }
@@ -276,7 +261,6 @@ extension MainVC: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        didRequestHomeLocation = false
         if let cityName = searchTextField.text {
             let formattedCityName = String((cityName as NSString).replacingOccurrences(of: " ", with: "+"))
             //            print("textFieldDidEndEditing " + formattedCityName)
@@ -293,27 +277,7 @@ extension MainVC: UITextFieldDelegate {
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async { //FOLLOWUP
-            var currentLocation = ""
-            let location = CLLocation(latitude: weather.coordinates.lat, longitude: weather.coordinates.lon)
-            location.placemark { placemark, error in
-                guard let placemark = placemark else {
-                    print("Error:", error ?? "nil")
-                    return
-                }
-                if var country = placemark.country {
-                    if country == "United States" {
-                        if let state = placemark.state {
-                            country = state
-                        } else {
-                            country = "US"
-                        }
-                    }
-                    currentLocation = weather.cityName + ", \(country)"
-                    self.cityLabel.text = currentLocation
-                    self.homeLocation = currentLocation
-                }
-            }
-            
+            self.cityLabel.text = weather.city
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.conditionName = weather.animatedConditionName
             self.updateConditionImage()
@@ -321,8 +285,11 @@ extension MainVC: WeatherManagerDelegate {
             self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
             self.windLabel.text = weather.windString + " "
             self.humidityLabel.text = weather.humidityString
+            print("homecity: " + self.homeLocation)
+            print("weather.cityName: " + weather.city)
+            self.resetLocationButton.isHidden = weather.city == self.homeLocation ? true : false
             
-            self.resetLocationButton.isHidden = currentLocation == self.homeLocation ? true : false
+//            self.resetLocationButton.isHidden = currentLocation == self.homeCity ? true : false
             Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { Timer in
                 self.view.removeBluerLoader()
             }
@@ -332,32 +299,8 @@ extension MainVC: WeatherManagerDelegate {
     func didUpdateForecast(_ weatherManager: WeatherManager, forecast: [ForecastModel]) {
         DispatchQueue.main.async {
             self.forecastArray = forecast
-            self.forecastDateArray = self.getDateGroup(forecastArray: forecast)
-            self.forecastGroup = self.groupForecast(forecastArray: forecast)
             self.forecastCollectionView.reloadData()
         }
-    }
-    
-    private func getDateGroup(forecastArray: [ForecastModel]) -> [String] {
-        var dateArray = [String]()
-        for forecast in forecastArray {
-            dateArray.append(forecast.dateShort)
-        }
-        return dateArray.uniqued()
-    }
-    
-    private func groupForecast(forecastArray: [ForecastModel]) -> [[ForecastModel]] {
-        var forecastGroup = [[ForecastModel]]()
-        
-        for i in forecastDateArray.indices {
-            forecastGroup.append([ForecastModel]())
-            for forecast in forecastArray {
-                if forecastDateArray[i] == forecast.dateShort {
-                    forecastGroup[i].append(forecast)
-                }
-            }
-        }
-        return forecastGroup
     }
     
     func didFailWithError(error: Error) {
@@ -379,11 +322,32 @@ extension MainVC: WeatherManagerDelegate {
 // MARK: - CLLocationManagerDelegate
 extension MainVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        didRequestHomeLocation = true
+//        didRequestHomeLocation = true
         if let latestLocation = locations.last {
             let latitude = latestLocation.coordinate.latitude
             let longitude = latestLocation.coordinate.longitude
             locationManager.stopUpdatingLocation() //FOLLOWUP
+            
+
+            
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            location.placemark { placemark, error in
+                guard let placemark = placemark else {
+                    print("Error:", error ?? "nil")
+                    return
+                }
+                if let city = placemark.city {
+                    self.homeLocation = city
+                }
+//                if let formattedLocation = placemark.locationFormatted {
+//                    print(formattedLocation)
+//                    if self.didRequestHomeLocation {
+//                        self.homeLocation = formattedLocation
+//                        self.didRequestHomeLocation = false
+//                    }
+//                }
+            }
+
             weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
             weatherManager.fetchForecast(latitude: latitude, longitude: longitude)
         }
@@ -439,7 +403,21 @@ extension CLPlacemark {
     /// state, eg. CA
     var state: String? { administrativeArea }
     /// county, eg. Santa Clara
-    var county: String? { subAdministrativeArea }
+//    var county: String? { subAdministrativeArea }
+    private var area: String? {
+        if self.country == "United States" {
+            return administrativeArea
+        } else {
+            return subAdministrativeArea
+        }
+    }
+    var locationFormatted: String? {
+        if let city = city, let area = area {
+            return "\(city), \(area)"
+        } else {
+            return nil
+        }
+    }
     /// zip code, eg. 95014
     var zipCode: String? { postalCode }
     /// postal address formatted

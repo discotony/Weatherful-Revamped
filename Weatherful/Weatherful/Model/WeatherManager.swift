@@ -27,6 +27,8 @@ struct WeatherManager {
     
     var delegate: WeatherManagerDelegate?
     
+    let dispatchGroup = DispatchGroup()
+    
     // MARK: - Fetch Weather by City Name
     // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
     func fetchWeather(from cityName: String) {
@@ -41,10 +43,6 @@ struct WeatherManager {
         performURLRequest(with: urlString)
     }
     
-    //    func fetchWeather(by zipCode) { // FOLLOWUP
-    //
-    //    }
-    
     // MARK: - Fetch Forecast
     // https://api.openweathermap.org/data/2.5/forecast?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
     func fetchForecast(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -52,8 +50,18 @@ struct WeatherManager {
         performURLRequest(with: urlString, isForecast: true)
     }
     
+//    func fetchWeatherData(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+//        let weatherString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
+//        let forecastString = "\(forecastUrl)&lat=\(latitude)&lon=\(longitude)"
+//        
+//        performURLRequest(with: weatherString)
+//        performURLRequest(with: forecastString)
+//        
+//    }
+    
     private func performURLRequest(with urlString: String, isForecast: Bool = false) {
         // 1. Create a URL
+        dispatchGroup.enter()
         if let url = URL(string: urlString) {
             
             // 2. Create a URL Session
@@ -79,6 +87,7 @@ struct WeatherManager {
                         delegate?.didUpdateWeather(self, weather: weather)
                     }
                 }
+                dispatchGroup.leave()
             }
             
             // 4. Start the task
@@ -93,6 +102,8 @@ struct WeatherManager {
                 let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
                 let cityName = decodedData.name
                 let coordinates = decodedData.coord
+                
+         
                 let conditionId = decodedData.weather[0].id
                 let condition = decodedData.weather[0].main
                 let conditionDescription = decodedData.weather[0].description.capitalizeFirstLetters
@@ -102,7 +113,20 @@ struct WeatherManager {
                 let wind = decodedData.wind.speed
                 let humidity = decodedData.main.humidity
                 
-                return WeatherModel(cityName: cityName,
+//                dispatchGroup.enter()
+//                let location = CLLocation(latitude: coordinates.lat, longitude: coordinates.lon)
+//                location.placemark { placemark, error in
+//                    guard let placemark = placemark else {
+//                        print("Error:", error ?? "nil")
+//                        return
+//                    }
+//                    if let formattedLocation = placemark.locationFormatted {
+//                        locationName = formattedLocation
+//                    }
+//                    dispatchGroup.leave()
+//                }
+                
+                return WeatherModel(city: cityName,
                                     coordinates: coordinates,
                                     conditionId: conditionId,
                                     condition: condition,
