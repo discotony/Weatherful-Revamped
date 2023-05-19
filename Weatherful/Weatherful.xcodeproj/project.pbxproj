@@ -18,6 +18,9 @@
 		041200E02A109C95007EF637 /* ForecastHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */; };
 		041200E22A10B88A007EF637 /* ForecastDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200E12A10B88A007EF637 /* ForecastDetailVC.swift */; };
 		041200E62A11A1D8007EF637 /* WeatherfulDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200E52A11A1D8007EF637 /* WeatherfulDate.swift */; };
+		043389E92A172452009F7E98 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389E82A172452009F7E98 /* MapVC.swift */; };
+		043389EB2A1724AB009F7E98 /* MapResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389EA2A1724AB009F7E98 /* MapResultVC.swift */; };
+		043389ED2A1724C6009F7E98 /* GooglePlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389EC2A1724C6009F7E98 /* GooglePlacesManager.swift */; };
 		0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD529F8E7EE0057098E /* DateCell.swift */; };
 		0440BAD829F8E7EE0057098E /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0440BAD629F8E7EE0057098E /* DateCell.xib */; };
 		0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD929F8E8050057098E /* ForecastCell.swift */; };
@@ -87,7 +90,7 @@
 		04D2633329F5DBCF00233FAF /* not-available-night.json in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633229F5DBCF00233FAF /* not-available-night.json */; };
 		04D2633529F5DBE300233FAF /* not-available-day.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633429F5DBE300233FAF /* not-available-day.svg */; };
 		04D2633729F5DBEC00233FAF /* not-available-night.svg in Resources */ = {isa = PBXBuildFile; fileRef = 04D2633629F5DBEC00233FAF /* not-available-night.svg */; };
-		C5649DAD3502BD3DF01C988C /* Pods_Weatherful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED34BEEAC5C806A91A4497D /* Pods_Weatherful.framework */; };
+		FE5E9F824178340F3DE76360 /* Pods_Weatherful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D62529F2B4F64F5E63B987 /* Pods_Weatherful.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +105,9 @@
 		041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastHeaderCell.xib; sourceTree = "<group>"; };
 		041200E12A10B88A007EF637 /* ForecastDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDetailVC.swift; sourceTree = "<group>"; };
 		041200E52A11A1D8007EF637 /* WeatherfulDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherfulDate.swift; sourceTree = "<group>"; };
+		043389E82A172452009F7E98 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		043389EA2A1724AB009F7E98 /* MapResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResultVC.swift; sourceTree = "<group>"; };
+		043389EC2A1724C6009F7E98 /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		0440BAD529F8E7EE0057098E /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		0440BAD629F8E7EE0057098E /* DateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
 		0440BAD929F8E8050057098E /* ForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCell.swift; sourceTree = "<group>"; };
@@ -176,9 +182,9 @@
 		04D2633229F5DBCF00233FAF /* not-available-night.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-available-night.json"; sourceTree = "<group>"; };
 		04D2633429F5DBE300233FAF /* not-available-day.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "not-available-day.svg"; sourceTree = "<group>"; };
 		04D2633629F5DBEC00233FAF /* not-available-night.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "not-available-night.svg"; sourceTree = "<group>"; };
-		4D4D35A9F135001836506D95 /* Pods-Weatherful.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weatherful.debug.xcconfig"; path = "Target Support Files/Pods-Weatherful/Pods-Weatherful.debug.xcconfig"; sourceTree = "<group>"; };
-		4ED34BEEAC5C806A91A4497D /* Pods_Weatherful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weatherful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7956FDAD574CB8A11DE037EE /* Pods-Weatherful.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weatherful.release.xcconfig"; path = "Target Support Files/Pods-Weatherful/Pods-Weatherful.release.xcconfig"; sourceTree = "<group>"; };
+		2EB9FC4D4DD7C3269A61F13A /* Pods-Weatherful.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weatherful.release.xcconfig"; path = "Target Support Files/Pods-Weatherful/Pods-Weatherful.release.xcconfig"; sourceTree = "<group>"; };
+		33EC7BBAE6F4D8A29F0548F8 /* Pods-Weatherful.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weatherful.debug.xcconfig"; path = "Target Support Files/Pods-Weatherful/Pods-Weatherful.debug.xcconfig"; sourceTree = "<group>"; };
+		58D62529F2B4F64F5E63B987 /* Pods_Weatherful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weatherful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,7 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5649DAD3502BD3DF01C988C /* Pods_Weatherful.framework in Frameworks */,
+				FE5E9F824178340F3DE76360 /* Pods_Weatherful.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +207,7 @@
 				04C112A729F47C9A00119130 /* WeatherfulUITests */,
 				04C1128529F47C9900119130 /* Products */,
 				2B736A280E5EDB48C2B8DA11 /* Pods */,
-				7C0C7FBA4D483D4E7C1280A1 /* Frameworks */,
+				1CB03BB1B4750DC050A1047D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -266,6 +272,8 @@
 				04C1128B29F47C9900119130 /* MainVC.swift */,
 				041200D52A1057E3007EF637 /* ForecastVC.swift */,
 				041200E12A10B88A007EF637 /* ForecastDetailVC.swift */,
+				043389E82A172452009F7E98 /* MapVC.swift */,
+				043389EA2A1724AB009F7E98 /* MapResultVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -322,6 +330,7 @@
 				04C1131729F4D0A900119130 /* WeatherModel.swift */,
 				0440BAE82A0C8C8A0057098E /* ForecastModel.swift */,
 				041200E52A11A1D8007EF637 /* WeatherfulDate.swift */,
+				043389EC2A1724C6009F7E98 /* GooglePlacesManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -398,21 +407,21 @@
 			path = "SVG Assets Day";
 			sourceTree = "<group>";
 		};
+		1CB03BB1B4750DC050A1047D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				58D62529F2B4F64F5E63B987 /* Pods_Weatherful.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2B736A280E5EDB48C2B8DA11 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4D4D35A9F135001836506D95 /* Pods-Weatherful.debug.xcconfig */,
-				7956FDAD574CB8A11DE037EE /* Pods-Weatherful.release.xcconfig */,
+				33EC7BBAE6F4D8A29F0548F8 /* Pods-Weatherful.debug.xcconfig */,
+				2EB9FC4D4DD7C3269A61F13A /* Pods-Weatherful.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		7C0C7FBA4D483D4E7C1280A1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4ED34BEEAC5C806A91A4497D /* Pods_Weatherful.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,11 +431,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04C112AE29F47C9A00119130 /* Build configuration list for PBXNativeTarget "Weatherful" */;
 			buildPhases = (
-				08545D8DCC3B3BC1BAD44991 /* [CP] Check Pods Manifest.lock */,
+				F5387087214C17F442F2E7A9 /* [CP] Check Pods Manifest.lock */,
 				04C1128029F47C9900119130 /* Sources */,
 				04C1128129F47C9900119130 /* Frameworks */,
 				04C1128229F47C9900119130 /* Resources */,
-				EB4899A8CD33DCFFF3BB294A /* [CP] Embed Pods Frameworks */,
+				993571740E6ADC7E785EFB60 /* [CP] Embed Pods Frameworks */,
+				2E861EFF06240A869AE87766 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -538,7 +548,41 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		08545D8DCC3B3BC1BAD44991 /* [CP] Check Pods Manifest.lock */ = {
+		2E861EFF06240A869AE87766 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		993571740E6ADC7E785EFB60 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5387087214C17F442F2E7A9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -560,23 +604,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EB4899A8CD33DCFFF3BB294A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Weatherful/Pods-Weatherful-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -594,12 +621,15 @@
 				0440BAE029F8E9710057098E /* Constants.swift in Sources */,
 				0440BAE92A0C8C8A0057098E /* ForecastModel.swift in Sources */,
 				0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */,
+				043389EB2A1724AB009F7E98 /* MapResultVC.swift in Sources */,
 				04C1130A29F4ADC800119130 /* UIView+Weatherful.swift in Sources */,
 				04C1128829F47C9900119130 /* AppDelegate.swift in Sources */,
 				041200E22A10B88A007EF637 /* ForecastDetailVC.swift in Sources */,
+				043389E92A172452009F7E98 /* MapVC.swift in Sources */,
 				04C1130829F4ADBE00119130 /* UIColor+Weatherful.swift in Sources */,
 				04C1131029F4ADF100119130 /* Fonts+Weatherful.swift in Sources */,
 				041200D62A1057E3007EF637 /* ForecastVC.swift in Sources */,
+				043389ED2A1724C6009F7E98 /* GooglePlacesManager.swift in Sources */,
 				041200E62A11A1D8007EF637 /* WeatherfulDate.swift in Sources */,
 				04C1128A29F47C9900119130 /* SceneDelegate.swift in Sources */,
 				04C1130E29F4ADE000119130 /* UIImage+Weatherful.swift in Sources */,
@@ -748,7 +778,7 @@
 		};
 		04C112AF29F47C9A00119130 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D4D35A9F135001836506D95 /* Pods-Weatherful.debug.xcconfig */;
+			baseConfigurationReference = 33EC7BBAE6F4D8A29F0548F8 /* Pods-Weatherful.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -756,6 +786,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X6JB7G9XQ7;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weatherful/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your current location to get the most accurate weather data.";
@@ -779,7 +810,7 @@
 		};
 		04C112B029F47C9A00119130 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7956FDAD574CB8A11DE037EE /* Pods-Weatherful.release.xcconfig */;
+			baseConfigurationReference = 2EB9FC4D4DD7C3269A61F13A /* Pods-Weatherful.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

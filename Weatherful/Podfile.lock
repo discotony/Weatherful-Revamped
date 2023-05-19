@@ -1,16 +1,20 @@
 PODS:
+  - GooglePlaces (6.2.1)
   - lottie-ios (4.2.0)
 
 DEPENDENCIES:
+  - GooglePlaces
   - lottie-ios
 
 SPEC REPOS:
   trunk:
+    - GooglePlaces
     - lottie-ios
 
 SPEC CHECKSUMS:
+  GooglePlaces: 94974aa119573d5acc2a35a699948dac838abd73
   lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
 
-PODFILE CHECKSUM: 5d3dc81404d0762c3fb61af9ea2ca1e03e934316
+PODFILE CHECKSUM: 2c28d1703823ce20463ce51a5e40a0d1f3bd5dfc
 
 COCOAPODS: 1.12.1
