@@ -454,6 +454,13 @@ open class LottieAnimationView: LottieAnimationViewBase {
     }
   }
 
+  /// Whether or not the animation is masked to the bounds. Defaults to true.
+  public var maskAnimationToBounds = true {
+    didSet {
+      animationLayer?.masksToBounds = maskAnimationToBounds
+    }
+  }
+
   /// Returns `true` if the animation is currently playing.
   public var isAnimationPlaying: Bool {
     guard let animationLayer = animationLayer else {
@@ -711,8 +718,15 @@ open class LottieAnimationView: LottieAnimationViewBase {
   }
 
   /// Logs all child keypaths.
+  /// Logs the result of `allHierarchyKeypaths()` to the `LottieLogger`.
   public func logHierarchyKeypaths() {
     animationLayer?.logHierarchyKeypaths()
+  }
+
+  /// Computes and returns a list of all child keypaths in the current animation.
+  /// The returned list is the same as the log output of `logHierarchyKeypaths()`
+  public func allHierarchyKeypaths() -> [String] {
+    animationLayer?.allHierarchyKeypaths() ?? []
   }
 
   /// Searches for the nearest child layer to the first Keypath and adds the subview
@@ -1062,6 +1076,33 @@ open class LottieAnimationView: LottieAnimationViewBase {
     }
   }
 
+  /// Updates an in flight animation.
+  func updateInFlightAnimation() {
+    guard let animationContext = animationContext else { return }
+
+    guard animationContext.closure.animationState != .complete else {
+      // Tried to re-add an already completed animation. Cancel.
+      self.animationContext = nil
+      return
+    }
+
+    /// Tell existing context to ignore its closure
+    animationContext.closure.ignoreDelegate = true
+
+    /// Make a new context, stealing the completion block from the previous.
+    let newContext = AnimationContext(
+      playFrom: animationContext.playFrom,
+      playTo: animationContext.playTo,
+      closure: animationContext.closure.completionBlock)
+
+    /// Remove current animation, and freeze the current frame.
+    let pauseFrame = realtimeAnimationFrame
+    animationLayer?.removeAnimation(forKey: activeAnimationName)
+    animationLayer?.currentFrame = pauseFrame
+
+    addNewAnimationForContext(newContext)
+  }
+
   // MARK: Fileprivate
 
   /// Context describing the animation that is currently playing in this `LottieAnimationView`
@@ -1089,6 +1130,7 @@ open class LottieAnimationView: LottieAnimationViewBase {
 
     if let oldAnimation = animationLayer {
       oldAnimation.removeFromSuperlayer()
+      animationLayer = nil
     }
 
     invalidateIntrinsicContentSize()
@@ -1111,6 +1153,7 @@ open class LottieAnimationView: LottieAnimationViewBase {
       return
     }
 
+    animationLayer.animationView = self
     animationLayer.renderScale = screenScale
 
     viewLayer?.addSublayer(animationLayer)
@@ -1127,6 +1170,7 @@ open class LottieAnimationView: LottieAnimationViewBase {
       imageProvider: imageProvider.cachedImageProvider,
       textProvider: textProvider,
       fontProvider: fontProvider,
+      maskAnimationToBounds: maskAnimationToBounds,
       logger: logger)
   }
 
@@ -1137,6 +1181,7 @@ open class LottieAnimationView: LottieAnimationViewBase {
         imageProvider: imageProvider.cachedImageProvider,
         textProvider: textProvider,
         fontProvider: fontProvider,
+        maskAnimationToBounds: maskAnimationToBounds,
         compatibilityTrackerMode: .track,
         logger: logger)
 
@@ -1172,6 +1217,7 @@ open class LottieAnimationView: LottieAnimationViewBase {
         imageProvider: imageProvider.cachedImageProvider,
         textProvider: textProvider,
         fontProvider: fontProvider,
+        maskAnimationToBounds: maskAnimationToBounds,
         compatibilityTrackerMode: .abort,
         logger: logger)
 
@@ -1215,6 +1261,12 @@ open class LottieAnimationView: LottieAnimationViewBase {
 
     let animationContext = animationContext
     let currentFrame = currentFrame
+
+    // Disable the completion handler delegate before tearing down the `CoreAnimationLayer`
+    // and building the `MainThreadAnimationLayer`. Otherwise deinitializing the
+    // `CoreAnimationLayer` would trigger the animation completion handler even though
+    // the animation hasn't even started playing yet.
+    animationContext?.closure.ignoreDelegate = true
 
     makeAnimationLayer(usingEngine: .mainThread)
 
@@ -1295,33 +1347,6 @@ open class LottieAnimationView: LottieAnimationViewBase {
     animationLayer?.removeAnimation(forKey: activeAnimationName)
     updateAnimationFrame(pauseFrame)
     animationContext = nil
-  }
-
-  /// Updates an in flight animation.
-  fileprivate func updateInFlightAnimation() {
-    guard let animationContext = animationContext else { return }
-
-    guard animationContext.closure.animationState != .complete else {
-      // Tried to re-add an already completed animation. Cancel.
-      self.animationContext = nil
-      return
-    }
-
-    /// Tell existing context to ignore its closure
-    animationContext.closure.ignoreDelegate = true
-
-    /// Make a new context, stealing the completion block from the previous.
-    let newContext = AnimationContext(
-      playFrom: animationContext.playFrom,
-      playTo: animationContext.playTo,
-      closure: animationContext.closure.completionBlock)
-
-    /// Remove current animation, and freeze the current frame.
-    let pauseFrame = realtimeAnimationFrame
-    animationLayer?.removeAnimation(forKey: activeAnimationName)
-    animationLayer?.currentFrame = pauseFrame
-
-    addNewAnimationForContext(newContext)
   }
 
   /// Adds animation to animation layer and sets the delegate. If animation layer or animation are nil, exits.
