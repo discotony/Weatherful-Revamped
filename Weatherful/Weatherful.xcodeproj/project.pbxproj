@@ -18,7 +18,10 @@
 		041200E02A109C95007EF637 /* ForecastHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */; };
 		041200E22A10B88A007EF637 /* ForecastDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200E12A10B88A007EF637 /* ForecastDetailVC.swift */; };
 		041200E62A11A1D8007EF637 /* WeatherfulDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041200E52A11A1D8007EF637 /* WeatherfulDate.swift */; };
-		043389E92A172452009F7E98 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389E82A172452009F7E98 /* MapVC.swift */; };
+		041E551C2A17482B00F6F60F /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E551B2A17482B00F6F60F /* SearchVC.swift */; };
+		041E55202A17ECDD00F6F60F /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E551F2A17ECDD00F6F60F /* SearchResultVC.swift */; };
+		041E55242A17F48D00F6F60F /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041E55232A17F48D00F6F60F /* PlaceModel.swift */; };
+		043389E92A172452009F7E98 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389E82A172452009F7E98 /* MapViewController.swift */; };
 		043389EB2A1724AB009F7E98 /* MapResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389EA2A1724AB009F7E98 /* MapResultVC.swift */; };
 		043389ED2A1724C6009F7E98 /* GooglePlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043389EC2A1724C6009F7E98 /* GooglePlacesManager.swift */; };
 		0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440BAD529F8E7EE0057098E /* DateCell.swift */; };
@@ -105,7 +108,10 @@
 		041200DE2A109C95007EF637 /* ForecastHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastHeaderCell.xib; sourceTree = "<group>"; };
 		041200E12A10B88A007EF637 /* ForecastDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDetailVC.swift; sourceTree = "<group>"; };
 		041200E52A11A1D8007EF637 /* WeatherfulDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherfulDate.swift; sourceTree = "<group>"; };
-		043389E82A172452009F7E98 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		041E551B2A17482B00F6F60F /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		041E551F2A17ECDD00F6F60F /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
+		041E55232A17F48D00F6F60F /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
+		043389E82A172452009F7E98 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		043389EA2A1724AB009F7E98 /* MapResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResultVC.swift; sourceTree = "<group>"; };
 		043389EC2A1724C6009F7E98 /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		0440BAD529F8E7EE0057098E /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
@@ -272,8 +278,10 @@
 				04C1128B29F47C9900119130 /* MainVC.swift */,
 				041200D52A1057E3007EF637 /* ForecastVC.swift */,
 				041200E12A10B88A007EF637 /* ForecastDetailVC.swift */,
-				043389E82A172452009F7E98 /* MapVC.swift */,
+				043389E82A172452009F7E98 /* MapViewController.swift */,
 				043389EA2A1724AB009F7E98 /* MapResultVC.swift */,
+				041E551B2A17482B00F6F60F /* SearchVC.swift */,
+				041E551F2A17ECDD00F6F60F /* SearchResultVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -331,6 +339,7 @@
 				0440BAE82A0C8C8A0057098E /* ForecastModel.swift */,
 				041200E52A11A1D8007EF637 /* WeatherfulDate.swift */,
 				043389EC2A1724C6009F7E98 /* GooglePlacesManager.swift */,
+				041E55232A17F48D00F6F60F /* PlaceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -612,12 +621,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C1128C29F47C9900119130 /* MainVC.swift in Sources */,
+				041E55202A17ECDD00F6F60F /* SearchResultVC.swift in Sources */,
 				04C1131229F4AF5F00119130 /* String+Weatherful.swift in Sources */,
 				04C1131629F4D09F00119130 /* WeatherManager.swift in Sources */,
+				041E551C2A17482B00F6F60F /* SearchVC.swift in Sources */,
 				04C1130C29F4ADD300119130 /* UILabel+Weatherful.swift in Sources */,
 				0440BAEB2A0C8D1F0057098E /* ForecastData.swift in Sources */,
 				041200DB2A106F1A007EF637 /* ForecastDetailCell.swift in Sources */,
 				0440BADB29F8E8050057098E /* ForecastCell.swift in Sources */,
+				041E55242A17F48D00F6F60F /* PlaceModel.swift in Sources */,
 				0440BAE029F8E9710057098E /* Constants.swift in Sources */,
 				0440BAE92A0C8C8A0057098E /* ForecastModel.swift in Sources */,
 				0440BAD729F8E7EE0057098E /* DateCell.swift in Sources */,
@@ -625,7 +637,7 @@
 				04C1130A29F4ADC800119130 /* UIView+Weatherful.swift in Sources */,
 				04C1128829F47C9900119130 /* AppDelegate.swift in Sources */,
 				041200E22A10B88A007EF637 /* ForecastDetailVC.swift in Sources */,
-				043389E92A172452009F7E98 /* MapVC.swift in Sources */,
+				043389E92A172452009F7E98 /* MapViewController.swift in Sources */,
 				04C1130829F4ADBE00119130 /* UIColor+Weatherful.swift in Sources */,
 				04C1131029F4ADF100119130 /* Fonts+Weatherful.swift in Sources */,
 				041200D62A1057E3007EF637 /* ForecastVC.swift in Sources */,

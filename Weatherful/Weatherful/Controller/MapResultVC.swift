@@ -55,10 +55,10 @@ class MapResultVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         print(places[indexPath.row].name)
         tableView.isHidden = true
-        
+
         let selectedPlace = places[indexPath.row]
         GooglePlacesManager.shared.resolveLocation(for: selectedPlace) { [weak self] result in
             switch result {
@@ -67,10 +67,10 @@ class MapResultVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
                     self?.delegate?.didTapPlace(with: coorindates) // FOLLOWUP
                 }
             case .failure(let error):
-                
+
                 print(error)
             }
         }
-        
+
     }
 }
