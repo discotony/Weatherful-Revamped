@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 
 protocol SearchResultVCDelegate: AnyObject {
-    func didTapPlace(with coordinates: CLLocationCoordinate2D)
+    func didTapPlace(cityName: String, with coordinates: CLLocationCoordinate2D)
 }
 
 class SearchResultVC: UIViewController {
@@ -32,10 +32,6 @@ class SearchResultVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print(searchResultTableView.frame)
-        print(searchResultTableView.bounds)
-        print(view.frame)
-        print(view.bounds)
         searchResultTableView.frame = view.bounds
     }
     
@@ -82,7 +78,8 @@ extension SearchResultVC: UITableViewDelegate {
             switch result {
             case .success(let coordinates):
                 DispatchQueue.main.async {
-                    self?.delegate?.didTapPlace(with: coordinates)
+                    print(selectedPlace.name)
+                    self?.delegate?.didTapPlace(cityName: selectedPlace.formattedName, with: coordinates)
                 }
             case .failure(let error):
                 print(error)

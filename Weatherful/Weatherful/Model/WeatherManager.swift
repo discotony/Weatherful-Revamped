@@ -31,10 +31,10 @@ struct WeatherManager {
     
     // MARK: - Fetch Weather by City Name
     // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
-    func fetchWeather(from cityName: String) {
-        let urlString = "\(weatherUrl)&q=\(cityName)"
-        performURLRequest(with: urlString)
-    }
+//    func fetchWeather(from cityName: String) {
+//        let urlString = "\(weatherUrl)&q=\(cityName)"
+//        performURLRequest(with: urlString)
+//    }
     
     // MARK: - Fetch Weather by Geo-coordinates
     // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&lat=52.535152&lon=13.390206

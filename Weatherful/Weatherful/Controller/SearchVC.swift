@@ -8,7 +8,13 @@
 import UIKit
 import MapKit
 
+protocol SearchVCDelegate: AnyObject {
+    func didFetchCoordinates(cityName: String, with coordinates: CLLocationCoordinate2D)
+}
+
 class SearchVC: UIViewController {
+    
+    weak var delegate: SearchVCDelegate?
     
     let mapView = MKMapView()
     let searchVC = UISearchController(searchResultsController: SearchResultVC())
@@ -27,6 +33,7 @@ class SearchVC: UIViewController {
     }
     
     private func setUpUI() {
+        navigationController?.isNavigationBarHidden = false
         title = "Look Up City"
         view.backgroundColor = .secondarySystemBackground
         view.addSubview(mapView)
@@ -62,7 +69,7 @@ class SearchVC: UIViewController {
 
 extension SearchVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print(searchController.searchBar.text)
+//        print(searchController.searchBar.text)
         guard let query = searchController.searchBar.text,
               !query.trimmingCharacters(in: .whitespaces).isEmpty,
               let searchResultVC = searchController.searchResultsController as? SearchResultVC else { return }
@@ -84,7 +91,7 @@ extension SearchVC: UISearchResultsUpdating {
 }
 
 extension SearchVC: SearchResultVCDelegate {
-    func didTapPlace(with coordinates: CLLocationCoordinate2D) {
+    func didTapPlace(cityName: String, with coordinates: CLLocationCoordinate2D) {
         searchVC.searchBar.resignFirstResponder()
         searchVC.dismiss(animated: true)
         
@@ -100,5 +107,9 @@ extension SearchVC: SearchResultVCDelegate {
                                              span: MKCoordinateSpan(latitudeDelta: 2.0,
                                                                     longitudeDelta: 2.0)),
                           animated: true)
+        
+        // Pass coordinates to MainVC
+        self.delegate?.didFetchCoordinates(cityName: cityName, with: coordinates)
+        dismiss(animated: true)
     }
 }
