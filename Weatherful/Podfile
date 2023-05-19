@@ -6,5 +6,6 @@ target 'Weatherful' do
 
   # Pods for Weatherful
   pod 'lottie-ios'
+  pod 'GooglePlaces'
 
 end

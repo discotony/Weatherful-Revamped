@@ -1,6 +1,10 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## GooglePlaces
+
+Copyright 2022 Google
+
 ## lottie-ios
 
                                  Apache License
