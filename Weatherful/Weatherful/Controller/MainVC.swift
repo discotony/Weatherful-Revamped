@@ -14,18 +14,7 @@ import Contacts
 class MainVC: UIViewController {
     
     @IBOutlet weak var backgroundImageView: UIImageView!
-    
-    @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var dropdownSymbol: UIImageView!
-    
     @IBOutlet weak var resetLocationButton: UIButton!
-    @IBOutlet weak var tappableView: UIView!
     
     @IBOutlet weak var weatherAnimationView: LottieAnimationView!
     @IBOutlet weak var weatherConditionLabel: UILabel!
@@ -41,8 +30,6 @@ class MainVC: UIViewController {
     @IBOutlet weak var forecastDetailButton: UIButton!
     @IBOutlet weak var forecastCollectionView: UICollectionView!
     
-    let searchVC = UISearchController(searchResultsController: MapViewController())
-    
     private var isSearchTriggered: Bool = true // FOLLOWUP
     private var tempUnits: [tempUnits] = [.metric, .imperial] // FOLLOWUP
     
@@ -55,8 +42,6 @@ class MainVC: UIViewController {
     var requestedLocation = ""
     var didRequestHomeLocation = true
     var forecastArray = [ForecastModel]()
-//    var forecastGroup = [[ForecastModel]]()
-//    var forecastDateArray = [String]()
     
     var timer = Timer()
     
@@ -68,7 +53,6 @@ class MainVC: UIViewController {
         resetPlaceholder()
         hideOldSearchBar()
         
-        searchTextField.delegate = self
         weatherManager.delegate = self
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -86,33 +70,9 @@ class MainVC: UIViewController {
     private func setUpNavBar() {
         guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
+
+        setNavigationTitle(titleText: "Antony")
         
-        let titleButton = UIButton()
-        let titleSearchAttachment = NSTextAttachment()
-        titleSearchAttachment.image = UIImage(named: "icon_location")
-        titleSearchAttachment.setImageHeight(font: titleMediumFont, height: 14)
-        let titleDropdownAttachment = NSTextAttachment()
-        titleDropdownAttachment.image = UIImage(named: "icon_dropdown")
-        titleDropdownAttachment.setImageHeight(font: titleMediumFont, height: 14)
-        let titleText = NSMutableAttributedString(string: "  Davis, CA  ", attributes: [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
-        titleText.insert(NSAttributedString(attachment: titleSearchAttachment), at: 0)
-        titleText.append(NSAttributedString(attachment: titleDropdownAttachment))
-        titleButton.setAttributedTitle(titleText, for: .normal)
-        titleButton.addTarget(self, action: #selector(titleButtonPressed), for: .touchUpInside)
-        
-        navigationItem.titleView = titleButton
-        
-//
-        let backButton = UIButton()
-        let backButtonAttachment = NSTextAttachment()
-        backButtonAttachment.image = UIImage(named: "icon_search")
-        backButtonAttachment.setImageHeight(font: titleMediumFont, height: 14)
-        let backButtonTitle = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
-        backButtonTitle.insert(NSAttributedString(attachment: backButtonAttachment), at: 0)
-        backButton.setAttributedTitle(backButtonTitle, for: .normal)
-        backButton.addTarget(self, action: #selector(btnLeftNavigationClicked), for: .touchUpInside)
-//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-//        self.navigationItem.titleView = backButton
         
         let settingButton = UIButton()
         let settingAttachment = NSTextAttachment()
@@ -125,10 +85,6 @@ class MainVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingButton)
     }
     
-    @objc func btnLeftNavigationClicked(sender: UIButton) {
-        guard let navigationController = self.navigationController else { return }
-        performSegue(withIdentifier: K.showSearchIdentifier, sender: self)
-    }
     
     @objc func titleButtonPressed(sender: UIButton) {
         
@@ -140,7 +96,6 @@ class MainVC: UIViewController {
 //        transition.subtype = CATransitionSubtype.fromTop
 //        navigationController?.view.layer.add(transition, forKey: kCATransition)
 //        self.navigationController?.pushViewController(searchVC, animated: true)
-        
         
         performSegue(withIdentifier: K.showSearchIdentifier, sender: self)
     }
@@ -208,16 +163,14 @@ class MainVC: UIViewController {
     }
     
     private func setUpUI() {
-        headerView.backgroundColor = .clear
-        self.headerView.roundCorners()
         
-        guard let titleLargeFont = WeatherfulFonts.titleLarge else { return }
-        cityLabel.configure(font: titleLargeFont)
-        searchTextField.backgroundColor = .clear
-        searchTextField.textColor = .weatherfulWhite
-        searchTextField.tintColor = .weatherfulPlaceholderGrey
-        searchTextField.borderStyle = .none
-        searchTextField.font = WeatherfulFonts.captionMedium
+//        guard let titleLargeFont = WeatherfulFonts.titleLarge else { return }
+//        cityLabel.configure(font: titleLargeFont)
+//        searchTextField.backgroundColor = .clear
+//        searchTextField.textColor = .weatherfulWhite
+//        searchTextField.tintColor = .weatherfulPlaceholderGrey
+//        searchTextField.borderStyle = .none
+//        searchTextField.font = WeatherfulFonts.captionMedium
         
         resetLocationButton.backgroundColor = .weatherfulDarkGrey.withAlphaComponent(0.5)
         resetLocationButton.titleLabel?.font = WeatherfulFonts.captionMedium
@@ -252,8 +205,25 @@ class MainVC: UIViewController {
         forecastDetailButton.setAttributedTitle(forecastButtonTitle, for: .normal)
     }
     
+    private func setNavigationTitle(titleText: String) {
+        guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
+        let titleButton = UIButton()
+        let titleSearchAttachment = NSTextAttachment()
+        titleSearchAttachment.image = UIImage(named: "icon_location")
+        titleSearchAttachment.setImageHeight(font: titleMediumFont, height: 14)
+        let titleDropdownAttachment = NSTextAttachment()
+        titleDropdownAttachment.image = UIImage(named: "icon_dropdown")
+        titleDropdownAttachment.setImageHeight(font: titleMediumFont, height: 14)
+        let titleText = NSMutableAttributedString(string: "  \(titleText)  ", attributes: [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        titleText.insert(NSAttributedString(attachment: titleSearchAttachment), at: 0)
+        titleText.append(NSAttributedString(attachment: titleDropdownAttachment))
+        titleButton.setAttributedTitle(titleText, for: .normal)
+        titleButton.addTarget(self, action: #selector(titleButtonPressed), for: .touchUpInside)
+        
+        navigationItem.titleView = titleButton
+    }
+    
     private func resetPlaceholder() {
-        cityLabel.text = ""
         weatherConditionLabel.text = ""
         currentTempLabel.text = ""
         maxMinTempLabel.text = ""
@@ -277,43 +247,6 @@ class MainVC: UIViewController {
     }
     
     // MARK: - IBActions
-    @IBAction func searchBarPessed(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func searchButtonPressed(_ sender: UIButton) {
-        if isSearchTriggered {
-            self.showSearchBar()
-        } else {
-            self.hideSearchBar()
-        }
-        isSearchTriggered = !isSearchTriggered
-    }
-    
-    private func showSearchBar() {
-        UIView.animate(withDuration: 0.5) {
-            self.headerView.backgroundColor = .weatherfulWhite.withAlphaComponent(0.2)
-            self.cityLabel.isHidden = true
-            self.dropdownSymbol.isHidden = true
-            self.iconImageView.image = UIImage(named: "icon_search.png")
-            self.searchTextField.isHidden = false
-            guard let captionMediumFont = WeatherfulFonts.captionMedium else { return }
-            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : captionMediumFont])
-            self.tappableView.isHidden = true
-        }
-    }
-    
-    private func hideSearchBar() {
-        UIView.animate(withDuration: 0.5) {
-            self.headerView.backgroundColor = .clear
-            self.cityLabel.isHidden = false
-            self.dropdownSymbol.isHidden = false
-            self.iconImageView.image = UIImage(named: "icon_location.png")
-            self.searchTextField.isHidden = true
-            self.tappableView.isHidden = false
-        }
-    }
-    
     @IBAction func resetLocationButtonPressed(_ sender: Any) {
         locationManager.requestLocation()
         resetLocationButton.isHidden = true
@@ -329,15 +262,13 @@ class MainVC: UIViewController {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
             destinationVC.homeLocation = homeLocation
+        } else if segue.identifier == K.showSearchIdentifier {
+            let destinationNavVC = segue.destination as! UINavigationController
+            let destinationVC = destinationNavVC.topViewController as! SearchVC
+            destinationVC.delegate = self
         }
     }
 }
-
-//extension MainVC: UISearchResultsUpdating {
-//    func updateSearchResults(for searchController: UISearchController) {
-//        print(searchBar.text)
-//    }
-//}
 
 // MARK: - UISearchBarDelegate
 extension MainVC: UISearchBarDelegate {
@@ -349,7 +280,7 @@ extension MainVC: UISearchBarDelegate {
         print(searchBar.text)
     }
 }
-
+/*
 // MARK: - UITextFieldDelegate
 extension MainVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -385,12 +316,12 @@ extension MainVC: UITextFieldDelegate {
         view.showBlurLoader()
     }
 }
+*/
 
 // MARK: - WeatherManagerDelegate
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async { //FOLLOWUP
-            self.cityLabel.text = weather.city
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.conditionName = weather.animatedConditionName
             self.updateConditionImage()
@@ -400,9 +331,7 @@ extension MainVC: WeatherManagerDelegate {
             self.humidityLabel.text = weather.humidityString
             print("homecity: " + self.homeLocation)
             print("weather.cityName: " + weather.city)
-            self.resetLocationButton.isHidden = weather.city == self.homeLocation ? true : false
-            
-//            self.resetLocationButton.isHidden = currentLocation == self.homeCity ? true : false
+            self.resetLocationButton.isHidden = self.requestedLocation == self.homeLocation ? true : false
             Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { Timer in
                 self.view.removeBluerLoader()
             }
@@ -419,15 +348,14 @@ extension MainVC: WeatherManagerDelegate {
     func didFailWithError(error: Error) {
         print(error.localizedDescription)
         DispatchQueue.main.async {
-            self.showSearchBar()
             self.view.removeBluerLoader()
-            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Please enter a valid city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red])
-            self.searchTextField.becomeFirstResponder()
-            self.searchTextField.shake()
-            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Error: Invalid City Name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherWarningRed, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { Timer in
-                self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
-            }
+//            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Please enter a valid city name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red])
+//            self.searchTextField.becomeFirstResponder()
+//            self.searchTextField.shake()
+//            self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Error: Invalid City Name!", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherWarningRed, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
+//            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { Timer in
+//                self.searchTextField.attributedPlaceholder = NSAttributedString(string: " Look up weather by city name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulPlaceholderGrey, NSAttributedString.Key.font : WeatherfulFonts.captionMedium!])
+//            }
         }
     }
 }
@@ -435,13 +363,10 @@ extension MainVC: WeatherManagerDelegate {
 // MARK: - CLLocationManagerDelegate
 extension MainVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        didRequestHomeLocation = true
         if let latestLocation = locations.last {
             let latitude = latestLocation.coordinate.latitude
             let longitude = latestLocation.coordinate.longitude
             locationManager.stopUpdatingLocation() //FOLLOWUP
-            
-
             
             let location = CLLocation(latitude: latitude, longitude: longitude)
             location.placemark { placemark, error in
@@ -449,16 +374,11 @@ extension MainVC: CLLocationManagerDelegate {
                     print("Error:", error ?? "nil")
                     return
                 }
-                if let city = placemark.city {
-                    self.homeLocation = city
+                if let location = placemark.locationFormatted {
+                    self.requestedLocation = location
+                    self.homeLocation = location
+                    self.setNavigationTitle(titleText: location)
                 }
-//                if let formattedLocation = placemark.locationFormatted {
-//                    print(formattedLocation)
-//                    if self.didRequestHomeLocation {
-//                        self.homeLocation = formattedLocation
-//                        self.didRequestHomeLocation = false
-//                    }
-//                }
             }
 
             weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
@@ -564,5 +484,18 @@ extension Sequence where Element: Hashable {
     func uniqued() -> [Element] {
         var set = Set<Element>()
         return filter { set.insert($0).inserted }
+    }
+}
+
+extension MainVC: SearchVCDelegate {
+    func didFetchCoordinates(cityName: String, with coordinates: CLLocationCoordinate2D) {
+        print(coordinates)
+        print(cityName)
+        setNavigationTitle(titleText: cityName)
+        requestedLocation = cityName
+        
+        print("lat: \(coordinates.latitude)")
+        print("lon: \(coordinates.longitude)")
+        weatherManager.fetchWeather(latitude: coordinates.latitude, longitude: coordinates.longitude)
     }
 }

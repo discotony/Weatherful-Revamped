@@ -40,6 +40,7 @@ class GooglePlacesManager {
     }
     
     public func resolveLocation(for place: Place, completion: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
+
         client.fetchPlace(fromPlaceID: place.id,
                           placeFields: .coordinate,
                           sessionToken: nil) { googlePlace, error in
@@ -47,6 +48,7 @@ class GooglePlacesManager {
                 completion(.failure(PlacesError.failedToGetCoorindates))
                 return
             }
+            
             let coordinates = CLLocationCoordinate2D(latitude: googlePlace.coordinate.latitude,
                                                      longitude: googlePlace.coordinate.longitude)
             completion(.success(coordinates))
