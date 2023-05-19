@@ -10,6 +10,8 @@ import Foundation
 struct K {
     static let appName = "Weatherful"
     
+    static let searchResultCellIdentifier = "searchResultCell"
+    
     static let dateCellIdentifier = String(describing: DateCell.self)
     static let dateCellNibName = String(describing: DateCell.self)
     
@@ -22,4 +24,5 @@ struct K {
     static let forecastDetailNibName = String(describing: ForecastDetailCell.self)
     
     static let showForecastIdentifier = "showForecast"
+    static let showSearchIdentifier = "showSearch"
 }

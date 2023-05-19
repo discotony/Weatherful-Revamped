@@ -15,6 +15,9 @@ class MainVC: UIViewController {
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
@@ -38,6 +41,8 @@ class MainVC: UIViewController {
     @IBOutlet weak var forecastDetailButton: UIButton!
     @IBOutlet weak var forecastCollectionView: UICollectionView!
     
+    let searchVC = UISearchController(searchResultsController: MapViewController())
+    
     private var isSearchTriggered: Bool = true // FOLLOWUP
     private var tempUnits: [tempUnits] = [.metric, .imperial] // FOLLOWUP
     
@@ -57,8 +62,11 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpNavBar()
+        setUpSearchBar()
         setUpUI()
         resetPlaceholder()
+        hideOldSearchBar()
         
         searchTextField.delegate = self
         weatherManager.delegate = self
@@ -71,15 +79,99 @@ class MainVC: UIViewController {
         view.showBlurLoader()
     }
     
+    private func hideOldSearchBar() {
+        
+    }
+    
+    private func setUpNavBar() {
+        guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
+        
+        let titleButton = UIButton()
+        let titleSearchAttachment = NSTextAttachment()
+        titleSearchAttachment.image = UIImage(named: "icon_location")
+        titleSearchAttachment.setImageHeight(font: titleMediumFont, height: 14)
+        let titleDropdownAttachment = NSTextAttachment()
+        titleDropdownAttachment.image = UIImage(named: "icon_dropdown")
+        titleDropdownAttachment.setImageHeight(font: titleMediumFont, height: 14)
+        let titleText = NSMutableAttributedString(string: "  Davis, CA  ", attributes: [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        titleText.insert(NSAttributedString(attachment: titleSearchAttachment), at: 0)
+        titleText.append(NSAttributedString(attachment: titleDropdownAttachment))
+        titleButton.setAttributedTitle(titleText, for: .normal)
+        titleButton.addTarget(self, action: #selector(titleButtonPressed), for: .touchUpInside)
+        
+        navigationItem.titleView = titleButton
+        
+//
+        let backButton = UIButton()
+        let backButtonAttachment = NSTextAttachment()
+        backButtonAttachment.image = UIImage(named: "icon_search")
+        backButtonAttachment.setImageHeight(font: titleMediumFont, height: 14)
+        let backButtonTitle = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        backButtonTitle.insert(NSAttributedString(attachment: backButtonAttachment), at: 0)
+        backButton.setAttributedTitle(backButtonTitle, for: .normal)
+        backButton.addTarget(self, action: #selector(btnLeftNavigationClicked), for: .touchUpInside)
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+//        self.navigationItem.titleView = backButton
+        
+        let settingButton = UIButton()
+        let settingAttachment = NSTextAttachment()
+        settingAttachment.image = UIImage(systemName: "gearshape.fill")?.withTintColor(.weatherfulWhite)
+        settingAttachment.setImageHeight(font: titleMediumFont, height: 20)
+        let settingButtonText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        settingButtonText.insert(NSAttributedString(attachment: settingAttachment), at: 0)
+        settingButton.setAttributedTitle(settingButtonText, for: .normal)
+        settingButton.addTarget(self, action: #selector(settingButtonPressed), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingButton)
+    }
+    
+    @objc func btnLeftNavigationClicked(sender: UIButton) {
+        guard let navigationController = self.navigationController else { return }
+        performSegue(withIdentifier: K.showSearchIdentifier, sender: self)
+    }
+    
+    @objc func titleButtonPressed(sender: UIButton) {
+        
+//        let searchVC = storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+//        let transition = CATransition()
+//        transition.duration = 1
+//        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+//        transition.type = CATransitionType.push
+//        transition.subtype = CATransitionSubtype.fromTop
+//        navigationController?.view.layer.add(transition, forKey: kCATransition)
+//        self.navigationController?.pushViewController(searchVC, animated: true)
+        
+        
+        performSegue(withIdentifier: K.showSearchIdentifier, sender: self)
+    }
+    
+    @objc func settingButtonPressed(sender: UIButton) {
+        performSegue(withIdentifier: K.showSearchIdentifier, sender: self)
+    }
+    
+    private func setUpSearchBar() {
+//        searchVC.searchResultsUpdater = self
+//        navigationItem.searchController = searchVC
+//        navigationItem.preferredSearchBarPlacement = .inline
+//        navigationItem.leftBarButtonItem?.isHidden = true
+//        searchVC.hidesNavigationBarDuringPresentation = false
+//        searchView.addSubview(searchVC.searchBar)
+//        searchVC.searchBar.bounds = searchView.frame
+////
+        
+//        self.searchVC.searchBar.frame = CGRectMake(0, 64, self.searchVC.searchBar.frame.size.width, 44.0);
+
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+//        navigationController?.setNavigationBarHidden(true, animated: animated)
         backgroundImageView.updateBackground() // FOLLOWUP
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func updateConditionImage() {
@@ -185,6 +277,10 @@ class MainVC: UIViewController {
     }
     
     // MARK: - IBActions
+    @IBAction func searchBarPessed(_ sender: UIButton) {
+        
+    }
+    
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         if isSearchTriggered {
             self.showSearchBar()
@@ -234,6 +330,23 @@ class MainVC: UIViewController {
             destinationVC.forecastArray = forecastArray
             destinationVC.homeLocation = homeLocation
         }
+    }
+}
+
+//extension MainVC: UISearchResultsUpdating {
+//    func updateSearchResults(for searchController: UISearchController) {
+//        print(searchBar.text)
+//    }
+//}
+
+// MARK: - UISearchBarDelegate
+extension MainVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        guard let query = searchBar.text,
+//              !query.trimmingCharacters(in: .whitespaces).isEmpty,
+//              let searchVC = searchVC.searchResultsController as MapResultVC else { return }
+//
+        print(searchBar.text)
     }
 }
 

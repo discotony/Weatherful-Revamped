@@ -9,11 +9,6 @@ import Foundation
 import GooglePlaces
 import CoreLocation
 
-struct Place {
-    let name: String
-    let identifier: String
-}
-
 class GooglePlacesManager {
     
     static let shared = GooglePlacesManager() // shared instance use it as a singleton
@@ -37,7 +32,7 @@ class GooglePlacesManager {
             }
             
             let places: [Place] = results.compactMap({
-                Place(name: $0.attributedFullText.string, identifier: $0.placeID)
+                Place(name: $0.attributedFullText.string, id: $0.placeID)
             })
             
             completion(.success(places))
@@ -45,7 +40,7 @@ class GooglePlacesManager {
     }
     
     public func resolveLocation(for place: Place, completion: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
-        client.fetchPlace(fromPlaceID: place.identifier,
+        client.fetchPlace(fromPlaceID: place.id,
                           placeFields: .coordinate,
                           sessionToken: nil) { googlePlace, error in
             guard let googlePlace = googlePlace, error == nil else {

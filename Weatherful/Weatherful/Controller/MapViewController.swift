@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapVC: UIViewController, UISearchResultsUpdating {
+class MapViewController: UIViewController, UISearchResultsUpdating {
     
     let mapView = MKMapView()
     let searchVC = UISearchController(searchResultsController: MapResultVC())
@@ -56,7 +56,7 @@ class MapVC: UIViewController, UISearchResultsUpdating {
     }
 }
 
-extension MapVC: ResultViewControllerDelegate {
+extension MapViewController: ResultViewControllerDelegate {
     func didTapPlace(with coordinates: CLLocationCoordinate2D) {
         searchVC.searchBar.resignFirstResponder()
         searchVC.dismiss(animated: true)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HEi-6q-yIH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rAP-5i-fJc">
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -64,6 +64,14 @@
                                             <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vxY-y6-Tzu"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dX0-Nt-Xgb">
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="48"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <action selector="searchBarPessed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kd6-Rv-HG9"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <constraints>
@@ -72,14 +80,18 @@
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qpi-Uv-l72" secondAttribute="trailing" constant="12" id="3jq-Ob-c06"/>
                                     <constraint firstItem="Bba-h8-l4j" firstAttribute="leading" secondItem="vxz-Pv-lCs" secondAttribute="trailing" constant="8" id="3zC-hh-Y3M"/>
                                     <constraint firstItem="qpi-Uv-l72" firstAttribute="centerY" secondItem="Dgx-Fd-Rw8" secondAttribute="centerY" id="5IS-2L-SMt"/>
+                                    <constraint firstAttribute="bottom" secondItem="dX0-Nt-Xgb" secondAttribute="bottom" id="9zq-OW-c2A"/>
                                     <constraint firstItem="vxz-Pv-lCs" firstAttribute="leading" secondItem="Dgx-Fd-Rw8" secondAttribute="leading" constant="8" id="Chf-HL-g8J"/>
                                     <constraint firstAttribute="bottom" secondItem="g9Z-jy-XO8" secondAttribute="bottom" id="E6W-wO-DgZ"/>
                                     <constraint firstItem="qpi-Uv-l72" firstAttribute="leading" secondItem="Bba-h8-l4j" secondAttribute="trailing" constant="8" id="FOh-IO-fYK"/>
                                     <constraint firstItem="Bba-h8-l4j" firstAttribute="centerY" secondItem="Dgx-Fd-Rw8" secondAttribute="centerY" id="LOA-6i-H3B"/>
                                     <constraint firstAttribute="trailing" secondItem="MSZ-ON-1B1" secondAttribute="trailing" id="Mb1-Jf-u9T"/>
+                                    <constraint firstItem="dX0-Nt-Xgb" firstAttribute="top" secondItem="Dgx-Fd-Rw8" secondAttribute="top" id="VXN-nJ-lzt"/>
                                     <constraint firstAttribute="height" constant="48" id="ZOT-Sl-1Ne"/>
                                     <constraint firstItem="MSZ-ON-1B1" firstAttribute="top" secondItem="Dgx-Fd-Rw8" secondAttribute="top" id="cNH-Cl-5rF"/>
+                                    <constraint firstAttribute="trailing" secondItem="dX0-Nt-Xgb" secondAttribute="trailing" id="cPL-W2-j6T"/>
                                     <constraint firstAttribute="bottom" secondItem="MSZ-ON-1B1" secondAttribute="bottom" id="lJa-gY-Sl9"/>
+                                    <constraint firstItem="dX0-Nt-Xgb" firstAttribute="leading" secondItem="g9Z-jy-XO8" secondAttribute="leading" id="mnT-eL-X1k"/>
                                     <constraint firstItem="vxz-Pv-lCs" firstAttribute="centerY" secondItem="Dgx-Fd-Rw8" secondAttribute="centerY" id="nC5-By-LkA"/>
                                     <constraint firstAttribute="trailing" secondItem="g9Z-jy-XO8" secondAttribute="trailing" id="otr-Ea-3zi"/>
                                     <constraint firstItem="g9Z-jy-XO8" firstAttribute="top" secondItem="Dgx-Fd-Rw8" secondAttribute="top" id="rTS-bM-CzG"/>
@@ -289,6 +301,7 @@
                         <outlet property="weatherConditionLabel" destination="w3Z-EY-n88" id="Bjk-dl-KMK"/>
                         <outlet property="windLabel" destination="RSj-DQ-c0a" id="Sg1-eb-Oj6"/>
                         <segue destination="ddg-wC-arS" kind="show" identifier="showForecast" id="eDL-sU-l4i"/>
+                        <segue destination="f9B-ix-apK" kind="show" identifier="showSearch" id="ooo-gq-rNK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -334,10 +347,10 @@
             </objects>
             <point key="canvasLocation" x="1850" y="3"/>
         </scene>
-        <!--MapVC-->
+        <!--SearchVC-->
         <scene sceneID="QvQ-gx-jJd">
             <objects>
-                <viewController id="euk-Fr-7Gr" customClass="MapVC" customModule="Weatherful" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="euk-Fr-7Gr" customClass="SearchVC" customModule="Weatherful" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4ZY-E7-Vcb">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -348,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Glk-Ap-1yZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3818" y="3"/>
+            <point key="canvasLocation" x="1805.5813953488371" y="760.94420600858371"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Eg-Bb-R9l">
@@ -369,22 +382,23 @@
             <point key="canvasLocation" x="9.7674418604651159" y="3.218884120171674"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="uWR-Mb-eyW">
+        <scene sceneID="8UK-rb-t3e">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HEi-6q-yIH" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="f9B-ix-apK" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gI0-jB-sqc">
+                    <navigationItem key="navigationItem" id="6PR-mU-A6d"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nPw-ay-AC5">
                         <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="euk-Fr-7Gr" kind="relationship" relationship="rootViewController" id="ubS-wq-Ncx"/>
+                        <segue destination="euk-Fr-7Gr" kind="relationship" relationship="rootViewController" id="2V6-qN-5xd"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cZO-tL-3uX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EFf-1V-Ean" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2919" y="3"/>
+            <point key="canvasLocation" x="906.97674418604652" y="760.94420600858371"/>
         </scene>
     </scenes>
     <resources>

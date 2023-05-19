@@ -48,11 +48,11 @@ class ForecastVC: UIViewController {
         let backButtonTitle = NSMutableAttributedString(string: " Back", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
         backButtonTitle.insert(NSAttributedString(attachment: backButtonAttachment), at: 0)
         backButton.setAttributedTitle(backButtonTitle, for: .normal)
-        backButton.addTarget(self, action: #selector(btnLeftNavigationClicked), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
-    @objc func btnLeftNavigationClicked(sender: UIButton) {
+    @objc func backButtonPressed(sender: UIButton) {
         guard let navigationController = self.navigationController else { return }
         navigationController.popViewController(animated: true)
     }
