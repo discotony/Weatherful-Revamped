@@ -45,7 +45,7 @@ class ForecastVC: UIViewController {
         let backButtonAttachment = NSTextAttachment()
         backButtonAttachment.image = UIImage(named: "icon_left_arrow")
         backButtonAttachment.setImageHeight(font: titleMediumFont, height: 14)
-        let backButtonTitle = NSMutableAttributedString(string: " Back", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        let backButtonTitle = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
         backButtonTitle.insert(NSAttributedString(attachment: backButtonAttachment), at: 0)
         backButton.setAttributedTitle(backButtonTitle, for: .normal)
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
@@ -67,6 +67,10 @@ class ForecastVC: UIViewController {
         forecastTableView.backgroundColor = .clear
         forecastTableView.showsVerticalScrollIndicator = false
         forecastTableView.separatorColor = . clear
+//        forecastTableView.contentInsetAdjustmentBehavior = .never
+//        forecastTableView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
+//        forecastTableView.automaticallyAdjustsScrollIndicatorInsets = false
+        forecastTableView.sectionHeaderTopPadding = 0
     }
     
     private func getDateGroup(forecastArray: [ForecastModel]) -> [String] {

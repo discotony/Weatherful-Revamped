@@ -109,12 +109,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ei4-TQ-Rgc">
-                                <rect key="frame" x="146.66666666666669" y="110.99999999999999" width="136.66666666666669" height="34.333333333333329"/>
+                                <rect key="frame" x="150" y="119" width="130" height="40"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="6xO-Co-bpr"/>
+                                    <constraint firstAttribute="height" constant="40" id="fq5-fz-XgM"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Reset Location">
-                                    <color key="baseForegroundColor" name="weatherfullTextColor"/>
-                                </buttonConfiguration>
+                                <buttonConfiguration key="configuration" style="plain"/>
                                 <connections>
                                     <action selector="resetLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DoP-xZ-CRm"/>
                                 </connections>
@@ -195,9 +197,9 @@
                             <constraint firstItem="UnJ-Bd-idt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Was-91-HuT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="V2K-dq-jLK" secondAttribute="bottom" constant="16" id="cFb-vY-ZE0"/>
                             <constraint firstAttribute="bottom" secondItem="UnJ-Bd-idt" secondAttribute="bottom" id="e49-4E-Sal"/>
+                            <constraint firstItem="Ei4-TQ-Rgc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="lr6-Vg-igT"/>
                             <constraint firstItem="UnJ-Bd-idt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="qkp-TQ-6gO"/>
                             <constraint firstItem="7tT-bk-Hxh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="uHr-KG-55X"/>
-                            <constraint firstItem="Ei4-TQ-Rgc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="uUD-kf-3FR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XCO-qO-0B9"/>

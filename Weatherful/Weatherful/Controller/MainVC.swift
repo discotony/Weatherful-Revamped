@@ -70,10 +70,6 @@ class MainVC: UIViewController {
     private func setUpNavBar() {
         guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
-
-        setNavigationTitle(titleText: "Antony")
-        
-        
         let settingButton = UIButton()
         let settingAttachment = NSTextAttachment()
         settingAttachment.image = UIImage(systemName: "gearshape.fill")?.withTintColor(.weatherfulWhite)
@@ -122,6 +118,7 @@ class MainVC: UIViewController {
         super.viewWillAppear(animated)
 //        navigationController?.setNavigationBarHidden(true, animated: animated)
         backgroundImageView.updateBackground() // FOLLOWUP
+        forecastCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .right, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -163,20 +160,15 @@ class MainVC: UIViewController {
     }
     
     private func setUpUI() {
-        
-//        guard let titleLargeFont = WeatherfulFonts.titleLarge else { return }
-//        cityLabel.configure(font: titleLargeFont)
-//        searchTextField.backgroundColor = .clear
-//        searchTextField.textColor = .weatherfulWhite
-//        searchTextField.tintColor = .weatherfulPlaceholderGrey
-//        searchTextField.borderStyle = .none
-//        searchTextField.font = WeatherfulFonts.captionMedium
-        
+        guard let titleSmallFont = WeatherfulFonts.titleSmall else { return }
         resetLocationButton.backgroundColor = .weatherfulDarkGrey.withAlphaComponent(0.5)
-        resetLocationButton.titleLabel?.font = WeatherfulFonts.captionMedium
         resetLocationButton.roundCorners(cornerRadius: resetLocationButton.frame.height / 2)
         resetLocationButton.applyDarkShadow()
+        let resetLocationButtonTitle = NSMutableAttributedString(string: "Reset Location", attributes: [NSAttributedString.Key.font : titleSmallFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
+        resetLocationButton.setAttributedTitle(resetLocationButtonTitle, for: .normal)
         resetLocationButton.isHidden = true
+        print(resetLocationButton.frame)
+        print(resetLocationButton.bounds)
         
         guard let titleXLFont = WeatherfulFonts.titleXL else { return }
         guard let captionLargeFont = WeatherfulFonts.captionLarge else { return }
@@ -208,14 +200,14 @@ class MainVC: UIViewController {
     private func setNavigationTitle(titleText: String) {
         guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
         let titleButton = UIButton()
-        let titleSearchAttachment = NSTextAttachment()
-        titleSearchAttachment.image = UIImage(named: "icon_location")
-        titleSearchAttachment.setImageHeight(font: titleMediumFont, height: 14)
+//        let titleSearchAttachment = NSTextAttachment()
+//        titleSearchAttachment.image = UIImage(named: "icon_location")
+//        titleSearchAttachment.setImageHeight(font: titleMediumFont, height: 14)
         let titleDropdownAttachment = NSTextAttachment()
         titleDropdownAttachment.image = UIImage(named: "icon_dropdown")
         titleDropdownAttachment.setImageHeight(font: titleMediumFont, height: 14)
         let titleText = NSMutableAttributedString(string: "  \(titleText)  ", attributes: [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite])
-        titleText.insert(NSAttributedString(attachment: titleSearchAttachment), at: 0)
+//        titleText.insert(NSAttributedString(attachment: titleSearchAttachment), at: 0)
         titleText.append(NSAttributedString(attachment: titleDropdownAttachment))
         titleButton.setAttributedTitle(titleText, for: .normal)
         titleButton.addTarget(self, action: #selector(titleButtonPressed), for: .touchUpInside)
