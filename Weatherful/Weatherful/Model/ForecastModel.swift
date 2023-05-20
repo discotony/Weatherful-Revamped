@@ -11,7 +11,6 @@ import Foundation
 
 struct ForecastModel {
     var cityName: String
-    var coordinates: Coord
     
     var weatherDate: WeatherfulDate
     var dateShort: String {
