@@ -31,7 +31,7 @@ class MainVC: UIViewController {
     @IBOutlet weak var forecastCollectionView: UICollectionView!
     
     private var isSearchTriggered: Bool = true // FOLLOWUP
-    private var tempUnits: [tempUnits] = [.metric, .imperial] // FOLLOWUP
+    private var tempUnits: [TempUnits] = [.metric, .imperial] // FOLLOWUP
     
     var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
@@ -261,7 +261,7 @@ class MainVC: UIViewController {
         if segue.identifier == K.showForecastIdentifier {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
-            destinationVC.homeLocation = homeLocation
+            destinationVC.homeLocation = requestedLocation
         } else if segue.identifier == K.showSearchIdentifier {
             let destinationNavVC = segue.destination as! UINavigationController
             let destinationVC = destinationNavVC.topViewController as! SearchVC
@@ -270,16 +270,6 @@ class MainVC: UIViewController {
     }
 }
 
-// MARK: - UISearchBarDelegate
-extension MainVC: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        guard let query = searchBar.text,
-//              !query.trimmingCharacters(in: .whitespaces).isEmpty,
-//              let searchVC = searchVC.searchResultsController as MapResultVC else { return }
-//
-        print(searchBar.text)
-    }
-}
 /*
 // MARK: - UITextFieldDelegate
 extension MainVC: UITextFieldDelegate {
@@ -380,9 +370,7 @@ extension MainVC: CLLocationManagerDelegate {
                     self.setNavigationTitle(titleText: location)
                 }
             }
-
-            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
-            weatherManager.fetchForecast(latitude: latitude, longitude: longitude)
+            weatherManager.fetchWeatherData(with: latestLocation.coordinate)
         }
     }
     
@@ -496,6 +484,6 @@ extension MainVC: SearchVCDelegate {
         
         print("lat: \(coordinates.latitude)")
         print("lon: \(coordinates.longitude)")
-        weatherManager.fetchWeather(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        weatherManager.fetchWeatherData(with: coordinates)
     }
 }

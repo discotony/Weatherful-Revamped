@@ -10,9 +10,19 @@ import CoreLocation
 
 private var APIKey = "69909afa26903a28166857e723462128"
 
-enum tempUnits { // FOLLOWUP
+enum RequestType {
+    case weather
+    case forecast
+}
+
+enum TempUnits { // FOLLOWUP
     case metric
     case imperial
+}
+
+enum WeatherError: Error {
+    case failedToFetchWeather
+    case failedToFetchForecast
 }
 
 protocol WeatherManagerDelegate {
@@ -29,81 +39,41 @@ struct WeatherManager {
     
     let dispatchGroup = DispatchGroup()
     
-    // MARK: - Fetch Weather by City Name
-    // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
-//    func fetchWeather(from cityName: String) {
-//        let urlString = "\(weatherUrl)&q=\(cityName)"
-//        performURLRequest(with: urlString)
-//    }
-    
-    // MARK: - Fetch Weather by Geo-coordinates
-    // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&lat=52.535152&lon=13.390206
-    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        let urlString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
-        performURLRequest(with: urlString)
+    func fetchWeatherData(with coordinates: CLLocationCoordinate2D) {
+        let weatherString = "\(weatherUrl)&lat=\(coordinates.latitude)&lon=\(coordinates.longitude)"
+        let forecastString = "\(forecastUrl)&lat=\(coordinates.latitude)&lon=\(coordinates.longitude)"
+
+        performURLRequest(with: weatherString, requestType: .weather)
+        performURLRequest(with: forecastString, requestType: .forecast)
     }
     
-    // MARK: - Fetch Forecast
-    // https://api.openweathermap.org/data/2.5/forecast?appid=69909afa26903a28166857e723462128&units=imperial&q=berlin
-    func fetchForecast(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        let urlString = "\(forecastUrl)&lat=\(latitude)&lon=\(longitude)"
-        performURLRequest(with: urlString, isForecast: true)
-    }
-    
-//    func fetchWeatherData(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-//        let weatherString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
-//        let forecastString = "\(forecastUrl)&lat=\(latitude)&lon=\(longitude)"
-//        
-//        performURLRequest(with: weatherString)
-//        performURLRequest(with: forecastString)
-//        
-//    }
-    
-    private func performURLRequest(with urlString: String, isForecast: Bool = false) {
-        // 1. Create a URL
+    private func performURLRequest(with urlString: String, requestType: RequestType) {
         dispatchGroup.enter()
         if let url = URL(string: urlString) {
-            
-            // 2. Create a URL Session
             let session = URLSession(configuration: .default)
-            
-            // 3. Create a task
-            // let task = session.dataTask(with: <#T##URLRequest#>, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
             let task = session.dataTask(with: url) { data, response, error in
-                
-                // error handling
-                if error != nil {
-                    delegate?.didFailWithError(error: error!) //FOLLOWUP
+                guard let safeData = data, error == nil else {
+                    delegate?.didFailWithError(error: error!)
                     return
                 }
-                
-                // if no error
-                if let safeData = data {
-                    if isForecast {
-                        if let forecast = parseForecastJSON(safeData) {
-                            delegate?.didUpdateForecast(self, forecast: forecast)
-                        }
-                    } else if let weather = parseWeatherJSON(safeData) {
+                if requestType == .weather {
+                    if let weather = parseWeatherJSON(safeData) {
                         delegate?.didUpdateWeather(self, weather: weather)
                     }
+                } else if let forecast = parseForecastJSON(safeData) {
+                    delegate?.didUpdateForecast(self, forecast: forecast)
                 }
                 dispatchGroup.leave()
             }
-            
-            // 4. Start the task
-            task.resume() //FOLLOWUP
+            task.resume()
         }
         
         func parseWeatherJSON(_ weatherData: Data) -> WeatherModel? {
             let decoder = JSONDecoder()
-            // decoder.decode(T##type: Decodable.Protocol##Decodable.Protocol, from: <#T##Data#>)
-            // "Call can throw, but it is not marked with 'try' and the error is not handled" //FOLLOWUP
             do {
                 let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
                 let cityName = decodedData.name
                 let coordinates = decodedData.coord
-                
-         
                 let conditionId = decodedData.weather[0].id
                 let condition = decodedData.weather[0].main
                 let conditionDescription = decodedData.weather[0].description.capitalizeFirstLetters
@@ -112,20 +82,6 @@ struct WeatherManager {
                 let tempMax = decodedData.main.temp_max
                 let wind = decodedData.wind.speed
                 let humidity = decodedData.main.humidity
-                
-//                dispatchGroup.enter()
-//                let location = CLLocation(latitude: coordinates.lat, longitude: coordinates.lon)
-//                location.placemark { placemark, error in
-//                    guard let placemark = placemark else {
-//                        print("Error:", error ?? "nil")
-//                        return
-//                    }
-//                    if let formattedLocation = placemark.locationFormatted {
-//                        locationName = formattedLocation
-//                    }
-//                    dispatchGroup.leave()
-//                }
-                
                 return WeatherModel(city: cityName,
                                     coordinates: coordinates,
                                     conditionId: conditionId,
@@ -145,14 +101,12 @@ struct WeatherManager {
         
         func parseForecastJSON(_ forecastData: Data) -> [ForecastModel]? {
             let decoder = JSONDecoder()
-            
             do {
                 let decodedData = try decoder.decode(ForecastData.self, from: forecastData)
                 var forecastArray = [ForecastModel]()
                 
                 for index in 0..<decodedData.list.count {
                     let cityName = decodedData.city.name
-                    let coordinates = decodedData.city.coord // FOLLOW-UP: remove if unused
                     let list = decodedData.list[index]
                     let weatherDate = WeatherfulDate(timestamp: list.dt)
                     let weather = list.weather[0]
@@ -161,7 +115,6 @@ struct WeatherManager {
                     let temp = list.main.temp
                     
                     let forecast = ForecastModel(cityName: cityName,
-                                                 coordinates: coordinates,
                                                  weatherDate: weatherDate,
                                                  conditionId: conditionId,
                                                  conditionDescription: conditionDescription,

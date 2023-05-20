@@ -17,7 +17,7 @@ class GooglePlacesManager {
     
     private init() {}
     
-    enum PlacesError: Error {
+    enum GooglePlacesError: Error {
         case failedToFind
         case failedToGetCoorindates
     }
@@ -27,7 +27,7 @@ class GooglePlacesManager {
         filter.type = .city
         client.findAutocompletePredictions(fromQuery: query, filter: filter, sessionToken: nil){ results, error in
             guard let results = results, error == nil else {
-                completion(.failure(PlacesError.failedToFind))
+                completion(.failure(GooglePlacesError.failedToFind))
                 return
             }
             
@@ -45,7 +45,7 @@ class GooglePlacesManager {
                           placeFields: .coordinate,
                           sessionToken: nil) { googlePlace, error in
             guard let googlePlace = googlePlace, error == nil else {
-                completion(.failure(PlacesError.failedToGetCoorindates))
+                completion(.failure(GooglePlacesError.failedToGetCoorindates))
                 return
             }
             
