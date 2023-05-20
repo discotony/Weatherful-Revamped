@@ -16,7 +16,7 @@ class ForecastVC: UIViewController {
     var forecastDateArray = [String]()
     var forecastGroup = [[ForecastModel]]()
     var numForecastDates = 0
-    var homeLocation = ""
+    var location = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class ForecastVC: UIViewController {
         
         guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
-        self.title = homeLocation
+        self.title = location
         
         let backButton = UIButton()
         let backButtonAttachment = NSTextAttachment()
@@ -115,6 +115,7 @@ extension ForecastVC: UITableViewDataSource {
         
         let isLastCell = indexPath.row == forecastGroup[indexPath.section].count - 1
         cell.borderView.isHidden = isLastCell ? true : false
+        cell.selectionStyle = .none
         
         return cell
     }

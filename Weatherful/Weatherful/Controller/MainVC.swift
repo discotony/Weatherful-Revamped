@@ -261,7 +261,7 @@ class MainVC: UIViewController {
         if segue.identifier == K.showForecastIdentifier {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
-            destinationVC.homeLocation = requestedLocation
+            destinationVC.location = requestedLocation
         } else if segue.identifier == K.showSearchIdentifier {
             let destinationNavVC = segue.destination as! UINavigationController
             let destinationVC = destinationNavVC.topViewController as! SearchVC
