@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 
 protocol SearchResultVCDelegate: AnyObject {
-    func didTapPlace(cityName: String, with coordinates: CLLocationCoordinate2D)
+    func didTapPlace(selectedPlace: Place)
 }
 
 class SearchResultVC: UIViewController {
@@ -73,17 +73,18 @@ extension SearchResultVC: UITableViewDelegate {
         tableView.isHidden = true
         
         let selectedPlace = places[indexPath.row]
+        self.delegate?.didTapPlace(selectedPlace: selectedPlace)
         // FOLLOWUP
-        GooglePlacesManager.shared.resolveLocation(for: selectedPlace) { [weak self] result in
-            switch result {
-            case .success(let coordinates):
-                DispatchQueue.main.async {
-                    print(selectedPlace.name)
-                    self?.delegate?.didTapPlace(cityName: selectedPlace.formattedName, with: coordinates)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+//        GooglePlacesManager.shared.resolveLocation(for: selectedPlace) { [weak self] result in
+//            switch result {
+//            case .success(let coordinates):
+//                DispatchQueue.main.async {
+//                    print(selectedPlace.name)
+//                    self?.delegate?.didTapPlace(cityName: selectedPlace.formattedName, with: coordinates)
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
 }
