@@ -37,7 +37,9 @@ class MainVC: UIViewController {
     private var selectedMenuItemTitle: String?
     private var siteMenuItems:[UIMenuElement] = []
     
+    var unit: WeatherfulUnit = .Imperial
     var weatherManager = WeatherManager()
+    var currentWeather: WeatherModel?
     var locationManager = CLLocationManager()
     var location: CLLocation?
     
@@ -65,8 +67,6 @@ class MainVC: UIViewController {
     private func setUpNavBar() {
         guard let titleMediumFont = WeatherfulFonts.titleMedium else { return }
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : titleMediumFont, NSAttributedString.Key.foregroundColor : UIColor.weatherfulWhite]
-        //        setUpSettingMenu(actionTitle: selectedMenuItemTitle)
-        
         let settingAttachment = NSTextAttachment()
         settingAttachment.image = UIImage(systemName: "ellipsis.circle")?.withTintColor(.weatherfulWhite)
         settingAttachment.setImageHeight(font: titleMediumFont, height: 20)
@@ -75,11 +75,11 @@ class MainVC: UIViewController {
         settingButton.setAttributedTitle(settingButtonText, for: .normal)
         settingButton.setTitle("title", for: .normal)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingButton)
-        siteMenuItems = [UIAction(title: "Celsius",
+        siteMenuItems = [UIAction(title: "Metric System",
                                   image: UIImage(systemName: "c.circle"),
                                   state: .off,
                                   handler: menuHandler),
-                         UIAction(title: "Fahrenheit",
+                         UIAction(title: "Imperial System",
                                   image: UIImage(systemName: "f.circle"),
                                   state: .on,
                                   handler: menuHandler)]
@@ -105,9 +105,9 @@ class MainVC: UIViewController {
                         if action.title == actionTitle {
                             if action.state == .off {
                                 action.state = .on
-                                let secondState = menu.children[1] as! UIAction
-                                secondState.state = .off
-                                convertToCelsius()
+                                let imperialAction = menu.children[1] as! UIAction
+                                imperialAction.state = .off
+                                convertToMetric()
                             }
                         }
                     }
@@ -115,9 +115,9 @@ class MainVC: UIViewController {
                         if action.title == actionTitle {
                             if action.state == .off {
                                 action.state = .on
-                                let firstState = menu.children[0] as! UIAction
-                                firstState.state = .off
-                                convertToFahrenheit()
+                                let metricAction = menu.children[0] as! UIAction
+                                metricAction.state = .off
+                                convertToImperial()
                             }
                         }
                     }
@@ -127,12 +127,33 @@ class MainVC: UIViewController {
         return menu
     }
     
-    private func convertToCelsius() {
-        print("convertToCelsius")
+    private func convertToMetric() {
+        if let weather = currentWeather {
+            print("convertToMetric")
+            //        weatherConditionLabel.text = currentWeather.conditionDescription.capitalizeFirstLetters
+            //        conditionName = currentWeather.animatedConditionName
+            unit = .Metric
+            currentTempLabel.text = (weather.tempCurrentMetricString) //FOLLOWUP
+            maxMinTempLabel.text = "H: \(weather.tempMaxMetricString)  L: \(weather.tempMinMetricString)"
+            windLabel.text = weather.windMetricString + " "
+            //        humidityLabel.text = currentWeather.humidityString
+            forecastCollectionView.reloadData()
+        }
     }
     
-    private func convertToFahrenheit() {
-        print("convertToFahrenheit")
+    private func convertToImperial() {
+        if let weather = currentWeather {
+            print("convertToImperial")
+            //        weatherConditionLabel.text = currentWeather.conditionDescription.capitalizeFirstLetters
+            //        conditionName = currentWeather.animatedConditionName
+            unit = .Imperial
+            currentTempLabel.text = (weather.tempCurrentImperialString) //FOLLOWUP
+            maxMinTempLabel.text = "H: \(weather.tempMaxImperialString)  L: \(weather.tempMinImperialString)"
+            windLabel.text = weather.windImperialString + " "
+            //        humidityLabel.text = currentWeather.humidityString
+            forecastCollectionView.reloadData()
+        }
+        
     }
 
     @objc func titleButtonPressed(sender: UIButton) {
@@ -275,6 +296,7 @@ class MainVC: UIViewController {
             let destinationVC = segue.destination as! ForecastVC
             destinationVC.forecastArray = forecastArray
             destinationVC.location = requestedLocation
+            destinationVC.unit = unit
         } else if segue.identifier == K.showSearchIdentifier {
             let destinationNavVC = segue.destination as! UINavigationController
             let destinationVC = destinationNavVC.topViewController as! SearchVC
@@ -325,12 +347,13 @@ class MainVC: UIViewController {
 extension MainVC: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async { //FOLLOWUP
+            self.currentWeather = weather
             self.weatherConditionLabel.text = weather.conditionDescription.capitalizeFirstLetters
             self.conditionName = weather.animatedConditionName
             self.updateConditionImage()
-            self.currentTempLabel.text = (weather.tempCurrentString) //FOLLOWUP
-            self.maxMinTempLabel.text = "H: \(weather.tempMaxString)  L: \(weather.tempMinString)"
-            self.windLabel.text = weather.windString + " "
+            self.currentTempLabel.text = (weather.tempCurrentImperialString) //FOLLOWUP
+            self.maxMinTempLabel.text = "H: \(weather.tempMaxImperialString)  L: \(weather.tempMinImperialString)"
+            self.windLabel.text = weather.windImperialString + " "
             self.humidityLabel.text = weather.humidityString
             print("homecity: " + self.homeLocation)
             print("weather.cityName: " + weather.city)
@@ -403,7 +426,11 @@ extension MainVC: UICollectionViewDataSource {
         
         if !forecastArray.isEmpty {
             let forecast = forecastArray[indexPath.row]
-            cell.configure(date: forecast.dateShort, time: forecast.time, imageName: forecast.conditionImageName, temp: forecast.tempString)
+            if unit == .Metric {
+                cell.configure(date: forecast.dateShort, time: forecast.time, imageName: forecast.conditionImageName, temp: forecast.tempMetricString)
+            } else {
+                cell.configure(date: forecast.dateShort, time: forecast.time, imageName: forecast.conditionImageName, temp: forecast.tempImperialString)
+            }
         }
         return cell
     }

@@ -10,6 +10,11 @@ import CoreLocation
 
 // https://api.openweathermap.org/data/2.5/weather?appid=69909afa26903a28166857e723462128&units=imperial&q=Berlin
 
+enum WeatherfulUnit {
+    case Metric
+    case Imperial
+}
+
 struct WeatherModel {
     var city: String
     var coordinates: Coord
@@ -127,26 +132,53 @@ struct WeatherModel {
         }
     }
     
-    var tempCurrent: Double
-    var tempMin: Double
-    var tempMax: Double
-    var wind: Double
+    var tempCurrentImperial: Double
+    var tempMinImperial: Double
+    var tempMaxImperial: Double
+    var windImperial: Double
+    
+    var tempCurrentMetric: Double {
+        return Measurement(value: tempCurrentImperial, unit: UnitTemperature.fahrenheit).converted(to: UnitTemperature.celsius).value
+    }
+    var tempMinMetric: Double {
+        return Measurement(value: tempMinImperial, unit: UnitTemperature.fahrenheit).converted(to: UnitTemperature.celsius).value
+    }
+    var tempMaxMetric: Double {
+        return Measurement(value: tempMaxImperial, unit: UnitTemperature.fahrenheit).converted(to: UnitTemperature.celsius).value
+    }
+    var windMetric: Double {
+        return Measurement(value: windImperial, unit: UnitSpeed.milesPerHour).converted(to: UnitSpeed.kilometersPerHour).value
+    }
+    
+    
+    var tempCurrentImperialString: String {
+        return String(Int(tempCurrentImperial)) + "°F"
+    }
+    var tempMinImperialString: String {
+        return String(format: "%.1f", tempMaxImperial) + "°F"
+    }
+    var tempMaxImperialString: String {
+        return String(format: "%.1f", tempMaxImperial) + "°F"
+    }
+    var windImperialString: String {
+        return String(format: "%.1f", windImperial) + " mph"
+    }
+    
+    
+    var tempCurrentMetricString: String {
+        return String(Int(tempCurrentMetric)) + "°C"
+    }
+    var tempMinMetricString: String {
+        return String(format: "%.1f", tempMinMetric) + "°C"
+    }
+    var tempMaxMetricString: String {
+        return String(format: "%.1f", tempMaxMetric) + "°C"
+    }
+    var windMetricString: String {
+        return String(format: "%.1f", windMetric) + " km/h"
+    }
+    
     var humidity: Int
-    
-    var tempCurrentString: String {
-        return String(Int(tempCurrent)) + "°F"
-    }
-    
-    var tempMinString: String {
-        return String(format: "%.1f", tempMax) + "°F"
-    }
-    var tempMaxString: String {
-        return String(format: "%.1f", tempMax) + "°F"
-    }
-       
-    var windString: String {
-        return String(format: "%.1f", wind) + " mph"
-    }
     
     var humidityString: String {
         return "\(humidity) %"
