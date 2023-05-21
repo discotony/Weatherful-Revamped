@@ -87,10 +87,10 @@ struct WeatherManager {
                                     conditionId: conditionId,
                                     condition: condition,
                                     conditionDescription: conditionDescription,
-                                    tempCurrent: tempCurrent,
-                                    tempMin: tempMin,
-                                    tempMax: tempMax,
-                                    wind: wind,
+                                    tempCurrentImperial: tempCurrent,
+                                    tempMinImperial: tempMin,
+                                    tempMaxImperial: tempMax,
+                                    windImperial: wind,
                                     humidity: humidity)
                 
             } catch {
@@ -118,7 +118,7 @@ struct WeatherManager {
                                                  weatherDate: weatherDate,
                                                  conditionId: conditionId,
                                                  conditionDescription: conditionDescription,
-                                                 temp: temp)
+                                                 tempImperial: temp)
                     
                     forecastArray.append(forecast)
                 }

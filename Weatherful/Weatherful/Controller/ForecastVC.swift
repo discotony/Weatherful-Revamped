@@ -12,6 +12,7 @@ class ForecastVC: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var forecastTableView: UITableView!
     
+    var unit: WeatherfulUnit?
     var forecastArray = [ForecastModel]()
     var forecastDateArray = [String]()
     var forecastGroup = [[ForecastModel]]()
@@ -115,8 +116,11 @@ extension ForecastVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = forecastTableView.dequeueReusableCell(withIdentifier: K.forecastDetailCellIdentifier, for: indexPath) as! ForecastDetailCell
         let forecast = forecastGroup[indexPath.section][indexPath.row]
-        cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempString)
-        
+        if unit == .Metric {
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempMetricString)
+        } else {
+            cell.configure(time: forecast.time, imageName: forecast.conditionImageName, condition: forecast.conditionDescription, temp: forecast.tempImperialString)
+        }
         let isLastCell = indexPath.row == forecastGroup[indexPath.section].count - 1
         cell.borderView.isHidden = isLastCell ? true : false
         cell.selectionStyle = .none

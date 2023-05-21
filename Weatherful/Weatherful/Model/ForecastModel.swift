@@ -88,8 +88,15 @@ struct ForecastModel {
         }
     }
     
-    var temp: Double
-    var tempString: String {
-        return String(Int(temp)) + "°F"
+    var tempImperial: Double
+    var tempImperialString: String {
+        return String(Int(tempImperial)) + "°F"
+    }
+    
+    var tempMetric: Double {
+        return Measurement(value: tempImperial, unit: UnitTemperature.fahrenheit).converted(to: .celsius).value
+    }
+    var tempMetricString: String {
+        return String(Int(tempMetric)) + "°C"
     }
 }
